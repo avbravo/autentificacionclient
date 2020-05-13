@@ -6,18 +6,19 @@
 package com.avbravo.autentificacionclient.entity;
 
 import com.avbravo.jmoordb.anotations.Embedded;
+import com.avbravo.jmoordb.anotations.Id;
 import com.avbravo.jmoordb.anotations.Referenced;
+import com.avbravo.jmoordb.anotations.Secondary;
 import com.avbravo.jmoordb.pojos.UserInfo;
 import java.util.List;
 import java.util.Objects;
-
 
 /**
  *
  * @author avbravo
  *
  */
-public class User {
+public class Usuario {
 
     private Integer iduser;
     private String username;
@@ -31,26 +32,31 @@ public class User {
     Sede sede;
 
     @Embedded
-    List<Profile> profile;
+    private List<Perfil> perfil;
+    @Embedded
+    List<Ubicacion> ubicacion;
 
     private String activo;
-    @Embedded
-    List<UserInfo> userInfo;
-
-    public User() {
+ 
+    public Usuario() {
     }
 
-    public User(Integer iduser, String username, String password, String nombre, String email, Sede sede, List<Profile> profile, String activo, List<UserInfo> userInfo) {
+    public Usuario(Integer iduser, String username, String password, String nombre, String email, Sede sede, List<Perfil> perfil, List<Ubicacion> ubicacion, String activo) {
         this.iduser = iduser;
         this.username = username;
         this.password = password;
         this.nombre = nombre;
         this.email = email;
         this.sede = sede;
-        this.profile = profile;
+        this.perfil = perfil;
+        this.ubicacion = ubicacion;
         this.activo = activo;
-        this.userInfo = userInfo;
     }
+    
+    
+    
+    
+    
 
     public Integer getIduser() {
         return iduser;
@@ -100,12 +106,14 @@ public class User {
         this.sede = sede;
     }
 
-    public List<Profile> getProfile() {
-        return profile;
+  
+
+    public List<Ubicacion> getUbicacion() {
+        return ubicacion;
     }
 
-    public void setProfile(List<Profile> profile) {
-        this.profile = profile;
+    public void setUbicacion(List<Ubicacion> ubicacion) {
+        this.ubicacion = ubicacion;
     }
 
     public String getActivo() {
@@ -116,16 +124,13 @@ public class User {
         this.activo = activo;
     }
 
-    public List<UserInfo> getUserInfo() {
-        return userInfo;
+    public List<Perfil> getPerfil() {
+        return perfil;
     }
 
-    public void setUserInfo(List<UserInfo> userInfo) {
-        this.userInfo = userInfo;
+    public void setPerfil(List<Perfil> perfil) {
+        this.perfil = perfil;
     }
 
-      @Override
-    public int hashCode() {
-        return Objects.hashCode(iduser);
-    }
+   
 }

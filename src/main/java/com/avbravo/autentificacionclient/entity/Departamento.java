@@ -15,41 +15,38 @@ import java.util.List;
  *
  * @author avbravo
  */
-public class Rol {
+public class Departamento {
 
     @Id
-    private String idrol;
+    private Integer iddepartamento;
     @Secondary
-    private String rol;
+    private String departamento;
     private String activo;
+   
 
-    public Rol() {
+    public Departamento() {
     }
 
-    public Rol(String idrol, String rol, String activo) {
-        this.idrol = idrol;
-        this.rol = rol;
+    public Departamento(Integer iddepartamento, String departamento, String activo) {
+        this.iddepartamento = iddepartamento;
+        this.departamento = departamento;
         this.activo = activo;
     }
 
-    
-    
-    
-    
-    public String getIdrol() {
-        return idrol;
+    public Integer getIddepartamento() {
+        return iddepartamento;
     }
 
-    public void setIdrol(String idrol) {
-        this.idrol = idrol;
+    public void setIddepartamento(Integer iddepartamento) {
+        this.iddepartamento = iddepartamento;
     }
 
-    public String getRol() {
-        return rol;
+    public String getDepartamento() {
+        return departamento;
     }
 
-    public void setRol(String rol) {
-        this.rol = rol;
+    public void setDepartamento(String departamento) {
+        this.departamento = departamento;
     }
 
     public String getActivo() {
@@ -61,7 +58,5 @@ public class Rol {
     }
 
     
-   
-  
 
 }

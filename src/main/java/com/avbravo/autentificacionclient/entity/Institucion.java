@@ -22,19 +22,20 @@ public class Institucion {
     @Secondary
     private String institucion;
     private String activo;
-    @Embedded
-    List<UserInfo> userInfo;
+  
 
     public Institucion() {
     }
 
-    public Institucion(Integer idinstitucion, String institucion, String activo, List<UserInfo> userInfo) {
+    public Institucion(Integer idinstitucion, String institucion, String activo) {
         this.idinstitucion = idinstitucion;
         this.institucion = institucion;
         this.activo = activo;
-        this.userInfo = userInfo;
     }
 
+    
+    
+    
     public Integer getIdinstitucion() {
         return idinstitucion;
     }
@@ -59,15 +60,6 @@ public class Institucion {
         this.activo = activo;
     }
 
-    public List<UserInfo> getUserInfo() {
-        return userInfo;
-    }
-
-    public void setUserInfo(List<UserInfo> userInfo) {
-        this.userInfo = userInfo;
-    }
-
-    
-  
+   
 
 }

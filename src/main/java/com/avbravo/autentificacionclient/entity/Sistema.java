@@ -22,22 +22,17 @@ public class Sistema {
     @Secondary
     private String sistema;
     private String activo;
-    @Embedded
-    List<UserInfo> userInfo;
+   
 
     public Sistema() {
     }
 
-    public Sistema(Integer idsistema, String sistema, String activo, List<UserInfo> userInfo) {
+    public Sistema(Integer idsistema, String sistema, String activo) {
         this.idsistema = idsistema;
         this.sistema = sistema;
         this.activo = activo;
-        this.userInfo = userInfo;
     }
 
-    
-    
-    
     public Integer getIdsistema() {
         return idsistema;
     }
@@ -62,15 +57,7 @@ public class Sistema {
         this.activo = activo;
     }
 
-    public List<UserInfo> getUserInfo() {
-        return userInfo;
-    }
-
-    public void setUserInfo(List<UserInfo> userInfo) {
-        this.userInfo = userInfo;
-    }
-
-    
+   
   
 
 }

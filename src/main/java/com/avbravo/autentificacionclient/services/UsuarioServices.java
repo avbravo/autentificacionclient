@@ -5,13 +5,14 @@
  */
 package com.avbravo.autentificacionclient.services;
 
-import com.avbravo.autentificacionclient.entity.User;
+import com.avbravo.autentificacionclient.entity.Usuario;
 import com.avbravo.autentificacionclient.producer.AuthentificationProducer;
 import com.avbravo.autentificacionclient.producer.MicroservicesProducer;
 import com.avbravo.jmoordbutils.JsfUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.client.Client;
@@ -28,7 +29,7 @@ import javax.ws.rs.core.Response;
  * @author avbravo
  */
 @Stateless
-public class UserServices implements Serializable {
+public class UsuarioServices implements Serializable {
 
     String directoryLogger = JsfUtil.isLinux() ? JsfUtil.userHome() + JsfUtil.fileSeparator() + "autentiticacionclient" + JsfUtil.fileSeparator() + "logs" + JsfUtil.fileSeparator() + "logger.json" : "C:\\autentiticacionclient\\logs\\logger.json";
     private static final String PASS = "pass";
@@ -42,15 +43,15 @@ public class UserServices implements Serializable {
     AuthentificationProducer authentificationProducer;
 
 // <editor-fold defaultstate="collapsed" desc="List<User> findAll()">
-    public List<User> findAll() {
-        List<User> userList = new ArrayList<>();
+    public List<Usuario> findAll() {
+        List<Usuario> userList = new ArrayList<>();
         try {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget target = client.target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/user/findall");
 
-            GenericType<List<User>> data = new GenericType<List<User>>() {
+            GenericType<List<Usuario>> data = new GenericType<List<Usuario>>() {
             };
 
             userList = target.request(MediaType.APPLICATION_JSON).get(data);
@@ -64,7 +65,7 @@ public class UserServices implements Serializable {
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Boolean add(User user)">
-    public Boolean add(User user) {
+    public Boolean add(Usuario user) {
         try {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
@@ -88,14 +89,41 @@ public class UserServices implements Serializable {
         return false;
     }
 // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="Boolean update(User user)">
+    
+// <editor-fold defaultstate="collapsed" desc="Boolean update(User user)">
 
-    public Boolean update(User user) {
+    public Boolean update(Usuario user) {
         try {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
                     = client.target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/user/update");
+
+            Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+            Response response = invocationBuilder.post(Entity.entity(user, MediaType.APPLICATION_JSON));
+
+            System.out.println(response.getStatus());
+            if (response.getStatus() == 400) {
+                return false;
+            }
+            System.out.println(response.readEntity(String.class
+            ));
+            return true;
+        } catch (Exception e) {
+            JsfUtil.appendTextToLogErrorFile(this.directoryLogger, JsfUtil.nameOfClass(), JsfUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println("errort" + e.getLocalizedMessage());
+        }
+        return false;
+    }
+// </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="Boolean update(User user)">
+
+    public Boolean delete(Usuario user) {
+        try {
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            WebTarget webTarget
+                    = client.target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/user/delete");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.post(Entity.entity(user, MediaType.APPLICATION_JSON));
@@ -122,10 +150,10 @@ public class UserServices implements Serializable {
      * @param codigo_
      * @return
      */
-    public User findByUsername(String username) {
-        User user = new User();
+    public Optional<Usuario> findByUsername(String username) {
+        Usuario user = new Usuario();
         try {
-    
+
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             user = client
@@ -133,15 +161,15 @@ public class UserServices implements Serializable {
                     .path("/{username}")
                     .resolveTemplate("username", username)
                     .request(MediaType.APPLICATION_JSON)
-                    .get(User.class
+                    .get(Usuario.class
                     );
-
+            return Optional.of(user);
             //String result = FAIL;
         } catch (Exception e) {
             JsfUtil.appendTextToLogErrorFile(this.directoryLogger, JsfUtil.nameOfClass(), JsfUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("findBUsername() " + e.getLocalizedMessage());
         }
-        return user;
+        return Optional.empty();
     }
     // </editor-fold>
 

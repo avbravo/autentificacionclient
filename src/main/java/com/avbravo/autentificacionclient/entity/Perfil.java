@@ -14,46 +14,37 @@ import java.util.List;
 
 /**
  *
- * @author avbravo
- * Los campos enteros pueden ser con un autoincrementable o insertando la fechahoradelsistema en milisegundos.
+ * @author avbravo Los campos enteros pueden ser con un autoincrementable o
+ * insertando la fechahoradelsistema en milisegundos.
  */
-public class Profile {
- private Integer idprofile;
- 
+public class Perfil {
+
+    private Integer idperfil;
+
     @Referenced(collection = "Sistema",
             field = "idsistema", javatype = "Integer", lazy = false,
             repository = "com.avbravo.autentificacion.repository.SistemaRepository")
-           Sistema sistema;
+    Sistema sistema;
     @Referenced(collection = "Rol",
             field = "idrol", javatype = "Integer", lazy = false,
             repository = "com.avbravo.autentificacion.repository.RolRepository")
-           List<Rol> rol;
-    
-          @Embedded
-    List<UserInfo> userInfo;
+    List<Rol> rol;
 
-  
-
-    public Profile() {
+    public Perfil() {
     }
 
-    public Profile(Integer idprofile, Sistema sistema, List<Rol> rol, List<UserInfo> userInfo) {
-        this.idprofile = idprofile;
+    public Perfil(Integer idperfil, Sistema sistema, List<Rol> rol) {
+        this.idperfil = idperfil;
         this.sistema = sistema;
         this.rol = rol;
-        this.userInfo = userInfo;
     }
 
-    
-    
-    
-    
-    public Integer getIdprofile() {
-        return idprofile;
+    public Integer getIdperfil() {
+        return idperfil;
     }
 
-    public void setIdprofile(Integer idprofile) {
-        this.idprofile = idprofile;
+    public void setIdperfil(Integer idperfil) {
+        this.idperfil = idperfil;
     }
 
     public Sistema getSistema() {
@@ -72,16 +63,8 @@ public class Profile {
         this.rol = rol;
     }
 
-    public List<UserInfo> getUserInfo() {
-        return userInfo;
-    }
-
-    public void setUserInfo(List<UserInfo> userInfo) {
-        this.userInfo = userInfo;
-    }
-
-  
+    
+    
+    
    
-  
-
 }

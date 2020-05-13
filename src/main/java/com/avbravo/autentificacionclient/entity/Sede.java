@@ -15,32 +15,28 @@ import java.util.List;
 /**
  *
  * @author avbravo
- 
+ *
  */
 public class Sede {
- private Integer idsede;
-  private String sede;
- 
+
+    private Integer idsede;
+    private String sede;
+
     @Referenced(collection = "Institucion",
             field = "idinstitucion", javatype = "Integer", lazy = false,
             repository = "com.avbravo.autentificacion.repository.InstitucionRepository")
-           Institucion institucion;
-    
-     private String activo;
-          @Embedded
-    List<UserInfo> userInfo;
+    Institucion institucion;
 
-  
+    private String activo;
 
     public Sede() {
     }
 
-    public Sede(Integer idsede, String sede, Institucion institucion, String activo, List<UserInfo> userInfo) {
+    public Sede(Integer idsede, String sede, Institucion institucion, String activo) {
         this.idsede = idsede;
         this.sede = sede;
         this.institucion = institucion;
         this.activo = activo;
-        this.userInfo = userInfo;
     }
 
     public Integer getIdsede() {
@@ -75,16 +71,5 @@ public class Sede {
         this.activo = activo;
     }
 
-    public List<UserInfo> getUserInfo() {
-        return userInfo;
-    }
-
-    public void setUserInfo(List<UserInfo> userInfo) {
-        this.userInfo = userInfo;
-    }
-
-   
-     
-  
-
+        
 }
