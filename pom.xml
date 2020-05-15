@@ -37,17 +37,13 @@
         </dependency>
         
         
-<!--        
+
           <dependency>
             <groupId>com.github.avbravo</groupId>
             <artifactId>jmoordb</artifactId>
-            <version>0.57</version>
-        </dependency>-->
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>jmoordb</artifactId>
-            <version>0.57.1</version>
+            <version>0.58</version>
         </dependency>
+        
         <dependency>
             <groupId>com.github.avbravo</groupId>
             <artifactId>jmoordbutils</artifactId>
