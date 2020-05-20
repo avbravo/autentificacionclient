@@ -18,17 +18,17 @@ import java.util.List;
  * insertando la fechahoradelsistema en milisegundos.
  */
 public class Ubicacion {
-
+@Id
     private Integer idubicacion;
 
-    @Referenced(collection = "Sistema",
-            field = "idsistema", javatype = "Integer", lazy = false,
-            repository = "com.avbravo.autentificacion.repository.SistemaRepository")
+    @Referenced(collection = "Sede",
+            field = "idsede", javatype = "Integer", lazy = false,
+            repository = "com.avbravo.autentificacion.repository.SedeRepository")
     Sistema sistema;
     
-    @Referenced(collection = "Perfil",
-            field = "idperfil", javatype = "Integer", lazy = false,
-            repository = "com.avbravo.autentificacion.repository.PerfilRepository")
+    @Referenced(collection = "Departamento",
+            field = "iddepartamento", javatype = "Integer", lazy = false,
+            repository = "com.avbravo.autentificacion.repository.DepartamentoRepository")
     Perfil perfil;
 
     public Ubicacion() {

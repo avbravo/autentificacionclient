@@ -19,20 +19,15 @@ import java.util.Objects;
  *
  */
 public class Usuario {
-
+@Id
     private Integer iduser;
     private String username;
     private String password;
     private String nombre;
     private String email;
 
-    @Referenced(collection = "Sede",
-            field = "idsede", javatype = "Integer", lazy = false,
-            repository = "com.avbravo.autentificacion.repository.SedeRepository")
-    Sede sede;
-
     @Embedded
-    private List<Perfil> perfil;
+    List<Perfil> perfil;
     @Embedded
     List<Ubicacion> ubicacion;
 
@@ -41,23 +36,20 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(Integer iduser, String username, String password, String nombre, String email, Sede sede, List<Perfil> perfil, List<Ubicacion> ubicacion, String activo) {
+    public Usuario(Integer iduser, String username, String password, String nombre, String email, List<Perfil> perfil, List<Ubicacion> ubicacion, String activo) {
         this.iduser = iduser;
         this.username = username;
         this.password = password;
         this.nombre = nombre;
         this.email = email;
-        this.sede = sede;
         this.perfil = perfil;
         this.ubicacion = ubicacion;
         this.activo = activo;
     }
-    
-    
-    
-    
-    
 
+    
+    
+    
     public Integer getIduser() {
         return iduser;
     }
@@ -98,12 +90,14 @@ public class Usuario {
         this.email = email;
     }
 
-    public Sede getSede() {
-        return sede;
+   
+
+    public List<Perfil> getPerfil() {
+        return perfil;
     }
 
-    public void setSede(Sede sede) {
-        this.sede = sede;
+    public void setPerfil(List<Perfil> perfil) {
+        this.perfil = perfil;
     }
 
   
@@ -122,14 +116,6 @@ public class Usuario {
 
     public void setActivo(String activo) {
         this.activo = activo;
-    }
-
-    public List<Perfil> getPerfil() {
-        return perfil;
-    }
-
-    public void setPerfil(List<Perfil> perfil) {
-        this.perfil = perfil;
     }
 
    

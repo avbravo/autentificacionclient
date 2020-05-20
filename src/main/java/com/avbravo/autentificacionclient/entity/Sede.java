@@ -18,7 +18,7 @@ import java.util.List;
  *
  */
 public class Sede {
-
+@Id
     private Integer idsede;
     private String sede;
 

@@ -35,7 +35,6 @@ public class Rol {
     
     
     
-    
     public String getIdrol() {
         return idrol;
     }
@@ -43,6 +42,8 @@ public class Rol {
     public void setIdrol(String idrol) {
         this.idrol = idrol;
     }
+
+    
 
     public String getRol() {
         return rol;
@@ -60,7 +61,7 @@ public class Rol {
         this.activo = activo;
     }
 
-    
+   
    
   
 

@@ -19,6 +19,7 @@ import java.util.List;
  */
 public class Perfil {
 
+    @Id
     private Integer idperfil;
 
     @Referenced(collection = "Sistema",
@@ -63,8 +64,4 @@ public class Perfil {
         this.rol = rol;
     }
 
-    
-    
-    
-   
 }
