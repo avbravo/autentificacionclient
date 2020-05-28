@@ -5,7 +5,7 @@
  */
 package com.avbravo.autentificacionclient.services;
 
-import com.avbravo.autentificacionclient.entity.Usuario;
+import com.avbravo.autentificacionclient.entity.Profile;
 import com.avbravo.autentificacionclient.producer.AuthentificationProducer;
 import com.avbravo.autentificacionclient.producer.MicroservicesProducer;
 import com.avbravo.jmoordbutils.JsfUtil;
@@ -29,7 +29,7 @@ import javax.ws.rs.core.Response;
  * @author avbravo
  */
 @Stateless
-public class UsuarioServices implements Serializable {
+public class ProfileServices implements Serializable {
 
     String directoryLogger = JsfUtil.isLinux() ? JsfUtil.userHome() + JsfUtil.fileSeparator() + "autentiticacionclient" + JsfUtil.fileSeparator() + "logs" + JsfUtil.fileSeparator() + "logger.json" : "C:\\autentiticacionclient\\logs\\logger.json";
     private static final String PASS = "pass";
@@ -42,91 +42,38 @@ public class UsuarioServices implements Serializable {
     @Inject
     AuthentificationProducer authentificationProducer;
 
-// <editor-fold defaultstate="collapsed" desc="List<User> findAll()">
-    public List<Usuario> findAll() {
-        List<Usuario> userList = new ArrayList<>();
+// <editor-fold defaultstate="collapsed" desc="List<Profile> findAll()">
+    public List<Profile> findAll() {
+        List<Profile> profileList = new ArrayList<>();
         try {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
-            WebTarget target = client.target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/user/findall");
+            WebTarget target = client.target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/profile/findall");
 
-            GenericType<List<Usuario>> data = new GenericType<List<Usuario>>() {
+            GenericType<List<Profile>> data = new GenericType<List<Profile>>() {
             };
 
-            userList = target.request(MediaType.APPLICATION_JSON).get(data);
+            profileList = target.request(MediaType.APPLICATION_JSON).get(data);
 
         } catch (Exception e) {
             JsfUtil.appendTextToLogErrorFile(this.directoryLogger, JsfUtil.nameOfClass(), JsfUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("findAll()" + e.getLocalizedMessage());
         }
-        return userList;
+        return profileList;
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Boolean add(User user)">
-    public Boolean add(Usuario user) {
+    // <editor-fold defaultstate="collapsed" desc="Boolean add(Profile profile)">
+    public Boolean add(Profile profile) {
         try {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/user/add");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/profile/add");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.post(Entity.entity(user, MediaType.APPLICATION_JSON));
-
-            System.out.println(response.getStatus());
-            if (response.getStatus() == 400) {
-                return false;
-            }
-            System.out.println(response.readEntity(String.class
-            ));
-            return true;
-        } catch (Exception e) {
-            JsfUtil.appendTextToLogErrorFile(this.directoryLogger, JsfUtil.nameOfClass(), JsfUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("errort" + e.getLocalizedMessage());
-        }
-        return false;
-    }
-// </editor-fold>
-    
-// <editor-fold defaultstate="collapsed" desc="Boolean update(User user)">
-
-    public Boolean update(Usuario user) {
-        try {
-            Client client = ClientBuilder.newClient();
-            client.register(authentificationProducer.httpAuthenticationFeature());
-            WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/user/update");
-
-            Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.post(Entity.entity(user, MediaType.APPLICATION_JSON));
-
-            System.out.println(response.getStatus());
-            if (response.getStatus() == 400) {
-                return false;
-            }
-            System.out.println(response.readEntity(String.class
-            ));
-            return true;
-        } catch (Exception e) {
-            JsfUtil.appendTextToLogErrorFile(this.directoryLogger, JsfUtil.nameOfClass(), JsfUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("errort" + e.getLocalizedMessage());
-        }
-        return false;
-    }
-// </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="Boolean update(User user)">
-
-    public Boolean delete(Usuario user) {
-        try {
-            Client client = ClientBuilder.newClient();
-            client.register(authentificationProducer.httpAuthenticationFeature());
-            WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/user/delete");
-
-            Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.post(Entity.entity(user, MediaType.APPLICATION_JSON));
+            Response response = invocationBuilder.post(Entity.entity(profile, MediaType.APPLICATION_JSON));
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
@@ -143,33 +90,113 @@ public class UsuarioServices implements Serializable {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="User findByUsername(String username) ">
+// <editor-fold defaultstate="collapsed" desc="Boolean update(Profile profile)">
+    public Boolean update(Profile profile) {
+        try {
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            WebTarget webTarget
+                    = client.target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/profile/update");
+
+            Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+            Response response = invocationBuilder.post(Entity.entity(profile, MediaType.APPLICATION_JSON));
+
+            System.out.println(response.getStatus());
+            if (response.getStatus() == 400) {
+                return false;
+            }
+            System.out.println(response.readEntity(String.class
+            ));
+            return true;
+        } catch (Exception e) {
+            JsfUtil.appendTextToLogErrorFile(this.directoryLogger, JsfUtil.nameOfClass(), JsfUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println("errort" + e.getLocalizedMessage());
+        }
+        return false;
+    }
+// </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="Boolean update(Profile profile)">
+
+    public Boolean delete(Profile profile) {
+        try {
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            WebTarget webTarget
+                    = client.target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/profile/delete");
+
+            Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+            Response response = invocationBuilder.post(Entity.entity(profile, MediaType.APPLICATION_JSON));
+
+            System.out.println(response.getStatus());
+            if (response.getStatus() == 400) {
+                return false;
+            }
+            System.out.println(response.readEntity(String.class
+            ));
+            return true;
+        } catch (Exception e) {
+            JsfUtil.appendTextToLogErrorFile(this.directoryLogger, JsfUtil.nameOfClass(), JsfUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println("errort" + e.getLocalizedMessage());
+        }
+        return false;
+    }
+// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Profile findByProfile(Integer idprofile) ">
     /**
      * consulta por codigo_pedido impresa
      *
      * @param codigo_
      * @return
      */
-    public Optional<Usuario> findByUsername(String username) {
-        Usuario user = new Usuario();
+    public Optional<Profile> findByIdprofile(Integer idprofile) {
+        Profile profile = new Profile();
         try {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
-            user = client
-                    .target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/user/search/")
-                    .path("/{username}")
-                    .resolveTemplate("username", username)
+            profile = client
+                    .target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/profile/search/")
+                    .path("/{idprofile}")
+                    .resolveTemplate("idprofile", idprofile)
                     .request(MediaType.APPLICATION_JSON)
-                    .get(Usuario.class
+                    .get(Profile.class
                     );
-            return Optional.of(user);
+            return Optional.of(profile);
             //String result = FAIL;
         } catch (Exception e) {
             JsfUtil.appendTextToLogErrorFile(this.directoryLogger, JsfUtil.nameOfClass(), JsfUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("findBUsername() " + e.getLocalizedMessage());
+            System.out.println("findByIdprofile() " + e.getLocalizedMessage());
         }
         return Optional.empty();
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="List<Profile> complete( String query)">
+    public List<Profile> complete(String query) {
+        List<Profile> suggestions = new ArrayList<>();
+        try {
+
+            if (query == null || query.isEmpty()) {
+                query = "{{complete}}";
+            }
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/profile/autocomplete/")
+                    .path("/{query}")
+                    .resolveTemplate("query", query)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Profile>>() {
+                    });
+
+        } catch (Exception e) {
+            JsfUtil.appendTextToLogErrorFile(this.directoryLogger, JsfUtil.nameOfClass(), JsfUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println("complete() " + e.getLocalizedMessage());
+            JsfUtil.errorDialog("complete()", e.getLocalizedMessage());
+        }
+
+        return suggestions;
     }
     // </editor-fold>
 

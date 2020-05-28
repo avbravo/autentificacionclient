@@ -5,8 +5,8 @@
  */
 package com.avbravo.autentificacionclient.converter;
 
-import com.avbravo.autentificacionclient.entity.Usuario;
-import com.avbravo.autentificacionclient.services.UsuarioServices;
+import com.avbravo.autentificacionclient.entity.Applicative;
+import com.avbravo.autentificacionclient.services.ApplicativeServices;
 import com.avbravo.jmoordb.mongodb.history.services.ErrorInfoServices;
 import com.avbravo.jmoordb.util.JmoordbUtil;
 import java.util.Optional;
@@ -23,38 +23,37 @@ import javax.inject.Named;
  */
 @Named
 @RequestScoped
-public class UsuarioConverter implements Converter {
+public class ApplicativeConverter implements Converter {
 
     @Inject
     ErrorInfoServices errorServices;
     @Inject
-    UsuarioServices userServices;
+    ApplicativeServices applicativeServices;
 
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String s) {
-        Usuario user = new Usuario();
+        Applicative applicative = new Applicative();
         try {
             if (!s.equals("null")) {
-                Usuario b = new Usuario();
-                b.setUsername(s);
-                Optional<Usuario> optional = userServices.findByUsername(s);
+                
+                Optional<Applicative> optional = applicativeServices.findByIdapplicative(Integer.parseInt(s));
                 if (optional.isPresent()) {
-                    user = optional.get();
+                    applicative = optional.get();
                 }
             }
         } catch (Exception e) {
             errorServices.errorMessage(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
         }
-        return user;
+        return applicative;
     }
 
     @Override
     public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object o) {
         String r = "";
         try {
-            if (o instanceof Usuario) {
-                Usuario user = (Usuario) o;
-                r = String.valueOf(user.getUsername());
+            if (o instanceof Applicative) {
+                Applicative applicative = (Applicative) o;
+                r = String.valueOf(applicative.getIdapplicative());
             } else if (o instanceof String) {
                 r = (String) o;
             }

@@ -6,7 +6,7 @@
 package com.avbravo.autentificacionclient.datamodel;
 
 
-import com.avbravo.autentificacionclient.entity.Usuario;
+import com.avbravo.autentificacionclient.entity.User;
 import java.util.List;
 import javax.faces.model.ListDataModel;
 import org.primefaces.model.SelectableDataModel;
@@ -15,20 +15,20 @@ import org.primefaces.model.SelectableDataModel;
  *
  * @author avbravo
  */
-public class UsuarioDataModel extends ListDataModel<Usuario> implements SelectableDataModel<Usuario> {
+public class UserDataModel extends ListDataModel<User> implements SelectableDataModel<User> {
 
-    public UsuarioDataModel() {
+    public UserDataModel() {
     }
 
-    public UsuarioDataModel(List<Usuario> data) {
+    public UserDataModel(List<User> data) {
         super(data);
     }
 
     @Override
-    public Usuario getRowData(String rowKey) {
-        List<Usuario> list = (List<Usuario>) getWrappedData();
+    public User getRowData(String rowKey) {
+        List<User> list = (List<User>) getWrappedData();
 
-        for (Usuario usero : list) {
+        for (User usero : list) {
             if (usero.getUsername().equals(rowKey)) {
                 return usero;
             }
@@ -38,7 +38,7 @@ public class UsuarioDataModel extends ListDataModel<Usuario> implements Selectab
     }
 
     @Override
-    public Object getRowKey(Usuario usero) {
+    public Object getRowKey(User usero) {
         return usero.getUsername();
     }
 
