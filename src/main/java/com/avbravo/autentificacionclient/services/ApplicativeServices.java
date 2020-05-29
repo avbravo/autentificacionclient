@@ -31,7 +31,7 @@ import javax.ws.rs.core.Response;
 @Stateless
 public class ApplicativeServices implements Serializable {
 
-    String directoryLogger = JsfUtil.isLinux() ? JsfUtil.userHome() + JsfUtil.fileSeparator() + "autentiticacionclient" + JsfUtil.fileSeparator() + "logs" + JsfUtil.fileSeparator() + "logger.json" : "C:\\autentiticacionclient\\logs\\logger.json";
+    String directoryLogger = JsfUtil.isLinux() ? JsfUtil.userHome() + JsfUtil.fileSeparator() + "autentificacionclient" + JsfUtil.fileSeparator() + "logs" + JsfUtil.fileSeparator() + "logger.json" : "C:\\autentificacionclient\\logs\\logger.json";
     private static final String PASS = "pass";
     private static final String FAIL = "fail";
     private static final String SUCCESS_RESULT = "<result>success</result>";
@@ -49,7 +49,7 @@ public class ApplicativeServices implements Serializable {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
-            WebTarget target = client.target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/applicative/findall");
+            WebTarget target = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/applicative/findall");
 
             GenericType<List<Applicative>> data = new GenericType<List<Applicative>>() {
             };
@@ -70,7 +70,7 @@ public class ApplicativeServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/applicative/add");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/applicative/add");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.post(Entity.entity(applicative, MediaType.APPLICATION_JSON));
@@ -96,7 +96,7 @@ public class ApplicativeServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/applicative/update");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/applicative/update");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.post(Entity.entity(applicative, MediaType.APPLICATION_JSON));
@@ -115,14 +115,14 @@ public class ApplicativeServices implements Serializable {
         return false;
     }
 // </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="Boolean update(Applicative applicative)">
+// <editor-fold defaultstate="collapsed" desc="Boolean delete(Applicative applicative)">
 
     public Boolean delete(Applicative applicative) {
         try {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/applicative/delete");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/applicative/delete");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.post(Entity.entity(applicative, MediaType.APPLICATION_JSON));
@@ -156,7 +156,7 @@ public class ApplicativeServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             applicative = client
-                    .target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/applicative/search/")
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/applicative/search/")
                     .path("/{idapplicative}")
                     .resolveTemplate("idapplicative", idapplicative)
                     .request(MediaType.APPLICATION_JSON)
@@ -183,7 +183,7 @@ public class ApplicativeServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/applicative/autocomplete/")
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/applicative/autocomplete/")
                     .path("/{query}")
                     .resolveTemplate("query", query)
                     .request(MediaType.APPLICATION_JSON)

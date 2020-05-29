@@ -31,7 +31,7 @@ import javax.ws.rs.core.Response;
 @Stateless
 public class ProfileServices implements Serializable {
 
-    String directoryLogger = JsfUtil.isLinux() ? JsfUtil.userHome() + JsfUtil.fileSeparator() + "autentiticacionclient" + JsfUtil.fileSeparator() + "logs" + JsfUtil.fileSeparator() + "logger.json" : "C:\\autentiticacionclient\\logs\\logger.json";
+    String directoryLogger = JsfUtil.isLinux() ? JsfUtil.userHome() + JsfUtil.fileSeparator() + "autentificacionclient" + JsfUtil.fileSeparator() + "logs" + JsfUtil.fileSeparator() + "logger.json" : "C:\\autentificacionclient\\logs\\logger.json";
     private static final String PASS = "pass";
     private static final String FAIL = "fail";
     private static final String SUCCESS_RESULT = "<result>success</result>";
@@ -49,7 +49,7 @@ public class ProfileServices implements Serializable {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
-            WebTarget target = client.target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/profile/findall");
+            WebTarget target = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/profile/findall");
 
             GenericType<List<Profile>> data = new GenericType<List<Profile>>() {
             };
@@ -70,7 +70,7 @@ public class ProfileServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/profile/add");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/profile/add");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.post(Entity.entity(profile, MediaType.APPLICATION_JSON));
@@ -96,7 +96,7 @@ public class ProfileServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/profile/update");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/profile/update");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.post(Entity.entity(profile, MediaType.APPLICATION_JSON));
@@ -122,7 +122,7 @@ public class ProfileServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/profile/delete");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/profile/delete");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.post(Entity.entity(profile, MediaType.APPLICATION_JSON));
@@ -156,7 +156,7 @@ public class ProfileServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             profile = client
-                    .target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/profile/search/")
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/profile/search/")
                     .path("/{idprofile}")
                     .resolveTemplate("idprofile", idprofile)
                     .request(MediaType.APPLICATION_JSON)
@@ -183,7 +183,7 @@ public class ProfileServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/profile/autocomplete/")
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/profile/autocomplete/")
                     .path("/{query}")
                     .resolveTemplate("query", query)
                     .request(MediaType.APPLICATION_JSON)

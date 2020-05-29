@@ -21,7 +21,7 @@ import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 @Named
 @ApplicationScoped
 public class AuthentificationProducer implements Serializable {
- String directoryLogger = JsfUtil.isLinux()?JsfUtil.userHome() + JsfUtil.fileSeparator() + "fiscalprinter" + JsfUtil.fileSeparator() + "logs" + JsfUtil.fileSeparator() + "logger.json": "C:\\fiscalprinter\\logs\\logger.json";
+ String directoryLogger = JsfUtil.isLinux()?JsfUtil.userHome() + JsfUtil.fileSeparator() + "autentificacionclient" + JsfUtil.fileSeparator() + "logs" + JsfUtil.fileSeparator() + "logger.json": "C:\\auctentifcacionclient\\logs\\logger.json";
     private String user = null;
     private String password = null;
 

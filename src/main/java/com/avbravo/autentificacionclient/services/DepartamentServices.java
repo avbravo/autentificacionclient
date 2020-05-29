@@ -31,7 +31,7 @@ import javax.ws.rs.core.Response;
 @Stateless
 public class DepartamentServices implements Serializable {
 
-    String directoryLogger = JsfUtil.isLinux() ? JsfUtil.userHome() + JsfUtil.fileSeparator() + "autentiticacionclient" + JsfUtil.fileSeparator() + "logs" + JsfUtil.fileSeparator() + "logger.json" : "C:\\autentiticacionclient\\logs\\logger.json";
+    String directoryLogger = JsfUtil.isLinux() ? JsfUtil.userHome() + JsfUtil.fileSeparator() + "autentificacionclient" + JsfUtil.fileSeparator() + "logs" + JsfUtil.fileSeparator() + "logger.json" : "C:\\autentificacionclient\\logs\\logger.json";
     private static final String PASS = "pass";
     private static final String FAIL = "fail";
     private static final String SUCCESS_RESULT = "<result>success</result>";
@@ -49,7 +49,7 @@ public class DepartamentServices implements Serializable {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
-            WebTarget target = client.target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/departament/findall");
+            WebTarget target = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/departament/findall");
 
             GenericType<List<Departament>> data = new GenericType<List<Departament>>() {
             };
@@ -70,7 +70,7 @@ public class DepartamentServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/departament/add");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/departament/add");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.post(Entity.entity(departament, MediaType.APPLICATION_JSON));
@@ -96,7 +96,7 @@ public class DepartamentServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/departament/update");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/departament/update");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.post(Entity.entity(departament, MediaType.APPLICATION_JSON));
@@ -122,7 +122,7 @@ public class DepartamentServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/departament/delete");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/departament/delete");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.post(Entity.entity(departament, MediaType.APPLICATION_JSON));
@@ -156,7 +156,7 @@ public class DepartamentServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             departament = client
-                    .target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/departament/search/")
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/departament/search/")
                     .path("/{iddepartament}")
                     .resolveTemplate("iddepartament", iddepartament)
                     .request(MediaType.APPLICATION_JSON)
@@ -183,7 +183,7 @@ public class DepartamentServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/departament/autocomplete/")
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/departament/autocomplete/")
                     .path("/{query}")
                     .resolveTemplate("query", query)
                     .request(MediaType.APPLICATION_JSON)

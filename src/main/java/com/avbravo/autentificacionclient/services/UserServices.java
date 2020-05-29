@@ -31,7 +31,7 @@ import javax.ws.rs.core.Response;
 @Stateless
 public class UserServices implements Serializable {
 
-    String directoryLogger = JsfUtil.isLinux() ? JsfUtil.userHome() + JsfUtil.fileSeparator() + "autentiticacionclient" + JsfUtil.fileSeparator() + "logs" + JsfUtil.fileSeparator() + "logger.json" : "C:\\autentiticacionclient\\logs\\logger.json";
+    String directoryLogger = JsfUtil.isLinux() ? JsfUtil.userHome() + JsfUtil.fileSeparator() + "autentificacionclient" + JsfUtil.fileSeparator() + "logs" + JsfUtil.fileSeparator() + "logger.json" : "C:\\autentificacionclient\\logs\\logger.json";
     private static final String PASS = "pass";
     private static final String FAIL = "fail";
     private static final String SUCCESS_RESULT = "<result>success</result>";
@@ -49,7 +49,7 @@ public class UserServices implements Serializable {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
-            WebTarget target = client.target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/user/findall");
+            WebTarget target = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/findall");
 
             GenericType<List<User>> data = new GenericType<List<User>>() {
             };
@@ -70,7 +70,7 @@ public class UserServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/user/add");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/add");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.post(Entity.entity(user, MediaType.APPLICATION_JSON));
@@ -96,7 +96,7 @@ public class UserServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/user/update");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/update");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.post(Entity.entity(user, MediaType.APPLICATION_JSON));
@@ -122,7 +122,7 @@ public class UserServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/user/delete");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/delete");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.post(Entity.entity(user, MediaType.APPLICATION_JSON));
@@ -152,16 +152,19 @@ public class UserServices implements Serializable {
     public Optional<User> findByUsername(String username) {
         User user = new User();
         try {
-
+            System.out.println("Test---->voy a  buscar usuario---- "+username);
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             user = client
-                    .target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/user/search/")
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/search/")
                     .path("/{username}")
                     .resolveTemplate("username", username)
                     .request(MediaType.APPLICATION_JSON)
                     .get(User.class
                     );
+            if(user == null || user.getIduser()== null || user.getUsername() == null || user.getUsername().isEmpty()){
+                 return Optional.empty();
+            }
             return Optional.of(user);
             //String result = FAIL;
         } catch (Exception e) {
@@ -183,7 +186,7 @@ public class UserServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentiticacion/resources/complete/tformaspago/")
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/complete/tformaspago/")
                     .path("/{nombre}")
                     .resolveTemplate("nombre", query)
                     .request(MediaType.APPLICATION_JSON)
