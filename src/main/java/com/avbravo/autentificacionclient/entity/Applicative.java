@@ -19,17 +19,51 @@ public class Applicative {
     @Secondary
     private String applicative;
     private String active;
-   
+
+    private String path;
+    private String image;
+    private String descroption;
 
     public Applicative() {
     }
 
-    public Applicative(Integer idapplicative, String applicative, String active) {
+    public Applicative(Integer idapplicative, String applicative, String active, String path, String image, String descroption) {
         this.idapplicative = idapplicative;
         this.applicative = applicative;
         this.active = active;
+        this.path = path;
+        this.image = image;
+        this.descroption = descroption;
     }
 
+    
+    
+    
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getDescroption() {
+        return descroption;
+    }
+
+    public void setDescroption(String descroption) {
+        this.descroption = descroption;
+    }
+
+   
     public Integer getIdapplicative() {
         return idapplicative;
     }
@@ -53,9 +87,5 @@ public class Applicative {
     public void setActive(String active) {
         this.active = active;
     }
-
-  
-   
-  
 
 }
