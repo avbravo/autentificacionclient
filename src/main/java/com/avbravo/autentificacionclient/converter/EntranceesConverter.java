@@ -5,8 +5,8 @@
  */
 package com.avbravo.autentificacionclient.converter;
 
-import com.avbravo.autentificacionclient.entity.Otp;
-import com.avbravo.autentificacionclient.services.OtpServices;
+import com.avbravo.autentificacionclient.entity.Entrancees;
+import com.avbravo.autentificacionclient.services.EntranceesServices;
 import com.avbravo.jmoordb.mongodb.history.services.ErrorInfoServices;
 import com.avbravo.jmoordb.util.JmoordbUtil;
 import java.util.Optional;
@@ -23,37 +23,37 @@ import javax.inject.Named;
  */
 @Named
 @RequestScoped
-public class OtpConverter implements Converter {
+public class EntranceesConverter implements Converter {
 
     @Inject
     ErrorInfoServices errorServices;
     @Inject
-    OtpServices otpServices;
+    EntranceesServices entranceesServices;
 
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String s) {
-        Otp otp = new Otp();
+        Entrancees entrancees = new Entrancees();
         try {
             if (!s.equals("null")) {
-             
-                Optional<Otp> optional = otpServices.findByIdotp(Integer.parseInt(s));
+                
+                Optional<Entrancees> optional = entranceesServices.findByIdentrancees(Integer.parseInt(s));
                 if (optional.isPresent()) {
-                    otp = optional.get();
+                    entrancees = optional.get();
                 }
             }
         } catch (Exception e) {
             errorServices.errorMessage(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
         }
-        return otp;
+        return entrancees;
     }
 
     @Override
     public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object o) {
         String r = "";
         try {
-            if (o instanceof Otp) {
-                Otp otp = (Otp) o;
-                r = String.valueOf(otp.getIdotp());
+            if (o instanceof Entrancees) {
+                Entrancees entrancees = (Entrancees) o;
+                r = String.valueOf(entrancees.getIdentrancees());
             } else if (o instanceof String) {
                 r = (String) o;
             }

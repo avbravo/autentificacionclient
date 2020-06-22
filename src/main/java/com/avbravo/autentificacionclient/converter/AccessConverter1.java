@@ -5,8 +5,8 @@
  */
 package com.avbravo.autentificacionclient.converter;
 
-import com.avbravo.autentificacionclient.entity.Otp;
-import com.avbravo.autentificacionclient.services.OtpServices;
+import com.avbravo.autentificacionclient.entity.Access;
+import com.avbravo.autentificacionclient.services.AccessServices;
 import com.avbravo.jmoordb.mongodb.history.services.ErrorInfoServices;
 import com.avbravo.jmoordb.util.JmoordbUtil;
 import java.util.Optional;
@@ -23,37 +23,37 @@ import javax.inject.Named;
  */
 @Named
 @RequestScoped
-public class OtpConverter implements Converter {
+public class AccessConverter1 implements Converter {
 
     @Inject
     ErrorInfoServices errorServices;
     @Inject
-    OtpServices otpServices;
+    AccessServices accessServices;
 
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String s) {
-        Otp otp = new Otp();
+        Access access = new Access();
         try {
             if (!s.equals("null")) {
-             
-                Optional<Otp> optional = otpServices.findByIdotp(Integer.parseInt(s));
+                
+                Optional<Access> optional = accessServices.findByIdaccess(Integer.parseInt(s));
                 if (optional.isPresent()) {
-                    otp = optional.get();
+                    access = optional.get();
                 }
             }
         } catch (Exception e) {
             errorServices.errorMessage(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
         }
-        return otp;
+        return access;
     }
 
     @Override
     public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object o) {
         String r = "";
         try {
-            if (o instanceof Otp) {
-                Otp otp = (Otp) o;
-                r = String.valueOf(otp.getIdotp());
+            if (o instanceof Access) {
+                Access access = (Access) o;
+                r = String.valueOf(access.getIdaccess());
             } else if (o instanceof String) {
                 r = (String) o;
             }
