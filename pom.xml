@@ -61,7 +61,7 @@
                 <configuration>
                       <!--Java 11 -->
                                         
-                                 <release>10</release> 
+                                 <release>11</release> 
 
                     <!--Java 8 -->
 <!--                    <source>1.8</source>
