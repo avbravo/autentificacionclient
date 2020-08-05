@@ -6,8 +6,8 @@
 package com.avbravo.autentificacionclient.entity;
 
 import com.avbravo.jmoordb.anotations.Id;
-import com.avbravo.jmoordb.anotations.Referenced;
-import java.util.List;
+import com.avbravo.jmoordb.anotations.Ignore;
+
 
 /**
  *
@@ -18,25 +18,26 @@ public class Profile {
 
     @Id
     private Integer idprofile;
-
-    @Referenced(collection = "Applicative",
-            field = "idapplicative", javatype = "Integer", lazy = false,
-            repository = "com.avbravo.autentificacion.repository.ApplicativeRepository")
-    Applicative applicative;
-    @Referenced(collection = "Role",
-            field = "idrole", javatype = "Integer", lazy = false,
-            repository = "com.avbravo.autentificacion.repository.RoleRepository")
-    Role role;
+    private Integer idapplicative;
+    private Integer idrole;
+    private Integer iddepartament;
 
     private String active;
-      
+    @Ignore
+    Applicative applicative;
+    @Ignore
+    Role role;
+    Departament departament;
+            
+
     public Profile() {
     }
 
-    public Profile(Integer idprofile, Applicative applicative, Role role, String active) {
+    public Profile(Integer idprofile, Integer idapplicative, Integer idrole, Integer iddepartament, String active) {
         this.idprofile = idprofile;
-        this.applicative = applicative;
-        this.role = role;
+        this.idapplicative = idapplicative;
+        this.idrole = idrole;
+        this.iddepartament = iddepartament;
         this.active = active;
     }
 
@@ -46,6 +47,38 @@ public class Profile {
 
     public void setIdprofile(Integer idprofile) {
         this.idprofile = idprofile;
+    }
+
+    public Integer getIdapplicative() {
+        return idapplicative;
+    }
+
+    public void setIdapplicative(Integer idapplicative) {
+        this.idapplicative = idapplicative;
+    }
+
+    public Integer getIdrole() {
+        return idrole;
+    }
+
+    public void setIdrole(Integer idrole) {
+        this.idrole = idrole;
+    }
+
+    public Integer getIddepartament() {
+        return iddepartament;
+    }
+
+    public void setIddepartament(Integer iddepartament) {
+        this.iddepartament = iddepartament;
+    }
+
+    public String getActive() {
+        return active;
+    }
+
+    public void setActive(String active) {
+        this.active = active;
     }
 
     public Applicative getApplicative() {
@@ -64,18 +97,15 @@ public class Profile {
         this.role = role;
     }
 
-    public String getActive() {
-        return active;
+    public Departament getDepartament() {
+        return departament;
     }
 
-    public void setActive(String active) {
-        this.active = active;
+    public void setDepartament(Departament departament) {
+        this.departament = departament;
     }
 
-
-
-   
-
-  
-
+    
+    
+    
 }

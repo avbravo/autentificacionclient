@@ -19,39 +19,38 @@ import java.util.Objects;
  *
  */
 public class User {
-@Id
+
+    @Id
     private Integer iduser;
     private String username;
     private String password;
     private String name;
     private String email;
     private String cellphone;
-@Referenced(collection = "Departament",
-            field = "iddepartament", javatype = "Integer", lazy = false,
-            repository = "com.avbravo.autentificacion.repository.DepartamentRepository")
-    private List<Departament> departament;
 
-@Referenced(collection = "Profile",
-            field = "idprofile", javatype = "Integer", lazy = false,
-            repository = "com.avbravo.autentificacion.repository.ProfileRepository")
+    @Embedded
     private List<Profile> profile;
-  
+
     private String active;
- 
+
     public User() {
     }
 
-    public User(Integer iduser, String username, String password, String name, String email, String cellphone, List<Departament> departament, List<Profile> profile, String active) {
+    public User(Integer iduser, String username, String password, String name, String email, String cellphone, List<Profile> profile, String active) {
         this.iduser = iduser;
         this.username = username;
         this.password = password;
         this.name = name;
         this.email = email;
         this.cellphone = cellphone;
-        this.departament = departament;
         this.profile = profile;
         this.active = active;
     }
+    
+    
+    
+    
+    
 
     public Integer getIduser() {
         return iduser;
@@ -101,14 +100,6 @@ public class User {
         this.cellphone = cellphone;
     }
 
-    public List<Departament> getDepartament() {
-        return departament;
-    }
-
-    public void setDepartament(List<Departament> departament) {
-        this.departament = departament;
-    }
-
     public List<Profile> getProfile() {
         return profile;
     }
@@ -125,7 +116,5 @@ public class User {
         this.active = active;
     }
 
-  
-  
-  
+    
 }
