@@ -27,6 +27,7 @@ public class Profile {
     Applicative applicative;
     @Ignore
     Role role;
+        @Ignore
     Departament departament;
             
 
