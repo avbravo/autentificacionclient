@@ -8,7 +8,6 @@ package com.avbravo.autentificacionclient.entity;
 import com.avbravo.jmoordb.anotations.Id;
 import com.avbravo.jmoordb.anotations.Ignore;
 
-
 /**
  *
  * @author avbravo Los campos enteros pueden ser con un autoincrementable o
@@ -27,9 +26,8 @@ public class Profile {
     Applicative applicative;
     @Ignore
     Role role;
-        @Ignore
+    @Ignore
     Departament departament;
-            
 
     public Profile() {
     }
@@ -106,7 +104,4 @@ public class Profile {
         this.departament = departament;
     }
 
-    
-    
-    
 }
