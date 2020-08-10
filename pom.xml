@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.avbravo</groupId>
     <artifactId>autentificacionclient</artifactId>
-    <version>0.4</version>
+    <version>0.5</version>
     <packaging>ejb</packaging>
     <name>autentificacionclient</name>
     
@@ -17,11 +17,8 @@
     </properties>
     
     <dependencies>
-        <dependency>
-            <groupId>com.github.avbravo</groupId>
-            <artifactId>jmoordbutils</artifactId>
-            <version>0.88</version>
-        </dependency>
+
+      
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
@@ -41,7 +38,9 @@
             <version>2.25</version>
         </dependency>
         
-        
+        <!--
+jmoordb
+-->
 
           <dependency>
             <groupId>com.github.avbravo</groupId>
@@ -49,12 +48,11 @@
             <version>0.59</version>
         </dependency>
         
-<!--        <dependency>
+  <dependency>
             <groupId>com.github.avbravo</groupId>
             <artifactId>jmoordbutils</artifactId>
-            <version>0.85</version>
-        </dependency>-->
-        
+            <version>0.89</version>
+        </dependency>
         
     </dependencies>
     
