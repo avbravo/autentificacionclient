@@ -51,7 +51,7 @@ jmoordb
   <dependency>
             <groupId>com.github.avbravo</groupId>
             <artifactId>jmoordbutils</artifactId>
-            <version>0.89</version>
+            <version>0.90</version>
         </dependency>
         
     </dependencies>
