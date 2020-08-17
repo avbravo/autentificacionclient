@@ -5,7 +5,7 @@
  */
 package com.avbravo.autentificacionclient.producer;
 
-import com.avbravo.jmoordbutils.JsfUtil;
+import com.avbravo.jmoordb.util.JmoordbUtil;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Properties;
@@ -20,7 +20,7 @@ import javax.inject.Named;
 @ApplicationScoped
 public class MicroservicesProducer implements Serializable {
 
-    String directoryLogger = JsfUtil.isLinux() ? JsfUtil.userHome() + JsfUtil.fileSeparator() + "autentificacionclient" + JsfUtil.fileSeparator() + "logs" + JsfUtil.fileSeparator() + "logger.json" : "C:\\autentificacionclient\\logs\\logger.json";
+    String directoryLogger = JmoordbUtil.isLinux() ? JmoordbUtil.userHome() + JmoordbUtil.fileSeparator() + "autentificacionclient" + JmoordbUtil.fileSeparator() + "logs" + JmoordbUtil.fileSeparator() + "logger.json" : "C:\\autentificacionclient\\logs\\logger.json";
     private String url = null;
 
     public String microservicesHost() {
@@ -40,13 +40,13 @@ public class MicroservicesProducer implements Serializable {
 
                     //  System.out.println("el url del microservices es "+url);
                 } else {
-                    JsfUtil.errorMessage("No se puede cargar el archivo microservices.properties");
+                    JmoordbUtil.errorMessage("No se puede cargar el archivo microservices.properties");
                 }
 
             }
         } catch (Exception e) {
-            JsfUtil.appendTextToLogErrorFile(this.directoryLogger, JsfUtil.nameOfClass(), JsfUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            JsfUtil.errorMessage("microservicesHost() " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            JmoordbUtil.errorMessage("microservicesHost() " + e.getLocalizedMessage());
         }
         return url;
     }

@@ -5,8 +5,8 @@
  */
 package com.avbravo.autentificacionclient.producer;
 
-
-import com.avbravo.jmoordbutils.JsfUtil;
+import com.avbravo.jmoordb.util.JmoordbUtil;
+import static com.avbravo.jmoordb.util.JmoordbUtil.isLinux;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Properties;
@@ -21,7 +21,8 @@ import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 @Named
 @ApplicationScoped
 public class AuthentificationProducer implements Serializable {
- String directoryLogger = JsfUtil.isLinux()?JsfUtil.userHome() + JsfUtil.fileSeparator() + "autentificacionclient" + JsfUtil.fileSeparator() + "logs" + JsfUtil.fileSeparator() + "logger.json": "C:\\auctentifcacionclient\\logs\\logger.json";
+
+    String directoryLogger = isLinux() ? JmoordbUtil.userHome() + JmoordbUtil.fileSeparator() + "autentificacionclient" + JmoordbUtil.fileSeparator() + "logs" + JmoordbUtil.fileSeparator() + "logger.json" : "C:\\auctentifcacionclient\\logs\\logger.json";
     private String user = null;
     private String password = null;
 
@@ -37,8 +38,10 @@ public class AuthentificationProducer implements Serializable {
             readAuthentificationProperties();
             httpAuthenticationFeature = HttpAuthenticationFeature.basic(user, password);
 
-        } catch (Exception e) {   JsfUtil.appendTextToLogErrorFile(this.directoryLogger, JsfUtil.nameOfClass(), JsfUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            JsfUtil.errorMessage("HttpAuthenticationFeature () " + e.getLocalizedMessage());
+        } catch (Exception e) {
+           JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+ 
+   JmoordbUtil.errorMessage("HttpAuthenticationFeature () " + e.getLocalizedMessage());
         }
 
         return httpAuthenticationFeature;
@@ -65,28 +68,27 @@ public class AuthentificationProducer implements Serializable {
 
                     prop.load(inputStream);
                     if (prop.getProperty("user") == null) {
-                        JsfUtil.warningDialog("Advertencia", "Consulte al desarrollador no se encuentra el usuario de autentificacion");
+                        JmoordbUtil.warningDialog("Advertencia", "Consulte al desarrollador no se encuentra el usuario de autentificacion");
                     } else {
                         user = prop.getProperty("user");
-                          user = JsfUtil.desencriptar(user);
+                        user = JmoordbUtil.desencriptar(user);
                     }
                     if (prop.getProperty("password") == null) {
-                        JsfUtil.warningDialog("Advertencia", "Consulte al desarrollador no se encuentra el password del usuario de autentificacion");
+                        JmoordbUtil.warningDialog("Advertencia", "Consulte al desarrollador no se encuentra el password del usuario de autentificacion");
                     } else {
                         password = prop.getProperty("password");
-                           password = JsfUtil.desencriptar(password);
+                        password = JmoordbUtil.desencriptar(password);
                     }
 
-                  
-                 
                     return true;
                 } else {
-                    JsfUtil.errorMessage("No se puede cargar el archivo authentification.properties");
+                  JmoordbUtil.errorMessage("No se puede cargar el archivo authentification.properties");
                 }
 
             }
-        } catch (Exception e) {   JsfUtil.appendTextToLogErrorFile(this.directoryLogger, JsfUtil.nameOfClass(), JsfUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            JsfUtil.errorMessage("readAuthentificationProperties() " + e.getLocalizedMessage());
+        } catch (Exception e) {
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+        JmoordbUtil.errorMessage("readAuthentificationProperties() " + e.getLocalizedMessage());
         }
         return false;
     }
