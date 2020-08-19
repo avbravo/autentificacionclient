@@ -35,14 +35,15 @@ public class ProfileConverter implements Converter {
         Profile profile = new Profile();
         try {
             if (!s.equals("null")) {
-              
-                Optional<Profile> optional = profileServices.findByIdprofile(Integer.parseInt(s));
-                if (optional.isPresent()) {
-                    profile = optional.get();
-                }
+              profile.setIdprofile(Integer.parseInt(s));
+//                Optional<Profile> optional = profileServices.findByIdprofile(Integer.parseInt(s));
+//                if (optional.isPresent()) {
+//                    profile = optional.get();
+//                }
             }
         } catch (Exception e) {
-            errorServices.errorMessage(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+//            errorServices.errorMessage(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+          JmoordbUtil.errorDialog( JmoordbUtil.nameOfMethod(),e.getLocalizedMessage());
         }
         return profile;
     }
@@ -58,7 +59,8 @@ public class ProfileConverter implements Converter {
                 r = (String) o;
             }
         } catch (Exception e) {
-            errorServices.errorMessage(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+             JmoordbUtil.errorDialog( JmoordbUtil.nameOfMethod(),e.getLocalizedMessage());
+//            errorServices.errorMessage(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
         }
         return r;
     }
