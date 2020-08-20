@@ -7,14 +7,13 @@ package com.avbravo.autentificacionclient.converter;
 
 import com.avbravo.autentificacionclient.entity.Departament;
 import com.avbravo.autentificacionclient.services.DepartamentServices;
-import com.avbravo.jmoordb.mongodb.history.services.ErrorInfoServices;
 import com.avbravo.jmoordb.util.JmoordbUtil;
 import java.util.Optional;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
 import javax.inject.Named;
 
 /**
@@ -22,45 +21,49 @@ import javax.inject.Named;
  * @author avbravo
  */
 @Named
-@RequestScoped
-public class DepartamentConverter implements Converter {
-
-    @Inject
-    ErrorInfoServices errorServices;
+@FacesConverter( forClass=Departament.class, managed = true)
+public class DepartamentConverter implements Converter<Departament> { 
     @Inject
     DepartamentServices departamentServices;
 
     @Override
-    public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String s) {
-        Departament departament = new Departament();
+    public Departament getAsObject(FacesContext fc, UIComponent uic, String string) {
+          Departament departament = new Departament();
         try {
-            if (!s.equals("null")) {
-             
-                Optional<Departament> optional = departamentServices.findByIddepartament(Integer.parseInt(s));
+            if (string  == null || string.isEmpty()) {
+            return null;
+        }
+             Optional<Departament> optional = departamentServices.findByIddepartament(Integer.parseInt(string));
                 if (optional.isPresent()) {
                     departament = optional.get();
                 }
-            }
         } catch (Exception e) {
-            errorServices.errorMessage(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+               JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
         }
         return departament;
     }
 
     @Override
-    public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object o) {
-        String r = "";
-        try {
-            if (o instanceof Departament) {
-                Departament departament = (Departament) o;
-                r = String.valueOf(departament.getIddepartament());
-            } else if (o instanceof String) {
-                r = (String) o;
+    public String getAsString(FacesContext fc, UIComponent uic, Departament t) {
+     
+       try{
+            if (t == null) {
+
+                return "";
             }
+
+            if (t.getIddepartament()!= null) {
+
+                return t.getIddepartament().toString();
+            } else {
+
+                //JmoordbUtil.warningDialog("No es valido el id ","");
+            }
+
         } catch (Exception e) {
-            errorServices.errorMessage(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
         }
-        return r;
+        return "";
     }
 
 }

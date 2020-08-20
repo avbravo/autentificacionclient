@@ -7,14 +7,13 @@ package com.avbravo.autentificacionclient.converter;
 
 import com.avbravo.autentificacionclient.entity.Institution;
 import com.avbravo.autentificacionclient.services.InstitutionServices;
-import com.avbravo.jmoordb.mongodb.history.services.ErrorInfoServices;
 import com.avbravo.jmoordb.util.JmoordbUtil;
 import java.util.Optional;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
 import javax.inject.Named;
 
 /**
@@ -22,45 +21,51 @@ import javax.inject.Named;
  * @author avbravo
  */
 @Named
-@RequestScoped
-public class InstitutionConverter implements Converter {
+@FacesConverter( forClass=Institution.class, managed = true)
+public class InstitutionConverter implements Converter<Institution> {
 
     @Inject
-    ErrorInfoServices errorServices;
-    @Inject
-    InstitutionServices IistitutionServices;
+    InstitutionServices institutionServices;
 
     @Override
-    public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String s) {
-        Institution Iistitution = new Institution();
+    public Institution getAsObject(FacesContext fc, UIComponent uic, String string) {
+          Institution institution = new Institution();
         try {
-            if (!s.equals("null")) {
-              
-                Optional<Institution> optional = IistitutionServices.findByIdinstitution(Integer.parseInt(s));
+            if (string  == null || string.isEmpty()) {
+            return null;
+        }
+             Optional<Institution> optional = institutionServices.findByIdinstitution(Integer.parseInt(string));
                 if (optional.isPresent()) {
-                    Iistitution = optional.get();
+                    institution = optional.get();
                 }
-            }
         } catch (Exception e) {
-            errorServices.errorMessage(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+               JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
         }
-        return Iistitution;
+        return institution;
     }
 
     @Override
-    public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object o) {
-        String r = "";
-        try {
-            if (o instanceof Institution) {
-                Institution Iistitution = (Institution) o;
-                r = String.valueOf(Iistitution.getIdinstitution());
-            } else if (o instanceof String) {
-                r = (String) o;
+    public String getAsString(FacesContext fc, UIComponent uic, Institution t) {
+     
+       try{
+            if (t == null) {
+
+                return "";
             }
+
+            if (t.getIdinstitution()!= null) {
+
+                return t.getIdinstitution().toString();
+            } else {
+
+                //JmoordbUtil.warningDialog("No es valido el id ","");
+            }
+
         } catch (Exception e) {
-            errorServices.errorMessage(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
         }
-        return r;
+        return "";
     }
+
 
 }

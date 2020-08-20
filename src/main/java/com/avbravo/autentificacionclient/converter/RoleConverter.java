@@ -6,6 +6,8 @@
 package com.avbravo.autentificacionclient.converter;
 
 import com.avbravo.autentificacionclient.entity.Role;
+import com.avbravo.autentificacionclient.entity.Role;
+import com.avbravo.autentificacionclient.services.RoleServices;
 import com.avbravo.autentificacionclient.services.RoleServices;
 import com.avbravo.jmoordb.mongodb.history.services.ErrorInfoServices;
 import com.avbravo.jmoordb.util.JmoordbUtil;
@@ -15,6 +17,7 @@ import javax.inject.Inject;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
 import javax.inject.Named;
 
 /**
@@ -22,45 +25,50 @@ import javax.inject.Named;
  * @author avbravo
  */
 @Named
-@RequestScoped
-public class RoleConverter implements Converter {
+@FacesConverter( forClass=Role.class, managed = true)
+public class RoleConverter implements Converter<Role> {
 
-    @Inject
-    ErrorInfoServices errorServices;
     @Inject
     RoleServices roleServices;
 
     @Override
-    public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String s) {
-        Role role = new Role();
+    public Role getAsObject(FacesContext fc, UIComponent uic, String string) {
+          Role role = new Role();
         try {
-            if (!s.equals("null")) {
-                
-                Optional<Role> optional = roleServices.findByIdrole(Integer.parseInt(s));
+            if (string  == null || string.isEmpty()) {
+            return null;
+        }
+             Optional<Role> optional = roleServices.findByIdrole(Integer.parseInt(string));
                 if (optional.isPresent()) {
                     role = optional.get();
                 }
-            }
         } catch (Exception e) {
-            errorServices.errorMessage(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+               JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
         }
         return role;
     }
 
     @Override
-    public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object o) {
-        String r = "";
-        try {
-            if (o instanceof Role) {
-                Role role = (Role) o;
-                r = String.valueOf(role.getIdrole());
-            } else if (o instanceof String) {
-                r = (String) o;
+    public String getAsString(FacesContext fc, UIComponent uic, Role t) {
+     
+       try{
+            if (t == null) {
+
+                return "";
             }
+
+            if (t.getIdrole()!= null) {
+
+                return t.getIdrole().toString();
+            } else {
+
+                //JmoordbUtil.warningDialog("No es valido el id ","");
+            }
+
         } catch (Exception e) {
-            errorServices.errorMessage(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
         }
-        return r;
+        return "";
     }
 
 }

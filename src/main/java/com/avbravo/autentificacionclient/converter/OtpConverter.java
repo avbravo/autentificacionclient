@@ -6,6 +6,8 @@
 package com.avbravo.autentificacionclient.converter;
 
 import com.avbravo.autentificacionclient.entity.Otp;
+import com.avbravo.autentificacionclient.entity.Otp;
+import com.avbravo.autentificacionclient.services.OtpServices;
 import com.avbravo.autentificacionclient.services.OtpServices;
 import com.avbravo.jmoordb.mongodb.history.services.ErrorInfoServices;
 import com.avbravo.jmoordb.util.JmoordbUtil;
@@ -15,6 +17,7 @@ import javax.inject.Inject;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
 import javax.inject.Named;
 
 /**
@@ -22,45 +25,50 @@ import javax.inject.Named;
  * @author avbravo
  */
 @Named
-@RequestScoped
-public class OtpConverter implements Converter {
+@FacesConverter( forClass=Otp.class, managed = true)
+public class OtpConverter implements Converter<Otp> {
 
-    @Inject
-    ErrorInfoServices errorServices;
-    @Inject
+   @Inject
     OtpServices otpServices;
 
     @Override
-    public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String s) {
-        Otp otp = new Otp();
+    public Otp getAsObject(FacesContext fc, UIComponent uic, String string) {
+          Otp otp = new Otp();
         try {
-            if (!s.equals("null")) {
-             
-                Optional<Otp> optional = otpServices.findByIdotp(Integer.parseInt(s));
+            if (string  == null || string.isEmpty()) {
+            return null;
+        }
+             Optional<Otp> optional = otpServices.findByIdotp(Integer.parseInt(string));
                 if (optional.isPresent()) {
                     otp = optional.get();
                 }
-            }
         } catch (Exception e) {
-            errorServices.errorMessage(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+               JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
         }
         return otp;
     }
 
     @Override
-    public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object o) {
-        String r = "";
-        try {
-            if (o instanceof Otp) {
-                Otp otp = (Otp) o;
-                r = String.valueOf(otp.getIdotp());
-            } else if (o instanceof String) {
-                r = (String) o;
+    public String getAsString(FacesContext fc, UIComponent uic, Otp t) {
+     
+       try{
+            if (t == null) {
+
+                return "";
             }
+
+            if (t.getIdotp()!= null) {
+
+                return t.getIdotp().toString();
+            } else {
+
+                //JmoordbUtil.warningDialog("No es valido el id ","");
+            }
+
         } catch (Exception e) {
-            errorServices.errorMessage(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
         }
-        return r;
+        return "";
     }
 
 }

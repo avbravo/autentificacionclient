@@ -5,8 +5,8 @@
  */
 package com.avbravo.autentificacionclient.converter;
 
-import com.avbravo.autentificacionclient.entity.Headquarters;
-import com.avbravo.autentificacionclient.services.HeadquartersServices;
+import com.avbravo.autentificacionclient.entity.Access;
+import com.avbravo.autentificacionclient.services.AccessServices;
 import com.avbravo.jmoordb.util.JmoordbUtil;
 import java.util.Optional;
 import javax.inject.Inject;
@@ -21,31 +21,30 @@ import javax.inject.Named;
  * @author avbravo
  */
 @Named
-@FacesConverter( forClass=Headquarters.class, managed = true)
-public class HeadquartersConverter implements Converter<Headquarters> {
-
+@FacesConverter( forClass=Access.class, managed = true)
+public class AccessConverter implements Converter<Access> {
     @Inject
-    HeadquartersServices headquartersServices;
+    AccessServices accessServices;
 
     @Override
-    public Headquarters getAsObject(FacesContext fc, UIComponent uic, String string) {
-          Headquarters headquarters = new Headquarters();
+    public Access getAsObject(FacesContext fc, UIComponent uic, String string) {
+          Access access = new Access();
         try {
             if (string  == null || string.isEmpty()) {
             return null;
         }
-             Optional<Headquarters> optional = headquartersServices.findByIdheadquarters(Integer.parseInt(string));
+             Optional<Access> optional = accessServices.findByIdaccess(Integer.parseInt(string));
                 if (optional.isPresent()) {
-                    headquarters = optional.get();
+                    access = optional.get();
                 }
         } catch (Exception e) {
                JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
         }
-        return headquarters;
+        return access;
     }
 
     @Override
-    public String getAsString(FacesContext fc, UIComponent uic, Headquarters t) {
+    public String getAsString(FacesContext fc, UIComponent uic, Access t) {
      
        try{
             if (t == null) {
@@ -53,9 +52,9 @@ public class HeadquartersConverter implements Converter<Headquarters> {
                 return "";
             }
 
-            if (t.getIdheadquarters()!= null) {
+            if (t.getIdaccess()!= null) {
 
-                return t.getIdheadquarters().toString();
+                return t.getIdaccess().toString();
             } else {
 
                 //JmoordbUtil.warningDialog("No es valido el id ","");

@@ -6,6 +6,7 @@
 package com.avbravo.autentificacionclient.converter;
 
 import com.avbravo.autentificacionclient.entity.Applicative;
+import com.avbravo.autentificacionclient.entity.Applicative;
 import com.avbravo.autentificacionclient.services.ApplicativeServices;
 import com.avbravo.jmoordb.mongodb.history.services.ErrorInfoServices;
 import com.avbravo.jmoordb.util.JmoordbUtil;
@@ -15,6 +16,7 @@ import javax.inject.Inject;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
 import javax.inject.Named;
 
 /**
@@ -22,45 +24,55 @@ import javax.inject.Named;
  * @author avbravo
  */
 @Named
-@RequestScoped
-public class ApplicativeConverter implements Converter {
+@FacesConverter( forClass=Applicative.class, managed = true)
+public class ApplicativeConverter implements Converter<Applicative>{
 
-    @Inject
-    ErrorInfoServices errorServices;
     @Inject
     ApplicativeServices applicativeServices;
 
+
+
     @Override
-    public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String s) {
-        Applicative applicative = new Applicative();
+    public Applicative getAsObject(FacesContext fc, UIComponent uic, String string) {
+          Applicative applicative = new Applicative();
         try {
-            if (!s.equals("null")) {
-                
-                Optional<Applicative> optional = applicativeServices.findByIdapplicative(Integer.parseInt(s));
+            if (string  == null || string.isEmpty()) {
+            return null;
+        }
+             Optional<Applicative> optional = applicativeServices.findByIdapplicative(Integer.parseInt(string));
                 if (optional.isPresent()) {
                     applicative = optional.get();
                 }
-            }
         } catch (Exception e) {
-            errorServices.errorMessage(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+               JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
         }
         return applicative;
     }
 
     @Override
-    public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object o) {
-        String r = "";
-        try {
-            if (o instanceof Applicative) {
-                Applicative applicative = (Applicative) o;
-                r = String.valueOf(applicative.getIdapplicative());
-            } else if (o instanceof String) {
-                r = (String) o;
+    public String getAsString(FacesContext fc, UIComponent uic, Applicative t) {
+     
+       try{
+            if (t == null) {
+
+                return "";
             }
+
+            if (t.getIdapplicative()!= null) {
+
+                return t.getIdapplicative().toString();
+            } else {
+
+                //JmoordbUtil.warningDialog("No es valido el id ","");
+            }
+
         } catch (Exception e) {
-            errorServices.errorMessage(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
         }
-        return r;
+        return "";
     }
+
+   
+
 
 }
