@@ -28,6 +28,7 @@ public class Boletas {
             field = "username", javatype = "String", lazy = false,
             repository = "com.avbravo.autentificacion.repository.UserRepository")
     User user;   
+         private String archivo;
     private String tipoboleta;   
     private Date fechainicial;
     private Date fechafinal;
@@ -51,10 +52,15 @@ public class Boletas {
     public Boletas() {
     }
 
-    public Boletas(Integer idboleta, Date fecha, User user, String tipoboleta, Date fechainicial, Date fechafinal, String observacion, String tipojustificacon, String estadounidad, String estadoautoridad, List<Autorizacionunidad> autorizacionunidads, List<Autorizacionautoridad> autorizacionautoridad, String numeroincapadicadsalud, String tipojustificacionsalud, String tareasextraordinario, Date fechasolicitudextraordinario, Date fecharegistoextraordinario, Date fechacapturarextraordinario, String active) {
+    public Boletas(Integer idboleta) {
+        this.idboleta = idboleta;
+    }
+
+    public Boletas(Integer idboleta, Date fecha, User user, String archivo, String tipoboleta, Date fechainicial, Date fechafinal, String observacion, String tipojustificacon, String estadounidad, String estadoautoridad, List<Autorizacionunidad> autorizacionunidads, List<Autorizacionautoridad> autorizacionautoridad, String numeroincapadicadsalud, String tipojustificacionsalud, String tareasextraordinario, Date fechasolicitudextraordinario, Date fecharegistoextraordinario, Date fechacapturarextraordinario, String active) {
         this.idboleta = idboleta;
         this.fecha = fecha;
         this.user = user;
+        this.archivo = archivo;
         this.tipoboleta = tipoboleta;
         this.fechainicial = fechainicial;
         this.fechafinal = fechafinal;
@@ -72,6 +78,21 @@ public class Boletas {
         this.fechacapturarextraordinario = fechacapturarextraordinario;
         this.active = active;
     }
+
+    
+    
+    
+    
+    public String getArchivo() {
+        return archivo;
+    }
+
+    public void setArchivo(String archivo) {
+        this.archivo = archivo;
+    }
+
+   
+    
 
     
     
