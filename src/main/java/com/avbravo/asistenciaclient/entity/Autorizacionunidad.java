@@ -14,9 +14,9 @@ import java.util.Date;
  *
  * @author avbravo
  */
-public class AutorizacionUnidad {
+public class Autorizacionunidad {
     @Id
-    private Integer idaautorizacionunidad;
+    private Integer idautorizacionunidad;
     private String username;
     private Date fecha;
     private String comentario;
@@ -24,11 +24,11 @@ public class AutorizacionUnidad {
     @Ignore
     private User user;
 
-    public AutorizacionUnidad() {
+    public Autorizacionunidad() {
     }
 
-    public AutorizacionUnidad(Integer idaautorizacionunidad, String username, Date fecha, String comentario, String estado, User user) {
-        this.idaautorizacionunidad = idaautorizacionunidad;
+    public Autorizacionunidad(Integer idautorizacionunidad, String username, Date fecha, String comentario, String estado, User user) {
+        this.idautorizacionunidad = idautorizacionunidad;
         this.username = username;
         this.fecha = fecha;
         this.comentario = comentario;
@@ -36,14 +36,16 @@ public class AutorizacionUnidad {
         this.user = user;
     }
 
- 
-
-    public Integer getIdaautorizacionunidad() {
-        return idaautorizacionunidad;
+    
+    
+    
+    
+    public Integer getIdautorizacionunidad() {
+        return idautorizacionunidad;
     }
 
-    public void setIdaautorizacionunidad(Integer idaautorizacionunidad) {
-        this.idaautorizacionunidad = idaautorizacionunidad;
+    public void setIdautorizacionunidad(Integer idautorizacionunidad) {
+        this.idautorizacionunidad = idautorizacionunidad;
     }
 
     public String getUsername() {
@@ -85,5 +87,7 @@ public class AutorizacionUnidad {
     public void setUser(User user) {
         this.user = user;
     }
+
+   
     
 }

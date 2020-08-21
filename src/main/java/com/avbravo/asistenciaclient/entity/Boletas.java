@@ -36,9 +36,9 @@ public class Boletas {
     private String estadounidad;
     private String estadoautoridad;   
     @Embedded
-    private List<AutorizacionUnidad> autorizacionUnidads;
+    private List<Autorizacionunidad> autorizacionunidads;
     @Embedded
-    private List<AutorizacionAutoridad> autorizacionAutoridad;
+    private List<Autorizacionautoridad> autorizacionautoridad;
     private String numeroincapadicadsalud;
     private String tipojustificacionsalud;
     
@@ -51,9 +51,28 @@ public class Boletas {
     public Boletas() {
     }
 
-       
-    
-    
+    public Boletas(Integer idboleta, Date fecha, User user, String tipoboleta, Date fechainicial, Date fechafinal, String observacion, String tipojustificacon, String estadounidad, String estadoautoridad, List<Autorizacionunidad> autorizacionunidads, List<Autorizacionautoridad> autorizacionautoridad, String numeroincapadicadsalud, String tipojustificacionsalud, String tareasextraordinario, Date fechasolicitudextraordinario, Date fecharegistoextraordinario, Date fechacapturarextraordinario, String active) {
+        this.idboleta = idboleta;
+        this.fecha = fecha;
+        this.user = user;
+        this.tipoboleta = tipoboleta;
+        this.fechainicial = fechainicial;
+        this.fechafinal = fechafinal;
+        this.observacion = observacion;
+        this.tipojustificacon = tipojustificacon;
+        this.estadounidad = estadounidad;
+        this.estadoautoridad = estadoautoridad;
+        this.autorizacionunidads = autorizacionunidads;
+        this.autorizacionautoridad = autorizacionautoridad;
+        this.numeroincapadicadsalud = numeroincapadicadsalud;
+        this.tipojustificacionsalud = tipojustificacionsalud;
+        this.tareasextraordinario = tareasextraordinario;
+        this.fechasolicitudextraordinario = fechasolicitudextraordinario;
+        this.fecharegistoextraordinario = fecharegistoextraordinario;
+        this.fechacapturarextraordinario = fechacapturarextraordinario;
+        this.active = active;
+    }
+
     
     
     public Integer getIdboleta() {
@@ -136,20 +155,20 @@ public class Boletas {
         this.estadoautoridad = estadoautoridad;
     }
 
-    public List<AutorizacionUnidad> getAutorizacionUnidads() {
-        return autorizacionUnidads;
+    public List<Autorizacionunidad> getAutorizacionunidads() {
+        return autorizacionunidads;
     }
 
-    public void setAutorizacionUnidads(List<AutorizacionUnidad> autorizacionUnidads) {
-        this.autorizacionUnidads = autorizacionUnidads;
+    public void setAutorizacionunidads(List<Autorizacionunidad> autorizacionunidads) {
+        this.autorizacionunidads = autorizacionunidads;
     }
 
-    public List<AutorizacionAutoridad> getAutorizacionAutoridad() {
-        return autorizacionAutoridad;
+    public List<Autorizacionautoridad> getAutorizacionautoridad() {
+        return autorizacionautoridad;
     }
 
-    public void setAutorizacionAutoridad(List<AutorizacionAutoridad> autorizacionAutoridad) {
-        this.autorizacionAutoridad = autorizacionAutoridad;
+    public void setAutorizacionautoridad(List<Autorizacionautoridad> autorizacionautoridad) {
+        this.autorizacionautoridad = autorizacionautoridad;
     }
 
     public String getNumeroincapadicadsalud() {
@@ -207,7 +226,11 @@ public class Boletas {
     public void setActive(String active) {
         this.active = active;
     }
+
+       
     
+    
+ 
     
     
 }

@@ -14,9 +14,9 @@ import java.util.Date;
  *
  * @author avbravo
  */
-public class AutorizacionAutoridad {
+public class Autorizacionautoridad {
     @Id
-    private Integer idaautorizacionautoridad;
+    private Integer idautorizacionautoridad;
     private String username;
     private Date fecha;
     private String comentario;
@@ -24,15 +24,24 @@ public class AutorizacionAutoridad {
     @Ignore
     private User user;
 
-    public AutorizacionAutoridad() {
+    public Autorizacionautoridad() {
     }
 
-    public Integer getIdaautorizacionautoridad() {
-        return idaautorizacionautoridad;
+    public Autorizacionautoridad(Integer idautorizacionautoridad, String username, Date fecha, String comentario, String estado, User user) {
+        this.idautorizacionautoridad = idautorizacionautoridad;
+        this.username = username;
+        this.fecha = fecha;
+        this.comentario = comentario;
+        this.estado = estado;
+        this.user = user;
     }
 
-    public void setIdaautorizacionautoridad(Integer idaautorizacionautoridad) {
-        this.idaautorizacionautoridad = idaautorizacionautoridad;
+    public Integer getIdautorizacionautoridad() {
+        return idautorizacionautoridad;
+    }
+
+    public void setIdautorizacionautoridad(Integer idautorizacionautoridad) {
+        this.idautorizacionautoridad = idautorizacionautoridad;
     }
 
     public String getUsername() {
@@ -75,6 +84,7 @@ public class AutorizacionAutoridad {
         this.user = user;
     }
 
+ 
   
     
     
