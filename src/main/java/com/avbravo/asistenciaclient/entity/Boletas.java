@@ -22,11 +22,11 @@ import java.util.List;
  */
 public class Boletas {
 
-  @Id
-    private Integer idboleta;
+   private Integer idboleta;
     private Date fecha;
-    private String username;
-    @Ignore
+      @Referenced(collection = "User",
+            field = "username", javatype = "String", lazy = false,
+            repository = "com.avbravo.autentificacion.repository.UserRepository")
     User user;   
     private String tipoboleta;   
     private Date fechainicial;
@@ -51,16 +51,7 @@ public class Boletas {
     public Boletas() {
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    
-    
+       
     
     
     
