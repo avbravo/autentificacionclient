@@ -28,6 +28,8 @@ public class User {
     private String email;
     private String cellphone;
  private String sex;
+     private String photo;
+
     @Embedded
     private List<Profile> profile;
 
@@ -36,7 +38,7 @@ public class User {
     public User() {
     }
 
-    public User(Integer iduser, String username, String password, String name, String email, String cellphone, String sex, List<Profile> profile, String active) {
+    public User(Integer iduser, String username, String password, String name, String email, String cellphone, String sex, String photo, List<Profile> profile, String active) {
         this.iduser = iduser;
         this.username = username;
         this.password = password;
@@ -44,10 +46,27 @@ public class User {
         this.email = email;
         this.cellphone = cellphone;
         this.sex = sex;
+        this.photo = photo;
         this.profile = profile;
         this.active = active;
     }
 
+    
+    
+    
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+  
+    
+    
+    
+    
     public String getSex() {
         return sex;
     }
@@ -56,9 +75,7 @@ public class User {
         this.sex = sex;
     }
 
-   
-    
-    
+  
     
     
     
@@ -126,6 +143,5 @@ public class User {
     public void setActive(String active) {
         this.active = active;
     }
-
     
 }

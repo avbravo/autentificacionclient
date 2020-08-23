@@ -17,14 +17,20 @@ public class Entrancees {
     private Integer identrancees;
     private Date date;
     private Integer idprofile;
+    private Integer idapplicativa;
+    private Integer idrole;
+    private Integer iddepartament;
 
     public Entrancees() {
     }
 
-    public Entrancees(Integer identrancees, Date date, Integer idprofile) {
+    public Entrancees(Integer identrancees, Date date, Integer idprofile, Integer idapplicativa, Integer idrole, Integer iddepartament) {
         this.identrancees = identrancees;
         this.date = date;
         this.idprofile = idprofile;
+        this.idapplicativa = idapplicativa;
+        this.idrole = idrole;
+        this.iddepartament = iddepartament;
     }
 
     public Integer getIdentrancees() {
@@ -50,6 +56,31 @@ public class Entrancees {
     public void setIdprofile(Integer idprofile) {
         this.idprofile = idprofile;
     }
+
+    public Integer getIdapplicativa() {
+        return idapplicativa;
+    }
+
+    public void setIdapplicativa(Integer idapplicativa) {
+        this.idapplicativa = idapplicativa;
+    }
+
+    public Integer getIdrole() {
+        return idrole;
+    }
+
+    public void setIdrole(Integer idrole) {
+        this.idrole = idrole;
+    }
+
+    public Integer getIddepartament() {
+        return iddepartament;
+    }
+
+    public void setIddepartament(Integer iddepartament) {
+        this.iddepartament = iddepartament;
+    }
+
 
    
     

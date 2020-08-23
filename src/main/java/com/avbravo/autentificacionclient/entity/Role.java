@@ -22,16 +22,27 @@ public class Role {
     @Secondary
     private String role;
     private String active;
+    private String isauthority;
 
     public Role() {
     }
 
-    public Role(Integer idrole, String role, String active) {
+    public Role(Integer idrole, String role, String active, String isauthority) {
         this.idrole = idrole;
         this.role = role;
         this.active = active;
+        this.isauthority = isauthority;
     }
-    
+
+    public String getIsauthority() {
+        return isauthority;
+    }
+
+    public void setIsauthority(String isauthority) {
+        this.isauthority = isauthority;
+    }
+
+  
     
     
     

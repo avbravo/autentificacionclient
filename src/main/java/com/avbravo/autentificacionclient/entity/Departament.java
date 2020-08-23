@@ -29,16 +29,47 @@ public class Departament {
             repository = "com.avbravo.autentificacion.repository.HeadquartersRepository")
     private Headquarters headquarters;
     
+     
+private String isapprovalchietunitrequired;
+private String isapprovalauthorityrequired;
+    
     public Departament() {
     }
 
-    public Departament(Integer iddepartament, String departament, String active, Headquarters headquarters) {
+    public Departament(Integer iddepartament, String departament, String active, Headquarters headquarters, String isapprovalchietunitrequired, String isapprovalauthorityrequired) {
         this.iddepartament = iddepartament;
         this.departament = departament;
         this.active = active;
         this.headquarters = headquarters;
+        this.isapprovalchietunitrequired = isapprovalchietunitrequired;
+        this.isapprovalauthorityrequired = isapprovalauthorityrequired;
     }
 
+    
+    
+    
+    public String getIsapprovalchietunitrequired() {
+        return isapprovalchietunitrequired;
+    }
+
+    public void setIsapprovalchietunitrequired(String isapprovalchietunitrequired) {
+        this.isapprovalchietunitrequired = isapprovalchietunitrequired;
+    }
+
+    public String getIsapprovalauthorityrequired() {
+        return isapprovalauthorityrequired;
+    }
+
+    public void setIsapprovalauthorityrequired(String isapprovalauthorityrequired) {
+        this.isapprovalauthorityrequired = isapprovalauthorityrequired;
+    }
+
+   
+    
+    
+    
+    
+    
     public Integer getIddepartament() {
         return iddepartament;
     }
@@ -70,7 +101,5 @@ public class Departament {
     public void setHeadquarters(Headquarters headquarters) {
         this.headquarters = headquarters;
     }
-
-   
 
 }
