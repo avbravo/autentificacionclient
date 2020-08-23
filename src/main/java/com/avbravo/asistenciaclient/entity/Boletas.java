@@ -28,7 +28,9 @@ public class Boletas {
             field = "username", javatype = "String", lazy = false,
             repository = "com.avbravo.autentificacion.repository.UserRepository")
     User user;   
-         private String archivo;
+        private String archivo;
+    private String archivo2;
+    private String archivo3;
     private String tipoboleta;   
     private Date fechainicial;
     private Date fechafinal;
@@ -52,15 +54,13 @@ public class Boletas {
     public Boletas() {
     }
 
-    public Boletas(Integer idboleta) {
-        this.idboleta = idboleta;
-    }
-
-    public Boletas(Integer idboleta, Date fecha, User user, String archivo, String tipoboleta, Date fechainicial, Date fechafinal, String observacion, String tipojustificacon, String estadounidad, String estadoautoridad, List<Autorizacionunidad> autorizacionunidads, List<Autorizacionautoridad> autorizacionautoridad, String numeroincapadicadsalud, String tipojustificacionsalud, String tareasextraordinario, Date fechasolicitudextraordinario, Date fecharegistoextraordinario, Date fechacapturarextraordinario, String active) {
+    public Boletas(Integer idboleta, Date fecha, User user, String archivo, String archivo2, String archivo3, String tipoboleta, Date fechainicial, Date fechafinal, String observacion, String tipojustificacon, String estadounidad, String estadoautoridad, List<Autorizacionunidad> autorizacionunidads, List<Autorizacionautoridad> autorizacionautoridad, String numeroincapadicadsalud, String tipojustificacionsalud, String tareasextraordinario, Date fechasolicitudextraordinario, Date fecharegistoextraordinario, Date fechacapturarextraordinario, String active) {
         this.idboleta = idboleta;
         this.fecha = fecha;
         this.user = user;
         this.archivo = archivo;
+        this.archivo2 = archivo2;
+        this.archivo3 = archivo3;
         this.tipoboleta = tipoboleta;
         this.fechainicial = fechainicial;
         this.fechafinal = fechafinal;
@@ -79,23 +79,6 @@ public class Boletas {
         this.active = active;
     }
 
-    
-    
-    
-    
-    public String getArchivo() {
-        return archivo;
-    }
-
-    public void setArchivo(String archivo) {
-        this.archivo = archivo;
-    }
-
-   
-    
-
-    
-    
     public Integer getIdboleta() {
         return idboleta;
     }
@@ -118,6 +101,30 @@ public class Boletas {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getArchivo() {
+        return archivo;
+    }
+
+    public void setArchivo(String archivo) {
+        this.archivo = archivo;
+    }
+
+    public String getArchivo2() {
+        return archivo2;
+    }
+
+    public void setArchivo2(String archivo2) {
+        this.archivo2 = archivo2;
+    }
+
+    public String getArchivo3() {
+        return archivo3;
+    }
+
+    public void setArchivo3(String archivo3) {
+        this.archivo3 = archivo3;
     }
 
     public String getTipoboleta() {
@@ -248,10 +255,4 @@ public class Boletas {
         this.active = active;
     }
 
-       
-    
-    
- 
-    
-    
 }
