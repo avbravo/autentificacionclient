@@ -18,16 +18,24 @@ public class Applicative {
     private Integer idapplicative;
     @Secondary
     private String applicative;
+    private String path;
+    private String image;
+    private String description;
     private String active;
-   
-
+    private String shortname;
+  
+  
     public Applicative() {
     }
 
-    public Applicative(Integer idapplicative, String applicative, String active) {
+    public Applicative(Integer idapplicative, String applicative, String path, String image, String description, String active, String shortname) {
         this.idapplicative = idapplicative;
         this.applicative = applicative;
+        this.path = path;
+        this.image = image;
+        this.description = description;
         this.active = active;
+        this.shortname = shortname;
     }
 
     public Integer getIdapplicative() {
@@ -46,6 +54,30 @@ public class Applicative {
         this.applicative = applicative;
     }
 
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getActive() {
         return active;
     }
@@ -53,6 +85,16 @@ public class Applicative {
     public void setActive(String active) {
         this.active = active;
     }
+
+    public String getShortname() {
+        return shortname;
+    }
+
+    public void setShortname(String shortname) {
+        this.shortname = shortname;
+    }
+
+   
 
   
    

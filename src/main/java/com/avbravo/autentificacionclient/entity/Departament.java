@@ -5,12 +5,9 @@
  */
 package com.avbravo.autentificacionclient.entity;
 
-import com.avbravo.jmoordb.anotations.Embedded;
 import com.avbravo.jmoordb.anotations.Id;
 import com.avbravo.jmoordb.anotations.Referenced;
 import com.avbravo.jmoordb.anotations.Secondary;
-import com.avbravo.jmoordb.pojos.UserInfo;
-import java.util.List;
 
 /**
  *
@@ -23,53 +20,29 @@ public class Departament {
     @Secondary
     private String departament;
     private String active;
+    private String shortname;
    
 @Referenced(collection = "Headquarters",
             field = "idheadquarters", javatype = "Integer", lazy = false,
             repository = "com.avbravo.autentificacion.repository.HeadquartersRepository")
     private Headquarters headquarters;
-    
-     
+
 private String isapprovalchietunitrequired;
 private String isapprovalauthorityrequired;
     
     public Departament() {
     }
 
-    public Departament(Integer iddepartament, String departament, String active, Headquarters headquarters, String isapprovalchietunitrequired, String isapprovalauthorityrequired) {
+    public Departament(Integer iddepartament, String departament, String active, String shortname, Headquarters headquarters, String isapprovalchietunitrequired, String isapprovalauthorityrequired) {
         this.iddepartament = iddepartament;
         this.departament = departament;
         this.active = active;
+        this.shortname = shortname;
         this.headquarters = headquarters;
         this.isapprovalchietunitrequired = isapprovalchietunitrequired;
         this.isapprovalauthorityrequired = isapprovalauthorityrequired;
     }
 
-    
-    
-    
-    public String getIsapprovalchietunitrequired() {
-        return isapprovalchietunitrequired;
-    }
-
-    public void setIsapprovalchietunitrequired(String isapprovalchietunitrequired) {
-        this.isapprovalchietunitrequired = isapprovalchietunitrequired;
-    }
-
-    public String getIsapprovalauthorityrequired() {
-        return isapprovalauthorityrequired;
-    }
-
-    public void setIsapprovalauthorityrequired(String isapprovalauthorityrequired) {
-        this.isapprovalauthorityrequired = isapprovalauthorityrequired;
-    }
-
-   
-    
-    
-    
-    
-    
     public Integer getIddepartament() {
         return iddepartament;
     }
@@ -94,6 +67,14 @@ private String isapprovalauthorityrequired;
         this.active = active;
     }
 
+    public String getShortname() {
+        return shortname;
+    }
+
+    public void setShortname(String shortname) {
+        this.shortname = shortname;
+    }
+
     public Headquarters getHeadquarters() {
         return headquarters;
     }
@@ -101,5 +82,24 @@ private String isapprovalauthorityrequired;
     public void setHeadquarters(Headquarters headquarters) {
         this.headquarters = headquarters;
     }
+
+    public String getIsapprovalchietunitrequired() {
+        return isapprovalchietunitrequired;
+    }
+
+    public void setIsapprovalchietunitrequired(String isapprovalchietunitrequired) {
+        this.isapprovalchietunitrequired = isapprovalchietunitrequired;
+    }
+
+    public String getIsapprovalauthorityrequired() {
+        return isapprovalauthorityrequired;
+    }
+
+    public void setIsapprovalauthorityrequired(String isapprovalauthorityrequired) {
+        this.isapprovalauthorityrequired = isapprovalauthorityrequired;
+    }
+
+  
+ 
 
 }
