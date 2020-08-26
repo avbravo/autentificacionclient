@@ -27,8 +27,8 @@ public class User {
     private String name;
     private String email;
     private String cellphone;
- private String sex;
-     private String photo;
+    private String sex;
+    private String photo;
 
     @Embedded
     private List<Profile> profile;
@@ -51,9 +51,6 @@ public class User {
         this.active = active;
     }
 
-    
-    
-    
     public String getPhoto() {
         return photo;
     }
@@ -62,11 +59,6 @@ public class User {
         this.photo = photo;
     }
 
-  
-    
-    
-    
-    
     public String getSex() {
         return sex;
     }
@@ -74,11 +66,6 @@ public class User {
     public void setSex(String sex) {
         this.sex = sex;
     }
-
-  
-    
-    
-    
 
     public Integer getIduser() {
         return iduser;
@@ -143,5 +130,5 @@ public class User {
     public void setActive(String active) {
         this.active = active;
     }
-    
+
 }

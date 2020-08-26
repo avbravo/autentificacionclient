@@ -3,16 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.avbravo.asistenciaclient.services;
+package com.avbravo.autentificacionclient.services;
 
-import com.avbravo.asistenciaclient.entity.Boletas;
+import com.avbravo.autentificacionclient.entity.Collectionincrementable;
 import com.avbravo.autentificacionclient.producer.AuthentificationProducer;
 import com.avbravo.autentificacionclient.producer.MicroservicesProducer;
-import com.avbravo.jmoordb.util.JmoordbDateUtil;
 import com.avbravo.jmoordb.util.JmoordbUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.ejb.Stateless;
@@ -31,7 +29,7 @@ import javax.ws.rs.core.Response;
  * @author avbravo
  */
 @Stateless
-public class BoletasServices implements Serializable {
+public class CollectionincrementableServices implements Serializable {
 
     String directoryLogger = JmoordbUtil.isLinux() ? JmoordbUtil.userHome() + JmoordbUtil.fileSeparator() + "autentificacionclient" + JmoordbUtil.fileSeparator() + "logs" + JmoordbUtil.fileSeparator() + "logger.json" : "C:\\autentificacionclient\\logs\\logger.json";
     private static final String PASS = "pass";
@@ -44,38 +42,38 @@ public class BoletasServices implements Serializable {
     @Inject
     AuthentificationProducer authentificationProducer;
 
-// <editor-fold defaultstate="collapsed" desc="List<Boletas> findAll()">
-    public List<Boletas> findAll() {
-        List<Boletas> boletasList = new ArrayList<>();
+// <editor-fold defaultstate="collapsed" desc="List<Collectionincrementable> findAll()">
+    public List<Collectionincrementable> findAll() {
+        List<Collectionincrementable> collectionincrementableList = new ArrayList<>();
         try {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
-            WebTarget target = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/findall");
+            WebTarget target = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/collectionincrementable/findall");
 
-            GenericType<List<Boletas>> data = new GenericType<List<Boletas>>() {
+            GenericType<List<Collectionincrementable>> data = new GenericType<List<Collectionincrementable>>() {
             };
 
-            boletasList = target.request(MediaType.APPLICATION_JSON).get(data);
+            collectionincrementableList = target.request(MediaType.APPLICATION_JSON).get(data);
 
         } catch (Exception e) {
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("findAll()" + e.getLocalizedMessage());
         }
-        return boletasList;
+        return collectionincrementableList;
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Boolean add(Boletas boletas)">
-    public Boolean add(Boletas boletas) {
+    // <editor-fold defaultstate="collapsed" desc="Boolean add(Collectionincrementable collectionincrementable)">
+    public Boolean add(Collectionincrementable collectionincrementable) {
         try {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/add");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/collectionincrementable/add");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.post(Entity.entity(boletas, MediaType.APPLICATION_JSON));
+            Response response = invocationBuilder.post(Entity.entity(collectionincrementable, MediaType.APPLICATION_JSON));
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
@@ -92,16 +90,16 @@ public class BoletasServices implements Serializable {
     }
 // </editor-fold>
 
-// <editor-fold defaultstate="collapsed" desc="Boolean update(Boletas boletas)">
-    public Boolean update(Boletas boletas) {
+// <editor-fold defaultstate="collapsed" desc="Boolean update(Collectionincrementable collectionincrementable)">
+    public Boolean update(Collectionincrementable collectionincrementable) {
         try {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/update");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/collectionincrementable/update");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.post(Entity.entity(boletas, MediaType.APPLICATION_JSON));
+            Response response = invocationBuilder.post(Entity.entity(collectionincrementable, MediaType.APPLICATION_JSON));
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
@@ -117,17 +115,17 @@ public class BoletasServices implements Serializable {
         return false;
     }
 // </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="Boolean update(Boletas boletas)">
+// <editor-fold defaultstate="collapsed" desc="Boolean delete(Collectionincrementable collectionincrementable)">
 
-    public Boolean delete(Boletas boletas) {
+    public Boolean delete(Collectionincrementable collectionincrementable) {
         try {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/delete");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/collectionincrementable/delete");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.post(Entity.entity(boletas, MediaType.APPLICATION_JSON));
+            Response response = invocationBuilder.post(Entity.entity(collectionincrementable, MediaType.APPLICATION_JSON));
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
@@ -144,39 +142,42 @@ public class BoletasServices implements Serializable {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Boletas findByBoletas(Integer idboleta) ">
+    // <editor-fold defaultstate="collapsed" desc="Collectionincrementable findByCollectionincrementablename(String collectionincrementablename) ">
     /**
      * consulta por codigo_pedido impresa
      *
      * @param codigo_
      * @return
      */
-    public Optional<Boletas> findByIdboleta(Integer idboleta) {
-        Boletas boletas = new Boletas();
+    public Optional<Collectionincrementable> findByCollectionincrementablename(String collectionincrementablename) {
+        Collectionincrementable collectionincrementable = new Collectionincrementable();
         try {
-
+            System.out.println("Test---->voy a  buscar usuario---- "+collectionincrementablename);
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
-            boletas = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/search/")
-                    .path("/{idboletas}")
-                    .resolveTemplate("idboletas", idboleta)
+            collectionincrementable = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/collectionincrementable/search/")
+                    .path("/{collectionincrementablename}")
+                    .resolveTemplate("collectionincrementablename", collectionincrementablename)
                     .request(MediaType.APPLICATION_JSON)
-                    .get(Boletas.class
+                    .get(Collectionincrementable.class
                     );
-            return Optional.of(boletas);
+            if(collectionincrementable == null || collectionincrementable.getCollections()== null || collectionincrementable.getCollections()== null || collectionincrementable.getCollections().isEmpty()){
+                 return Optional.empty();
+            }
+            return Optional.of(collectionincrementable);
             //String result = FAIL;
         } catch (Exception e) {
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("findByidboletas() " + e.getLocalizedMessage());
+            System.out.println("findBCollectionincrementablename() " + e.getLocalizedMessage());
         }
         return Optional.empty();
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="List<Boletas> complete( String query)">
-    public List<Boletas> complete(String query) {
-        List<Boletas> suggestions = new ArrayList<>();
+    // <editor-fold defaultstate="collapsed" desc="List<Collectionincrementable> complete( String query)">
+    public List<Collectionincrementable> complete(String query) {
+        List<Collectionincrementable> suggestions = new ArrayList<>();
         try {
 
             if (query == null || query.isEmpty()) {
@@ -185,11 +186,11 @@ public class BoletasServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/autocomplete/")
-                    .path("/{query}")
-                    .resolveTemplate("query", query)
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/complete/tformaspago/")
+                    .path("/{nombre}")
+                    .resolveTemplate("nombre", query)
                     .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<Boletas>>() {
+                    .get(new GenericType<List<Collectionincrementable>>() {
                     });
 
         } catch (Exception e) {
@@ -201,28 +202,5 @@ public class BoletasServices implements Serializable {
         return suggestions;
     }
     // </editor-fold>
-    
-    
-      // <editor-fold defaultstate="collapsed" desc="String showDate(Date date)">
-    public String showDate(Date date) {
-        String h = "";
-        try {
-            h = JmoordbDateUtil.dateFormatToString(date, "dd/MM/yyyy");
-        } catch (Exception e) {
-            JmoordbUtil.errorMessage("showDate() " + e.getLocalizedMessage());
-        }
-        return h;
-    }// </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="String showHour(Date date)">
-
-    public String showHour(Date date) {
-        String h = "";
-        try {
-            h = JmoordbDateUtil.hourFromDateToString(date);
-        } catch (Exception e) {
-            JmoordbUtil.errorMessage("showHour() " + e.getLocalizedMessage());
-        }
-        return h;
-    }// </editor-fold>
 
 }
