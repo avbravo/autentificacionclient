@@ -103,16 +103,16 @@ public class BoletasServices implements Serializable {
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.post(Entity.entity(boletas, MediaType.APPLICATION_JSON));
 
-            System.out.println(response.getStatus());
+            System.out.println("Services >>>>>>>Estatus "+response.getStatus());
             if (response.getStatus() == 400) {
                 return false;
             }
-            System.out.println(response.readEntity(String.class
-            ));
+            System.out.println("Response " +response.readEntity(String.class ));
             return true;
-        } catch (Exception e) {
+        } catch (Exception e) {   
+            System.out.println("error" + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("errort" + e.getLocalizedMessage());
+         
         }
         return false;
     }

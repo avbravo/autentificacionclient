@@ -5,10 +5,10 @@
  */
 package com.avbravo.asistenciaclient.entity;
 
+import com.avbravo.autentificacionclient.entity.Departament;
 import com.avbravo.autentificacionclient.entity.User;
 import com.avbravo.jmoordb.anotations.Embedded;
 import com.avbravo.jmoordb.anotations.Id;
-import com.avbravo.jmoordb.anotations.Ignore;
 import com.avbravo.jmoordb.anotations.Referenced;
 import java.util.Date;
 import java.util.List;
@@ -21,12 +21,17 @@ import java.util.List;
  * estadoautoridad=aprobado, rechazado, regresado
  */
 public class Boletas {
-private Integer idboleta;
+        @Id
+ private Integer idboleta;
     private Date fecha;
       @Referenced(collection = "User",
             field = "username", javatype = "String", lazy = false,
             repository = "com.avbravo.autentificacion.repository.UserRepository")
     User user;   
+      @Referenced(collection = "Departament",
+            field = "iddepartament", javatype = "Integer", lazy = false,
+            repository = "com.avbravo.autentificacion.repository.DepartamentRepository")
+    Departament departament;
     private String archivo;
     private String archivo2;
     private String archivo3;
@@ -50,10 +55,11 @@ private Integer idboleta;
     public Boletas() {
     }
 
-    public Boletas(Integer idboleta, Date fecha, User user, String archivo, String archivo2, String archivo3, String tipoboleta, Date fechainicial, Date fechafinal, String observacion, String tipojustificacon, String estadounidad, String estadoautoridad, List<Autorizacionhistorial> autorizacionhistorial, String numeroincapadicadsalud, String tipojustificacionsalud, String active) {
+    public Boletas(Integer idboleta, Date fecha, User user, Departament departament, String archivo, String archivo2, String archivo3, String tipoboleta, Date fechainicial, Date fechafinal, String observacion, String tipojustificacon, String estadounidad, String estadoautoridad, List<Autorizacionhistorial> autorizacionhistorial, String numeroincapadicadsalud, String tipojustificacionsalud, String active) {
         this.idboleta = idboleta;
         this.fecha = fecha;
         this.user = user;
+        this.departament = departament;
         this.archivo = archivo;
         this.archivo2 = archivo2;
         this.archivo3 = archivo3;
@@ -70,6 +76,10 @@ private Integer idboleta;
         this.active = active;
     }
 
+    
+    
+    
+    
     public Integer getIdboleta() {
         return idboleta;
     }
@@ -92,6 +102,14 @@ private Integer idboleta;
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Departament getDepartament() {
+        return departament;
+    }
+
+    public void setDepartament(Departament departament) {
+        this.departament = departament;
     }
 
     public String getArchivo() {
@@ -205,6 +223,10 @@ private Integer idboleta;
     public void setActive(String active) {
         this.active = active;
     }
+
+   
+   
+ 
     
 
 }
