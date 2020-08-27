@@ -21,14 +21,13 @@ import java.util.List;
  * estadoautoridad=aprobado, rechazado, regresado
  */
 public class Boletas {
-
-   private Integer idboleta;
+private Integer idboleta;
     private Date fecha;
       @Referenced(collection = "User",
             field = "username", javatype = "String", lazy = false,
             repository = "com.avbravo.autentificacion.repository.UserRepository")
     User user;   
-        private String archivo;
+    private String archivo;
     private String archivo2;
     private String archivo3;
     private String tipoboleta;   
@@ -39,22 +38,19 @@ public class Boletas {
     private String estadounidad;
     private String estadoautoridad;   
     @Embedded
-    private List<Autorizacionunidad> autorizacionunidads;
+    private List<Autorizacionhistorial> autorizacionhistorial;
     @Embedded
-    private List<Autorizacionautoridad> autorizacionautoridad;
-    private String numeroincapadicadsalud;
+      private String numeroincapadicadsalud;
     private String tipojustificacionsalud;
-    
-    private String tareasextraordinario;
-    private Date fechasolicitudextraordinario;
-    private Date fecharegistoextraordinario;
-    private Date fechacapturarextraordinario;
+       
     private String active;
 
+     
+    
     public Boletas() {
     }
 
-    public Boletas(Integer idboleta, Date fecha, User user, String archivo, String archivo2, String archivo3, String tipoboleta, Date fechainicial, Date fechafinal, String observacion, String tipojustificacon, String estadounidad, String estadoautoridad, List<Autorizacionunidad> autorizacionunidads, List<Autorizacionautoridad> autorizacionautoridad, String numeroincapadicadsalud, String tipojustificacionsalud, String tareasextraordinario, Date fechasolicitudextraordinario, Date fecharegistoextraordinario, Date fechacapturarextraordinario, String active) {
+    public Boletas(Integer idboleta, Date fecha, User user, String archivo, String archivo2, String archivo3, String tipoboleta, Date fechainicial, Date fechafinal, String observacion, String tipojustificacon, String estadounidad, String estadoautoridad, List<Autorizacionhistorial> autorizacionhistorial, String numeroincapadicadsalud, String tipojustificacionsalud, String active) {
         this.idboleta = idboleta;
         this.fecha = fecha;
         this.user = user;
@@ -68,14 +64,9 @@ public class Boletas {
         this.tipojustificacon = tipojustificacon;
         this.estadounidad = estadounidad;
         this.estadoautoridad = estadoautoridad;
-        this.autorizacionunidads = autorizacionunidads;
-        this.autorizacionautoridad = autorizacionautoridad;
+        this.autorizacionhistorial = autorizacionhistorial;
         this.numeroincapadicadsalud = numeroincapadicadsalud;
         this.tipojustificacionsalud = tipojustificacionsalud;
-        this.tareasextraordinario = tareasextraordinario;
-        this.fechasolicitudextraordinario = fechasolicitudextraordinario;
-        this.fecharegistoextraordinario = fecharegistoextraordinario;
-        this.fechacapturarextraordinario = fechacapturarextraordinario;
         this.active = active;
     }
 
@@ -183,20 +174,12 @@ public class Boletas {
         this.estadoautoridad = estadoautoridad;
     }
 
-    public List<Autorizacionunidad> getAutorizacionunidads() {
-        return autorizacionunidads;
+    public List<Autorizacionhistorial> getAutorizacionhistorial() {
+        return autorizacionhistorial;
     }
 
-    public void setAutorizacionunidads(List<Autorizacionunidad> autorizacionunidads) {
-        this.autorizacionunidads = autorizacionunidads;
-    }
-
-    public List<Autorizacionautoridad> getAutorizacionautoridad() {
-        return autorizacionautoridad;
-    }
-
-    public void setAutorizacionautoridad(List<Autorizacionautoridad> autorizacionautoridad) {
-        this.autorizacionautoridad = autorizacionautoridad;
+    public void setAutorizacionhistorial(List<Autorizacionhistorial> autorizacionhistorial) {
+        this.autorizacionhistorial = autorizacionhistorial;
     }
 
     public String getNumeroincapadicadsalud() {
@@ -215,38 +198,6 @@ public class Boletas {
         this.tipojustificacionsalud = tipojustificacionsalud;
     }
 
-    public String getTareasextraordinario() {
-        return tareasextraordinario;
-    }
-
-    public void setTareasextraordinario(String tareasextraordinario) {
-        this.tareasextraordinario = tareasextraordinario;
-    }
-
-    public Date getFechasolicitudextraordinario() {
-        return fechasolicitudextraordinario;
-    }
-
-    public void setFechasolicitudextraordinario(Date fechasolicitudextraordinario) {
-        this.fechasolicitudextraordinario = fechasolicitudextraordinario;
-    }
-
-    public Date getFecharegistoextraordinario() {
-        return fecharegistoextraordinario;
-    }
-
-    public void setFecharegistoextraordinario(Date fecharegistoextraordinario) {
-        this.fecharegistoextraordinario = fecharegistoextraordinario;
-    }
-
-    public Date getFechacapturarextraordinario() {
-        return fechacapturarextraordinario;
-    }
-
-    public void setFechacapturarextraordinario(Date fechacapturarextraordinario) {
-        this.fechacapturarextraordinario = fechacapturarextraordinario;
-    }
-
     public String getActive() {
         return active;
     }
@@ -254,5 +205,6 @@ public class Boletas {
     public void setActive(String active) {
         this.active = active;
     }
+    
 
 }

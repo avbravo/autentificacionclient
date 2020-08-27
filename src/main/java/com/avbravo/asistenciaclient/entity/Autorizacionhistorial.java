@@ -14,20 +14,21 @@ import java.util.Date;
  *
  * @author avbravo
  */
-public class Autorizacionautoridad {
+public class Autorizacionhistorial {
     @Id
     private Integer idautorizacionautoridad;
     private String username;
     private Date fecha;
     private String comentario;
     private String estado;
+
     @Ignore
     private User user;
 
-    public Autorizacionautoridad() {
+    public Autorizacionhistorial() {
     }
 
-    public Autorizacionautoridad(Integer idautorizacionautoridad, String username, Date fecha, String comentario, String estado, User user) {
+    public Autorizacionhistorial(Integer idautorizacionautoridad, String username, Date fecha, String comentario, String estado, User user) {
         this.idautorizacionautoridad = idautorizacionautoridad;
         this.username = username;
         this.fecha = fecha;
@@ -84,9 +85,7 @@ public class Autorizacionautoridad {
         this.user = user;
     }
 
- 
   
-    
     
     
 }
