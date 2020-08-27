@@ -16,7 +16,7 @@ import java.util.Date;
  */
 public class Autorizacionhistorial {
     @Id
-    private Integer idautorizacionautoridad;
+    private Integer idautorizacionhistorial;
     private String username;
     private Date fecha;
     private String comentario;
@@ -28,8 +28,8 @@ public class Autorizacionhistorial {
     public Autorizacionhistorial() {
     }
 
-    public Autorizacionhistorial(Integer idautorizacionautoridad, String username, Date fecha, String comentario, String estado, User user) {
-        this.idautorizacionautoridad = idautorizacionautoridad;
+    public Autorizacionhistorial(Integer idautorizacionhistorial, String username, Date fecha, String comentario, String estado, User user) {
+        this.idautorizacionhistorial = idautorizacionhistorial;
         this.username = username;
         this.fecha = fecha;
         this.comentario = comentario;
@@ -37,12 +37,12 @@ public class Autorizacionhistorial {
         this.user = user;
     }
 
-    public Integer getIdautorizacionautoridad() {
-        return idautorizacionautoridad;
+    public Integer getIdautorizacionhistorial() {
+        return idautorizacionhistorial;
     }
 
-    public void setIdautorizacionautoridad(Integer idautorizacionautoridad) {
-        this.idautorizacionautoridad = idautorizacionautoridad;
+    public void setIdautorizacionhistorial(Integer idautorizacionhistorial) {
+        this.idautorizacionhistorial = idautorizacionhistorial;
     }
 
     public String getUsername() {
@@ -84,6 +84,8 @@ public class Autorizacionhistorial {
     public void setUser(User user) {
         this.user = user;
     }
+
+  
 
   
     
