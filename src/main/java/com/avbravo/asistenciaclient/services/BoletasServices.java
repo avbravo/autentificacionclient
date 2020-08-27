@@ -117,7 +117,7 @@ public class BoletasServices implements Serializable {
         return false;
     }
 // </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="Boolean update(Boletas boletas)">
+// <editor-fold defaultstate="collapsed" desc="Boolean delete(Boletas boletas)">
 
     public Boolean delete(Boletas boletas) {
         try {
@@ -144,7 +144,7 @@ public class BoletasServices implements Serializable {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Boletas findByBoletas(Integer idboleta) ">
+    // <editor-fold defaultstate="collapsed" desc="Boletas findByBoleta(Integer idboleta) ">
     /**
      * consulta por codigo_pedido impresa
      *
@@ -159,8 +159,8 @@ public class BoletasServices implements Serializable {
             client.register(authentificationProducer.httpAuthenticationFeature());
             boletas = client
                     .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/search/")
-                    .path("/{idboletas}")
-                    .resolveTemplate("idboletas", idboleta)
+                    .path("/{idboleta}")
+                    .resolveTemplate("idboleta", idboleta)
                     .request(MediaType.APPLICATION_JSON)
                     .get(Boletas.class
                     );
@@ -171,6 +171,39 @@ public class BoletasServices implements Serializable {
             System.out.println("findByidboletas() " + e.getLocalizedMessage());
         }
         return Optional.empty();
+    }
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="Boletas findByBoleta(Integer idboleta) ">
+    /**
+     * consulta por codigo_pedido impresa
+     *
+     * @param codigo_
+     * @return
+     */
+    public  List<Boletas> findByIddepartament(Integer iddepartament) {
+        List<Boletas> boletasList = new ArrayList<>();
+        try {
+
+//            Client client = ClientBuilder.newClient();
+//            client.register(authentificationProducer.httpAuthenticationFeature());
+//              WebTarget target = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/findall");
+//            boletas = client
+//                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/search/")
+//                    .path("/{idboleta}")
+//                    .resolveTemplate("idboleta", idboleta)
+//                    .request(MediaType.APPLICATION_JSON)
+//                    .get(Boletas.class
+//                    );
+//            
+//             GenericType<List<Boletas>> data = new GenericType<List<Boletas>>() {
+//            };
+//   boletasList = target.request(MediaType.APPLICATION_JSON).get(data);
+          
+        } catch (Exception e) {
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println("findByidboletas() " + e.getLocalizedMessage());
+        }
+        return boletasList;
     }
     // </editor-fold>
 
