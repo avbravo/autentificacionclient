@@ -96,7 +96,7 @@ public class InstitutionServices implements Serializable {
                     = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/institution/update");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.post(Entity.entity(institution, MediaType.APPLICATION_JSON));
+            Response response = invocationBuilder.put(Entity.entity(institution, MediaType.APPLICATION_JSON));
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {

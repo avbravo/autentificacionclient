@@ -99,7 +99,7 @@ public class AccessServices implements Serializable {
                     = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/access/update");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.post(Entity.entity(access, MediaType.APPLICATION_JSON));
+            Response response = invocationBuilder.put(Entity.entity(access, MediaType.APPLICATION_JSON));
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {

@@ -99,7 +99,7 @@ public class OtpServices implements Serializable {
                     = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/otp/update");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.post(Entity.entity(otp, MediaType.APPLICATION_JSON));
+            Response response = invocationBuilder.put(Entity.entity(otp, MediaType.APPLICATION_JSON));
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {

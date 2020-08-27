@@ -101,10 +101,10 @@ public class BoletasServices implements Serializable {
                     = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/update");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.post(Entity.entity(boletas, MediaType.APPLICATION_JSON));
+            Response response = invocationBuilder.put(Entity.entity(boletas, MediaType.APPLICATION_JSON));
 
-            System.out.println("Services >>>>>>>Estatus "+response.getStatus());
-            if (response.getStatus() == 400) {
+ 
+            if (response.getStatus() == 400 || response.getStatus() == 405) {
                 return false;
             }
             System.out.println("Response " +response.readEntity(String.class ));

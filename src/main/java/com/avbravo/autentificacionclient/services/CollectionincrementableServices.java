@@ -99,7 +99,7 @@ public class CollectionincrementableServices implements Serializable {
                     = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/collectionincrementable/update");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.post(Entity.entity(collectionincrementable, MediaType.APPLICATION_JSON));
+            Response response = invocationBuilder.put(Entity.entity(collectionincrementable, MediaType.APPLICATION_JSON));
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
