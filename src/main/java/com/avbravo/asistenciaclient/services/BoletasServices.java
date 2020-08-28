@@ -69,6 +69,7 @@ public class BoletasServices implements Serializable {
     // <editor-fold defaultstate="collapsed" desc="Boolean add(Boletas boletas)">
     public Boolean add(Boletas boletas) {
         try {
+            System.out.println(">>>> Client llego a add");
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
