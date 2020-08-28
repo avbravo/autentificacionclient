@@ -59,7 +59,7 @@ public class UserConverter implements Converter<User> {
 
             if (t.getIduser()!= null) {
 
-                return t.getIduser().toString();
+                return t.getUsername().toString();
             } else {
 
                 //JmoordbUtil.warningDialog("No es valido el id ","");
