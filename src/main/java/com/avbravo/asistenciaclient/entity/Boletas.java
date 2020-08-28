@@ -15,43 +15,41 @@ import java.util.List;
 
 /**
  *
- * @author avbravo
- * tipoboleta= ASISTENCIA, SALUD, TRABAJO-EXTRAORDINARIO
- * estadounidad=aprobado, rechazado, regresado
- * estadoautoridad=aprobado, rechazado, regresado
+ * @author avbravo tipoboleta= ASISTENCIA, SALUD, TRABAJO-EXTRAORDINARIO
+ * estadounidad=aprobado, rechazado, regresado estadoautoridad=aprobado,
+ * rechazado, regresado
  */
 public class Boletas {
-        @Id
- private Integer idboleta;
+
+    @Id
+    private Integer idboleta;
     private Date fecha;
-      @Referenced(collection = "User",
+    @Referenced(collection = "User",
             field = "username", javatype = "String", lazy = false,
             repository = "com.avbravo.autentificacion.repository.UserRepository")
-    User user;   
-      @Referenced(collection = "Departament",
+    User user;
+    @Referenced(collection = "Departament",
             field = "iddepartament", javatype = "Integer", lazy = false,
             repository = "com.avbravo.autentificacion.repository.DepartamentRepository")
     Departament departament;
     private String archivo;
     private String archivo2;
     private String archivo3;
-    private String tipoboleta;   
+    private String tipoboleta;
     private Date fechainicial;
     private Date fechafinal;
     private String observacion;
     private String tipojustificacon;
     private String estadounidad;
-    private String estadoautoridad;   
+    private String estadoautoridad;
     @Embedded
     private List<Autorizacionhistorial> autorizacionhistorial;
     @Embedded
-      private String numeroincapadicadsalud;
+    private String numeroincapadicadsalud;
     private String tipojustificacionsalud;
-       
+
     private String active;
 
-     
-    
     public Boletas() {
     }
 
@@ -76,10 +74,6 @@ public class Boletas {
         this.active = active;
     }
 
-    
-    
-    
-    
     public Integer getIdboleta() {
         return idboleta;
     }
@@ -223,10 +217,5 @@ public class Boletas {
     public void setActive(String active) {
         this.active = active;
     }
-
-   
-   
- 
-    
 
 }

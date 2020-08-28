@@ -95,6 +95,7 @@ public class BoletasServices implements Serializable {
 // <editor-fold defaultstate="collapsed" desc="Boolean update(Boletas boletas)">
     public Boolean update(Boletas boletas) {
         try {
+            System.out.println(">>>> Cliente invocando updatre"+boletas.getIdboleta());
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
@@ -103,39 +104,64 @@ public class BoletasServices implements Serializable {
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.put(Entity.entity(boletas, MediaType.APPLICATION_JSON));
 
- 
             if (response.getStatus() == 400 || response.getStatus() == 405) {
                 return false;
             }
-            System.out.println("Response " +response.readEntity(String.class ));
+            System.out.println("Response " + response.readEntity(String.class));
             return true;
-        } catch (Exception e) {   
-            System.out.println("error" + e.getLocalizedMessage());
+        } catch (Exception e) {
+            System.out.println("update" + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-         
+
         }
         return false;
     }
 // </editor-fold>
+//// <editor-fold defaultstate="collapsed" desc="Boolean delete(Boletas boletas)">
+//
+//    public Boolean delete(Boletas boletas) {
+//        try {
+//            Client client = ClientBuilder.newClient();
+//            client.register(authentificationProducer.httpAuthenticationFeature());
+//            WebTarget webTarget
+//                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/delete");
+//
+//            Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+//            Response response = invocationBuilder.post(Entity.entity(boletas, MediaType.APPLICATION_JSON));
+//
+//            System.out.println(response.getStatus());
+//            if (response.getStatus() == 400) {
+//                return false;
+//            }
+//            System.out.println(response.readEntity(String.class
+//            ));
+//            return true;
+//        } catch (Exception e) {
+//            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+//            System.out.println("errort" + e.getLocalizedMessage());
+//        }
+//        return false;
+//    }
+//// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="Boolean delete(Boletas boletas)">
 
     public Boolean delete(Boletas boletas) {
         try {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
-            WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/delete");
+//            WebTarget webTarget  = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/delete");
 
-            Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.post(Entity.entity(boletas, MediaType.APPLICATION_JSON));
+            String callResult = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/delete")
+                    .path("/{idboleta}")
+                    .resolveTemplate("idboleta", boletas.getIdboleta())
+                    .request(MediaType.APPLICATION_XML)
+                    .delete(String.class);
 
-            System.out.println(response.getStatus());
-            if (response.getStatus() == 400) {
-                return false;
+            System.out.println("*** Call result = " + callResult);
+            if (callResult.equals("<result>success</result>")) {
+                return true;
             }
-            System.out.println(response.readEntity(String.class
-            ));
-            return true;
+
         } catch (Exception e) {
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("errort" + e.getLocalizedMessage());
@@ -172,6 +198,7 @@ public class BoletasServices implements Serializable {
         }
         return Optional.empty();
     }
+
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Boletas findByBoleta(Integer idboleta) ">
     /**
@@ -180,7 +207,7 @@ public class BoletasServices implements Serializable {
      * @param codigo_
      * @return
      */
-    public  List<Boletas> findByIddepartament(Integer iddepartament) {
+    public List<Boletas> findByIddepartament(Integer iddepartament) {
         List<Boletas> boletasList = new ArrayList<>();
         try {
 
@@ -198,7 +225,6 @@ public class BoletasServices implements Serializable {
 //             GenericType<List<Boletas>> data = new GenericType<List<Boletas>>() {
 //            };
 //   boletasList = target.request(MediaType.APPLICATION_JSON).get(data);
-          
         } catch (Exception e) {
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("findByidboletas() " + e.getLocalizedMessage());
@@ -234,9 +260,8 @@ public class BoletasServices implements Serializable {
         return suggestions;
     }
     // </editor-fold>
-    
-    
-      // <editor-fold defaultstate="collapsed" desc="String showDate(Date date)">
+
+    // <editor-fold defaultstate="collapsed" desc="String showDate(Date date)">
     public String showDate(Date date) {
         String h = "";
         try {
