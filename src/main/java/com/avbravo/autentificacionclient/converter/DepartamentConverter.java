@@ -15,6 +15,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Named;
+import javax.naming.InitialContext;
 
 /**
  *
@@ -25,7 +26,7 @@ import javax.inject.Named;
 public class DepartamentConverter implements Converter<Departament> { 
     @Inject
     DepartamentServices departamentServices;
-
+    private InitialContext ic;
     @Override
     public Departament getAsObject(FacesContext fc, UIComponent uic, String string) {
           Departament departament = new Departament();
@@ -33,13 +34,15 @@ public class DepartamentConverter implements Converter<Departament> {
             if (string  == null || string.isEmpty()) {
             return null;
         }
-             Optional<Departament> optional = departamentServices.findByIddepartament(Integer.parseInt(string));
+             DepartamentServices departamentServices2  = (DepartamentServices)ic.lookup("java:module/DeoartamentServices");
+             Optional<Departament> optional = departamentServices2.findByIddepartament(Integer.parseInt(string));
                 if (optional.isPresent()) {
                     departament = optional.get();
                 }
         } catch (Exception e) {
                JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
         }
+        System.out.println(">>>>>>>>> departament found "+departament.getDepartament());
         return departament;
     }
 

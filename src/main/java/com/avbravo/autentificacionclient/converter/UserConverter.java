@@ -7,6 +7,7 @@ package com.avbravo.autentificacionclient.converter;
 
 import com.avbravo.autentificacionclient.entity.User;
 import com.avbravo.autentificacionclient.services.UserServices;
+import com.avbravo.jmoordb.configuration.JmoordbContext;
 import com.avbravo.jmoordb.util.JmoordbUtil;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,8 +69,13 @@ public class UserConverter implements Converter<User> {
                 System.out.println("||||||||||||||||| convertido");
                 System.out.println("||||||||||  user name "+user.getName());
             }
-            
-            
+            System.out.println("----voy a colocar el user logeado");
+            //Coloco el user logeado
+            if ((User) JmoordbContext.get("jmoordb_user") == null) {
+               
+            } else {
+     user = (User) JmoordbContext.get("jmoordb_user");
+            }
           
         } catch (Exception e) {
             System.out.println(">>>>>>>>-ErrprgetAsObject/(-----retornara el user");

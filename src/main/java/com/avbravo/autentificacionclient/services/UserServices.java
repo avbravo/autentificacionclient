@@ -152,8 +152,7 @@ public class UserServices implements Serializable {
     public Optional<User> findByUsername(String username) {
         User user = new User();
         try {
-            System.out.println("<{UserServices.java}]<<<<<<<<<<<<<<<<<Llego indByUsername()...............>>>");
-            System.out.println("############## value "+username);
+        
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             user = client
@@ -164,10 +163,10 @@ public class UserServices implements Serializable {
                     .get(User.class
                     );
             if(user == null || user.getIduser()== null || user.getUsername() == null || user.getUsername().isEmpty()){
-                System.out.println("############## es null ");
+              
                  return Optional.empty();
             }
-            System.out.println("##############  return Optional.of(user); ");
+      
             return Optional.of(user);
             //String result = FAIL;
         } catch (Exception e) {
@@ -175,7 +174,7 @@ public class UserServices implements Serializable {
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
           
         }
- System.out.println("##############   return Optional.empty();; ");
+
         return Optional.empty();
     }
     // </editor-fold>
