@@ -7,103 +7,65 @@ package com.avbravo.autentificacionclient.converter;
 
 import com.avbravo.autentificacionclient.entity.User;
 import com.avbravo.autentificacionclient.services.UserServices;
-import com.avbravo.jmoordb.configuration.JmoordbContext;
-import com.avbravo.jmoordb.util.JmoordbUtil;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.convert.FacesConverter;
+import javax.faces.convert.ConverterException;
+import javax.inject.Inject;
 import javax.inject.Named;
-import javax.naming.InitialContext;
 
 /**
  *
  * @author avbravo
  */
+@RequestScoped
 @Named
-@FacesConverter(forClass = User.class, managed = true)
-public class UserConverter implements Converter<User> {
+public class UserConverter implements Converter {
 
-    //@Inject
-    private UserServices userServices;
-    private InitialContext ic;
+    @Inject
+    UserServices userService;
 
     @Override
-    public User getAsObject(FacesContext fc, UIComponent uic, String string) {
-        User user = new User();
-        try {
-            System.out.println("---------------------------------");
-            if (string == null || string.isEmpty()) {
-                System.out.println("+++++++++ getAsObject es null");
-                return null;
-            }
-            System.out.println(">>>>>>>>>> obtengo el ic");
-            ic = new InitialContext();
-
-//            String myModuleName = (String) ic.lookup("java:module/ModuleName");
-//            String myApplicationName = (String) ic.lookup("java:app/AppName");
-
-            System.out.println("%%%%%  AQUI OBTENGO EL SERVICES--------> del lookup");
-          UserServices userServices2  = (UserServices)ic.lookup("java:module/UserServices");
-            
-//            userServices = (UserServices) ic.lookup("Java:global/com.mycom.rentalstore_RentalStore_war_1.0-SNAPSHOT/ClassificationEJB");
-            System.out.println("+++++++++  string " + string);
-            System.out.println("voy a buscarlo en el find all en el ic");
-            List<User> list = new ArrayList<>();
-
-            list = userServices2.findAll();
-            System.out.println("||||||||||||||||| trajo la lista");
-            for (User u : list) {
-                System.out.println("||||||||||||||||| user " + u.getUsername());
-            }
-            System.out.println("||||||||||||||||| ahora voy con elk findname");
-             Optional<User> optional = userServices2.findByUsername(string);
-            if (!optional.isPresent()) {
-                System.out.println("|||||||||||||||||No lo encuentra");
-            } else {
-                System.out.println("||||||||||||||||| voy a convertirlo");
-                user = optional.get();
-                System.out.println("||||||||||||||||| convertido");
-                System.out.println("||||||||||  user name "+user.getName());
-            }
-            System.out.println("----voy a colocar el user logeado");
-            //Coloco el user logeado
-            if ((User) JmoordbContext.get("jmoordb_user") == null) {
-               
-            } else {
-     user = (User) JmoordbContext.get("jmoordb_user");
-            }
-          
-        } catch (Exception e) {
-            System.out.println(">>>>>>>>-ErrprgetAsObject/(-----retornara el user");
-            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+    public String getAsString(FacesContext context, UIComponent component, Object modelValue) {
+        if (modelValue == null) {
+            return "";
         }
-        System.out.println(">>>>>>>>------retornara el user");
-        return user;
+
+        if (modelValue instanceof User) {
+  //          return String.valueOf(((User) modelValue).getIduser());
+          return String.valueOf(((User) modelValue).getUsername());
+        } else {
+            throw new ConverterException(new FacesMessage(modelValue + " is not a valid User"));
+        }
     }
 
     @Override
-    public String getAsString(FacesContext fc, UIComponent uic, User t) {
-
-        try {
-        
-            if (t == null) {
-
-                return "";
-            }
-
-            if (t.getUsername() != null) {
-           
-                return t.getUsername();
-            }
-        } catch (Exception e) {
-            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+    public Object getAsObject(FacesContext context, UIComponent component, String submittedValue) {
+       // System.out.println("submitted: " + Long.valueOf(submittedValue));
+        System.out.println("submitted: " +submittedValue);
+        User a = new User();
+        if (userService == null) {
+            System.out.println("Service is nich");
         }
- 
-        return "";
-    }
 
+        if (submittedValue == null || submittedValue.isEmpty()) {
+            System.out.println("submitted = nil");
+            return null;
+        }
+        System.out.println("leggie al 57");
+        try {
+            //return em.find(UserEntity.class, Long.valueOf(submittedValue));
+            System.out.println("llegue");
+            Optional<User> optional = userService.findByUsername(submittedValue);
+            if (optional.isPresent()) {
+                a = optional.get();
+            }
+            return a;
+        } catch (NumberFormatException e) {
+            throw new ConverterException(new FacesMessage(submittedValue + " is not a valid User ID"), e);
+        }
+    }
 }
