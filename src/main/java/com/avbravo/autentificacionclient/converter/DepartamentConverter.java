@@ -15,6 +15,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -24,7 +25,7 @@ import javax.inject.Named;
 @RequestScoped
 @Named
 public class DepartamentConverter implements Converter{ 
-
+    @Inject
     DepartamentServices departamentServices;
      @Override
     public String getAsString(FacesContext context, UIComponent component, Object modelValue) {
