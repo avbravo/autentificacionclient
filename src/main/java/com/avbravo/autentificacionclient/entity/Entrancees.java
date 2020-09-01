@@ -81,7 +81,17 @@ public class Entrancees {
         this.iddepartament = iddepartament;
     }
 
-
+ @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Entrancees)) {
+            return false;
+        }
+      Entrancees other = (Entrancees) object;
+        if ((this.identrancees == null && other.identrancees != null) || (this.identrancees != null && !this.identrancees.equals(other.identrancees))) {
+            return false;
+        }
+        return true;
+    }
    
     
 }

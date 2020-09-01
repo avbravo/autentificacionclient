@@ -218,4 +218,16 @@ public class Boletas {
         this.active = active;
     }
 
+    
+     @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Boletas)) {
+            return false;
+        }
+        Boletas other = (Boletas) object;
+        if ((this.idboleta == null && other.idboleta != null) || (this.idboleta != null && !this.idboleta.equals(other.idboleta))) {
+            return false;
+        }
+        return true;
+    }
 }

@@ -7,63 +7,60 @@ package com.avbravo.asistenciaclient.converter;
 
 import com.avbravo.asistenciaclient.entity.Boletas;
 import com.avbravo.asistenciaclient.services.BoletasServices;
-import com.avbravo.jmoordb.util.JmoordbUtil;
 import java.util.Optional;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.convert.FacesConverter;
+import javax.faces.convert.ConverterException;
 import javax.inject.Named;
 
 /**
  *
  * @author avbravo
  */
+@RequestScoped
 @Named
-@FacesConverter( forClass=Boletas.class, managed = true)
-public class BoletasConverter implements Converter<Boletas> {
+public class BoletasConverter implements Converter{
     @Inject
     BoletasServices boletasServices;
 
-    @Override
-    public Boletas getAsObject(FacesContext fc, UIComponent uic, String string) {
-          Boletas boletas = new Boletas();
-        try {
-            if (string  == null || string.isEmpty()) {
-            return null;
+   @Override
+    public String getAsString(FacesContext context, UIComponent component, Object modelValue) {
+        if (modelValue == null) {
+            return "";
         }
-             Optional<Boletas> optional = boletasServices.findByIdboleta(Integer.parseInt(string));
-                if (optional.isPresent()) {
-                    boletas = optional.get();
-                }
-        } catch (Exception e) {
-               JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+
+        if (modelValue instanceof Boletas) {
+          return String.valueOf(((Boletas) modelValue).getIdboleta());
+        } else {
+            throw new ConverterException(new FacesMessage(modelValue + " is not a valid from Converter"));
         }
-        return boletas;
     }
 
     @Override
-    public String getAsString(FacesContext fc, UIComponent uic, Boletas t) {
-     
-       try{
-            if (t == null) {
-
-                return "";
-            }
-
-            if (t.getIdboleta()!= null) {
-
-                return t.getIdboleta().toString();
-            } else {
-
-                //JmoordbUtil.warningDialog("No es valido el id ","");
-            }
-
-        } catch (Exception e) {
-            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+    public Object getAsObject(FacesContext context, UIComponent component, String submittedValue) {
+        Boletas a = new Boletas();
+        if (boletasServices == null) {
+            System.out.println("Service is nich");
         }
-        return "";
+
+        if (submittedValue == null || submittedValue.isEmpty()) {
+            System.out.println("submitted = nil");
+            return null;
+        }
+
+        try {
+            Optional<Boletas> optional = boletasServices.findByIdboleta(Integer.parseInt(submittedValue));
+            if (optional.isPresent()) {
+                a = optional.get();
+            }
+            return a;
+        } catch (NumberFormatException e) {
+            throw new ConverterException(new FacesMessage(submittedValue + " is not a valid selecction from Converter"), e);
+        }
     }
 
 }

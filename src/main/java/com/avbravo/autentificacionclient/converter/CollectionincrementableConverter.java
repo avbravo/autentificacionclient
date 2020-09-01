@@ -6,64 +6,62 @@
 package com.avbravo.autentificacionclient.converter;
 
 import com.avbravo.autentificacionclient.entity.Collectionincrementable;
+
 import com.avbravo.autentificacionclient.services.CollectionincrementableServices;
-import com.avbravo.jmoordb.util.JmoordbUtil;
 import java.util.Optional;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.convert.FacesConverter;
+import javax.faces.convert.ConverterException;
 import javax.inject.Named;
 
 /**
  *
  * @author avbravo
  */
+@RequestScoped
 @Named
-@FacesConverter( forClass=Collectionincrementable.class, managed = true)
-public class CollectionincrementableConverter implements Converter<Collectionincrementable> {
+public class CollectionincrementableConverter implements Converter{
     @Inject
     CollectionincrementableServices collectionincrementableServices;
 
-    @Override
-    public Collectionincrementable getAsObject(FacesContext fc, UIComponent uic, String string) {
-          Collectionincrementable collectionincrementable = new Collectionincrementable();
-        try {
-            if (string  == null || string.isEmpty()) {
-            return null;
+     @Override
+    public String getAsString(FacesContext context, UIComponent component, Object modelValue) {
+        if (modelValue == null) {
+            return "";
         }
-             Optional<Collectionincrementable> optional = collectionincrementableServices.findByCollectionincrementablename(string);
-                if (optional.isPresent()) {
-                    collectionincrementable = optional.get();
-                }
-        } catch (Exception e) {
-               JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+
+        if (modelValue instanceof Collectionincrementable) {
+          return String.valueOf(((Collectionincrementable) modelValue).getCollections());
+        } else {
+            throw new ConverterException(new FacesMessage(modelValue + " is not a valid from Converter"));
         }
-        return collectionincrementable;
     }
 
     @Override
-    public String getAsString(FacesContext fc, UIComponent uic, Collectionincrementable t) {
-     
-       try{
-            if (t == null) {
-
-                return "";
-            }
-
-            if (t.getCollections()!= null) {
-
-                return t.getCollections().toString();
-            } else {
-
-                //JmoordbUtil.warningDialog("No es valido el id ","");
-            }
-
-        } catch (Exception e) {
-            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+    public Object getAsObject(FacesContext context, UIComponent component, String submittedValue) {
+        Collectionincrementable a = new Collectionincrementable();
+        if (collectionincrementableServices == null) {
+            System.out.println("Service is nich");
         }
-        return "";
+
+        if (submittedValue == null || submittedValue.isEmpty()) {
+            System.out.println("submitted = nil");
+            return null;
+        }
+
+        try {
+            Optional<Collectionincrementable> optional = collectionincrementableServices.findByCollectionincrementablename(submittedValue);
+            if (optional.isPresent()) {
+                a = optional.get();
+            }
+            return a;
+        } catch (NumberFormatException e) {
+            throw new ConverterException(new FacesMessage(submittedValue + " is not a valid selecction from Converter"), e);
+        }
     }
 
 }

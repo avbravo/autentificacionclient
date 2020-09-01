@@ -104,4 +104,17 @@ public class Profile {
         this.departament = departament;
     }
 
+    
+      @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Profile)) {
+            return false;
+        }
+        Profile other = (Profile) object;
+        if ((this.idprofile== null && other.idprofile!= null) || (this.idprofile!= null && !this.idprofile.equals(other.idprofile))) {
+            return false;
+        }
+        return true;
+    }
+
 }

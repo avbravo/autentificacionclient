@@ -5,12 +5,8 @@
  */
 package com.avbravo.autentificacionclient.entity;
 
-import com.avbravo.jmoordb.anotations.Embedded;
 import com.avbravo.jmoordb.anotations.Id;
 import com.avbravo.jmoordb.anotations.Referenced;
-import com.avbravo.jmoordb.anotations.Secondary;
-import com.avbravo.jmoordb.pojos.UserInfo;
-import java.util.List;
 
 /**
  *
@@ -72,7 +68,17 @@ public class Headquarters {
     }
 
     
- 
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Headquarters)) {
+            return false;
+        }
+       Headquarters other = (Headquarters) object;
+        if ((this.idheadquarters == null && other.idheadquarters != null) || (this.idheadquarters != null && !this.idheadquarters.equals(other.idheadquarters))) {
+            return false;
+        }
+        return true;
+    }
 
         
 }

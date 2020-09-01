@@ -129,11 +129,9 @@ public class User {
      @Override
     public boolean equals(Object object) {
         if (!(object instanceof User)) {
-            System.out.println("No es instancia");
             return false;
         }
         User other = (User) object;
-         System.out.println("Paso lo primero ");
         if ((this.iduser == null && other.iduser != null) || (this.iduser != null && !this.iduser.equals(other.iduser))) {
             return false;
         }

@@ -63,7 +63,18 @@ private List<Entrancees> entrancees;
 
 
 
-
+@Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Applicative)) {
+            return false;
+        }
+       Access other = (Access) object;
+        if ((this.idaccess == null && other.idaccess != null) || (this.idaccess != null && !this.idaccess.equals(other.idaccess))) {
+            return false;
+        }
+        return true;
+    }
+ 
 
 
     

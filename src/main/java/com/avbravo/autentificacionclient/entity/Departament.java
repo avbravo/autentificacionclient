@@ -99,7 +99,17 @@ private String isapprovalauthorityrequired;
         this.isapprovalauthorityrequired = isapprovalauthorityrequired;
     }
 
-  
+  @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Departament)) {
+            return false;
+        }
+        Departament other = (Departament) object;
+        if ((this.iddepartament == null && other.iddepartament != null) || (this.iddepartament != null && !this.iddepartament.equals(other.iddepartament))) {
+            return false;
+        }
+        return true;
+    }
  
 
 }

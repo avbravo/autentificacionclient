@@ -35,17 +35,14 @@ public class UserConverter implements Converter {
         }
 
         if (modelValue instanceof User) {
-  //          return String.valueOf(((User) modelValue).getIduser());
           return String.valueOf(((User) modelValue).getUsername());
         } else {
-            throw new ConverterException(new FacesMessage(modelValue + " is not a valid User"));
+            throw new ConverterException(new FacesMessage(modelValue + " is not a valid from Converter"));
         }
     }
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String submittedValue) {
-       // System.out.println("submitted: " + Long.valueOf(submittedValue));
-        System.out.println("submitted: " +submittedValue);
         User a = new User();
         if (userService == null) {
             System.out.println("Service is nich");
@@ -55,17 +52,15 @@ public class UserConverter implements Converter {
             System.out.println("submitted = nil");
             return null;
         }
-        System.out.println("leggie al 57");
+
         try {
-            //return em.find(UserEntity.class, Long.valueOf(submittedValue));
-            System.out.println("llegue");
             Optional<User> optional = userService.findByUsername(submittedValue);
             if (optional.isPresent()) {
                 a = optional.get();
             }
             return a;
         } catch (NumberFormatException e) {
-            throw new ConverterException(new FacesMessage(submittedValue + " is not a valid User ID"), e);
+            throw new ConverterException(new FacesMessage(submittedValue + " is not a valid selecction from Converter"), e);
         }
     }
 }

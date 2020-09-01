@@ -58,6 +58,16 @@ public class Institution {
     }
 
    
-   
+   @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Institution)) {
+            return false;
+        }
+      Institution other = (Institution) object;
+        if ((this.idinstitution == null && other.idinstitution != null) || (this.idinstitution != null && !this.idinstitution.equals(other.idinstitution))) {
+            return false;
+        }
+        return true;
+    }
 
 }

@@ -6,13 +6,17 @@
 package com.avbravo.autentificacionclient.converter;
 
 import com.avbravo.autentificacionclient.entity.Entrancees;
+import com.avbravo.autentificacionclient.entity.Entrancees;
 import com.avbravo.autentificacionclient.services.EntranceesServices;
 import com.avbravo.jmoordb.util.JmoordbUtil;
 import java.util.Optional;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Named;
 
@@ -20,50 +24,46 @@ import javax.inject.Named;
  *
  * @author avbravo
  */
+@RequestScoped
 @Named
-@FacesConverter( forClass=Entrancees.class, managed = true) 
-public class EntranceesConverter implements Converter<Entrancees> {
+public class EntranceesConverter implements Converter {
     @Inject
     EntranceesServices entranceesServices;
 
-    @Override
-    public Entrancees getAsObject(FacesContext fc, UIComponent uic, String string) {
-          Entrancees entrancees = new Entrancees();
-        try {
-            if (string  == null || string.isEmpty()) {
-            return null;
+     @Override
+    public String getAsString(FacesContext context, UIComponent component, Object modelValue) {
+        if (modelValue == null) {
+            return "";
         }
-             Optional<Entrancees> optional = entranceesServices.findByIdentrancees(Integer.parseInt(string));
-                if (optional.isPresent()) {
-                    entrancees = optional.get();
-                }
-        } catch (Exception e) {
-               JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+
+        if (modelValue instanceof Entrancees) {
+          return String.valueOf(((Entrancees) modelValue).getIdentrancees());
+        } else {
+            throw new ConverterException(new FacesMessage(modelValue + " is not a valid from Converter"));
         }
-        return entrancees;
     }
 
     @Override
-    public String getAsString(FacesContext fc, UIComponent uic, Entrancees t) {
-     
-       try{
-            if (t == null) {
-
-                return "";
-            }
-
-            if (t.getIdentrancees()!= null) {
-
-                return t.getIdentrancees().toString();
-            } else {
-
-                //JmoordbUtil.warningDialog("No es valido el id ","");
-            }
-
-        } catch (Exception e) {
-            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+    public Object getAsObject(FacesContext context, UIComponent component, String submittedValue) {
+        Entrancees a = new Entrancees();
+        if (entranceesServices == null) {
+            System.out.println("Service is nich");
         }
-        return "";
+
+        if (submittedValue == null || submittedValue.isEmpty()) {
+            System.out.println("submitted = nil");
+            return null;
+        }
+
+        try {
+            Optional<Entrancees> optional = entranceesServices.findByIdentrancees(Integer.parseInt(submittedValue));
+            if (optional.isPresent()) {
+                a = optional.get();
+            }
+            return a;
+        } catch (NumberFormatException e) {
+            throw new ConverterException(new FacesMessage(submittedValue + " is not a valid selecction from Converter"), e);
+        }
     }
 
 }

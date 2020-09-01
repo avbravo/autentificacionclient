@@ -6,13 +6,17 @@
 package com.avbravo.autentificacionclient.converter;
 
 import com.avbravo.autentificacionclient.entity.Institution;
+import com.avbravo.autentificacionclient.entity.Institution;
 import com.avbravo.autentificacionclient.services.InstitutionServices;
 import com.avbravo.jmoordb.util.JmoordbUtil;
 import java.util.Optional;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Named;
 
@@ -20,51 +24,47 @@ import javax.inject.Named;
  *
  * @author avbravo
  */
+@RequestScoped
 @Named
-@FacesConverter( forClass=Institution.class, managed = true)
-public class InstitutionConverter implements Converter<Institution> {
+public class InstitutionConverter implements Converter {
 
     @Inject
     InstitutionServices institutionServices;
 
     @Override
-    public Institution getAsObject(FacesContext fc, UIComponent uic, String string) {
-          Institution institution = new Institution();
-        try {
-            if (string  == null || string.isEmpty()) {
-            return null;
+    public String getAsString(FacesContext context, UIComponent component, Object modelValue) {
+        if (modelValue == null) {
+            return "";
         }
-             Optional<Institution> optional = institutionServices.findByIdinstitution(Integer.parseInt(string));
-                if (optional.isPresent()) {
-                    institution = optional.get();
-                }
-        } catch (Exception e) {
-               JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+
+        if (modelValue instanceof Institution) {
+          return String.valueOf(((Institution) modelValue).getIdinstitution());
+        } else {
+            throw new ConverterException(new FacesMessage(modelValue + " is not a valid from Converter"));
         }
-        return institution;
     }
 
     @Override
-    public String getAsString(FacesContext fc, UIComponent uic, Institution t) {
-     
-       try{
-            if (t == null) {
-
-                return "";
-            }
-
-            if (t.getIdinstitution()!= null) {
-
-                return t.getIdinstitution().toString();
-            } else {
-
-                //JmoordbUtil.warningDialog("No es valido el id ","");
-            }
-
-        } catch (Exception e) {
-            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+    public Object getAsObject(FacesContext context, UIComponent component, String submittedValue) {
+        Institution a = new Institution();
+        if (institutionServices == null) {
+            System.out.println("Service is nich");
         }
-        return "";
+
+        if (submittedValue == null || submittedValue.isEmpty()) {
+            System.out.println("submitted = nil");
+            return null;
+        }
+
+        try {
+            Optional<Institution> optional = institutionServices.findByIdinstitution(Integer.parseInt(submittedValue));
+            if (optional.isPresent()) {
+                a = optional.get();
+            }
+            return a;
+        } catch (NumberFormatException e) {
+            throw new ConverterException(new FacesMessage(submittedValue + " is not a valid selecction from Converter"), e);
+        }
     }
 
 

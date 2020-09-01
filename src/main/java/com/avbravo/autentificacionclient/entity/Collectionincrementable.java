@@ -40,6 +40,17 @@ public class Collectionincrementable {
         this.count = count;
     }
    
-   
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Collectionincrementable)) {
+            return false;
+        }
+       Collectionincrementable  other = (Collectionincrementable) object;
+        if ((this.collections == null && other.collections != null) || (this.collections != null && !this.collections.equals(other.collections))) {
+            return false;
+        }
+        return true;
+    }
+ 
    
 }

@@ -6,67 +6,61 @@
 package com.avbravo.autentificacionclient.converter;
 
 import com.avbravo.autentificacionclient.entity.Departament;
+import com.avbravo.autentificacionclient.entity.Entrancees;
 import com.avbravo.autentificacionclient.services.DepartamentServices;
-import com.avbravo.jmoordb.util.JmoordbUtil;
 import java.util.Optional;
-import javax.inject.Inject;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.convert.FacesConverter;
+import javax.faces.convert.ConverterException;
 import javax.inject.Named;
-import javax.naming.InitialContext;
 
 /**
  *
  * @author avbravo
  */
+@RequestScoped
 @Named
-@FacesConverter( forClass=Departament.class, managed = true)
-public class DepartamentConverter implements Converter<Departament> { 
-    @Inject
+public class DepartamentConverter implements Converter{ 
+
     DepartamentServices departamentServices;
-    private InitialContext ic;
+     @Override
+    public String getAsString(FacesContext context, UIComponent component, Object modelValue) {
+        if (modelValue == null) {
+            return "";
+        }
+
+        if (modelValue instanceof Departament) {
+          return String.valueOf(((Departament) modelValue).getIddepartament());
+        } else {
+            throw new ConverterException(new FacesMessage(modelValue + " is not a valid from Converter"));
+        }
+    }
+
     @Override
-    public Departament getAsObject(FacesContext fc, UIComponent uic, String string) {
-          Departament departament = new Departament();
-        try {
-            if (string  == null || string.isEmpty()) {
+    public Object getAsObject(FacesContext context, UIComponent component, String submittedValue) {
+        Departament a = new Departament();
+        if (departamentServices == null) {
+            System.out.println("Service is nich");
+        }
+
+        if (submittedValue == null || submittedValue.isEmpty()) {
+            System.out.println("submitted = nil");
             return null;
         }
-             DepartamentServices departamentServices2  = (DepartamentServices)ic.lookup("java:module/DeoartamentServices");
-             Optional<Departament> optional = departamentServices2.findByIddepartament(Integer.parseInt(string));
-                if (optional.isPresent()) {
-                    departament = optional.get();
-                }
-        } catch (Exception e) {
-               JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+
+        try {
+            Optional<Departament> optional = departamentServices.findByIddepartament(Integer.parseInt(submittedValue));
+            if (optional.isPresent()) {
+                a = optional.get();
+            }
+            return a;
+        } catch (NumberFormatException e) {
+            throw new ConverterException(new FacesMessage(submittedValue + " is not a valid selecction from Converter"), e);
         }
-        System.out.println(">>>>>>>>> departament found "+departament.getDepartament());
-        return departament;
     }
 
-    @Override
-    public String getAsString(FacesContext fc, UIComponent uic, Departament t) {
-     
-       try{
-            if (t == null) {
-
-                return "";
-            }
-
-            if (t.getIddepartament()!= null) {
-
-                return t.getIddepartament().toString();
-            } else {
-
-                //JmoordbUtil.warningDialog("No es valido el id ","");
-            }
-
-        } catch (Exception e) {
-            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
-        }
-        return "";
-    }
 
 }

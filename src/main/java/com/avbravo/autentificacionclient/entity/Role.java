@@ -72,6 +72,16 @@ public class Role {
     }
 
     
-    
+     @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Role)) {
+            return false;
+        }
+        Role other = (Role) object;
+        if ((this.idrole == null && other.idrole != null) || (this.idrole != null && !this.idrole.equals(other.idrole))) {
+            return false;
+        }
+        return true;
+    }
 
 }

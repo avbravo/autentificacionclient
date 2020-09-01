@@ -95,7 +95,18 @@ public class Applicative {
     }
 
    
-
+@Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Applicative)) {
+            return false;
+        }
+       Applicative other = (Applicative) object;
+        if ((this.idapplicative == null && other.idapplicative != null) || (this.idapplicative != null && !this.idapplicative.equals(other.idapplicative))) {
+            return false;
+        }
+        return true;
+    }
+ 
   
    
   
