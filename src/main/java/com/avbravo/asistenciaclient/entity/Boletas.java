@@ -43,6 +43,7 @@ public class Boletas {
     private String tipojustificacon;
     private String estadounidad;
     private String estadoautoridad;
+      private String gradoconsanguinidad;
     @Embedded
     private List<Autorizacionhistorial> autorizacionhistorial;
     @Embedded
@@ -74,6 +75,14 @@ public class Boletas {
 
     public void setCaptadoensistemaaistencia(Boolean captadoensistemaaistencia) {
         this.captadoensistemaaistencia = captadoensistemaaistencia;
+    }
+
+    public String getGradoconsanguinidad() {
+        return gradoconsanguinidad;
+    }
+
+    public void setGradoconsanguinidad(String gradoconsanguinidad) {
+        this.gradoconsanguinidad = gradoconsanguinidad;
     }
 
    
