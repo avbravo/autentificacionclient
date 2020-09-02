@@ -62,7 +62,6 @@ private List<Entrancees> entrancees;
 
 
 
-
 @Override
     public boolean equals(Object object) {
         if (!(object instanceof Applicative)) {
@@ -74,7 +73,7 @@ private List<Entrancees> entrancees;
         }
         return true;
     }
- 
+
 
 
     

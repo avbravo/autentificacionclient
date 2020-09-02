@@ -21,18 +21,21 @@ public class Role {
     private Integer idrole;
     @Secondary
     private String role;
-    private String active;
+    private Boolean active;
+
     private String isauthority;
 
     public Role() {
     }
 
-    public Role(Integer idrole, String role, String active, String isauthority) {
+    public Role(Integer idrole, String role, Boolean active, String isauthority) {
         this.idrole = idrole;
         this.role = role;
         this.active = active;
         this.isauthority = isauthority;
     }
+
+  
 
     public String getIsauthority() {
         return isauthority;
@@ -63,15 +66,16 @@ public class Role {
         this.role = role;
     }
 
-    public String getActive() {
+    public Boolean getActive() {
         return active;
     }
 
-    public void setActive(String active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 
-    
+   
+
      @Override
     public boolean equals(Object object) {
         if (!(object instanceof Role)) {
@@ -83,5 +87,8 @@ public class Role {
         }
         return true;
     }
+
+    
+    
 
 }

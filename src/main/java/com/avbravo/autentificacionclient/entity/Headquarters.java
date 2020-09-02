@@ -5,8 +5,12 @@
  */
 package com.avbravo.autentificacionclient.entity;
 
+import com.avbravo.jmoordb.anotations.Embedded;
 import com.avbravo.jmoordb.anotations.Id;
 import com.avbravo.jmoordb.anotations.Referenced;
+import com.avbravo.jmoordb.anotations.Secondary;
+import com.avbravo.jmoordb.pojos.UserInfo;
+import java.util.List;
 
 /**
  *
@@ -23,17 +27,18 @@ public class Headquarters {
             repository = "com.avbravo.autentificacion.repository.InstitutionRepository")
     Institution institution;
 
-    private String active;
+    private Boolean active;
 
     public Headquarters() {
     }
 
-    public Headquarters(Integer idheadquarters, String headquarters, Institution institution, String active) {
+    public Headquarters(Integer idheadquarters, String headquarters, Institution institution, Boolean active) {
         this.idheadquarters = idheadquarters;
         this.headquarters = headquarters;
         this.institution = institution;
         this.active = active;
     }
+
 
     public Integer getIdheadquarters() {
         return idheadquarters;
@@ -59,13 +64,15 @@ public class Headquarters {
         this.institution = institution;
     }
 
-    public String getActive() {
+    public Boolean getActive() {
         return active;
     }
 
-    public void setActive(String active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
+
+   
 
     
     @Override

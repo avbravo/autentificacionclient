@@ -21,7 +21,7 @@ public class Profile {
     private Integer idrole;
     private Integer iddepartament;
 
-    private String active;
+    private Boolean active;
     @Ignore
     Applicative applicative;
     @Ignore
@@ -32,13 +32,18 @@ public class Profile {
     public Profile() {
     }
 
-    public Profile(Integer idprofile, Integer idapplicative, Integer idrole, Integer iddepartament, String active) {
+    public Profile(Integer idprofile, Integer idapplicative, Integer idrole, Integer iddepartament, Boolean active, Applicative applicative, Role role, Departament departament) {
         this.idprofile = idprofile;
         this.idapplicative = idapplicative;
         this.idrole = idrole;
         this.iddepartament = iddepartament;
         this.active = active;
+        this.applicative = applicative;
+        this.role = role;
+        this.departament = departament;
     }
+
+ 
 
     public Integer getIdprofile() {
         return idprofile;
@@ -72,13 +77,15 @@ public class Profile {
         this.iddepartament = iddepartament;
     }
 
-    public String getActive() {
+    public Boolean getActive() {
         return active;
     }
 
-    public void setActive(String active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
+
+    
 
     public Applicative getApplicative() {
         return applicative;
@@ -103,9 +110,7 @@ public class Profile {
     public void setDepartament(Departament departament) {
         this.departament = departament;
     }
-
-    
-      @Override
+  @Override
     public boolean equals(Object object) {
         if (!(object instanceof Profile)) {
             return false;

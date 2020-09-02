@@ -40,7 +40,8 @@ public class Collectionincrementable {
         this.count = count;
     }
    
-    @Override
+   
+   @Override
     public boolean equals(Object object) {
         if (!(object instanceof Collectionincrementable)) {
             return false;

@@ -7,7 +7,11 @@ package com.avbravo.autentificacionclient.entity;
 
 import com.avbravo.jmoordb.anotations.Embedded;
 import com.avbravo.jmoordb.anotations.Id;
+import com.avbravo.jmoordb.anotations.Referenced;
+import com.avbravo.jmoordb.anotations.Secondary;
+import com.avbravo.jmoordb.pojos.UserInfo;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -25,16 +29,19 @@ public class User {
     private String cellphone;
     private String sex;
     private String photo;
+    private String identificationcard;
+    private String socialsecuritynumber;
+    
 
     @Embedded
     private List<Profile> profile;
 
-    private String active;
+    private Boolean active;
 
     public User() {
     }
 
-    public User(Integer iduser, String username, String password, String name, String email, String cellphone, String sex, String photo, List<Profile> profile, String active) {
+    public User(Integer iduser, String username, String password, String name, String email, String cellphone, String sex, String photo, List<Profile> profile, Boolean active) {
         this.iduser = iduser;
         this.username = username;
         this.password = password;
@@ -47,6 +54,10 @@ public class User {
         this.active = active;
     }
 
+  
+    
+    
+    
     public String getPhoto() {
         return photo;
     }
@@ -55,6 +66,11 @@ public class User {
         this.photo = photo;
     }
 
+  
+    
+    
+    
+    
     public String getSex() {
         return sex;
     }
@@ -62,6 +78,11 @@ public class User {
     public void setSex(String sex) {
         this.sex = sex;
     }
+
+  
+    
+    
+    
 
     public Integer getIduser() {
         return iduser;
@@ -119,14 +140,16 @@ public class User {
         this.profile = profile;
     }
 
-    public String getActive() {
+    public Boolean getActive() {
         return active;
     }
 
-    public void setActive(String active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
-     @Override
+
+   
+ @Override
     public boolean equals(Object object) {
         if (!(object instanceof User)) {
             return false;
@@ -137,5 +160,5 @@ public class User {
         }
         return true;
     }
-
+    
 }

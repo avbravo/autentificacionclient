@@ -49,14 +49,36 @@ public class Boletas {
     private String numeroincapadicadsalud;
     private String tipojustificacionsalud;
 
-    private String active;
+    private Boolean active;
     
     private Boolean captadoensistemaaistencia;
     @Ignore
     private Boolean  essekeccionada;
-
     public Boletas() {
     }
+
+    public Boolean getEssekeccionada() {
+        return essekeccionada;
+    }
+
+    public void setEssekeccionada(Boolean essekeccionada) {
+        this.essekeccionada = essekeccionada;
+    }
+
+  
+    
+    
+    public Boolean getCaptadoensistemaaistencia() {
+        return captadoensistemaaistencia;
+    }
+
+    public void setCaptadoensistemaaistencia(Boolean captadoensistemaaistencia) {
+        this.captadoensistemaaistencia = captadoensistemaaistencia;
+    }
+
+   
+
+   
 
     public Integer getIdboleta() {
         return idboleta;
@@ -194,31 +216,16 @@ public class Boletas {
         this.tipojustificacionsalud = tipojustificacionsalud;
     }
 
-    public String getActive() {
+    public Boolean getActive() {
         return active;
     }
 
-    public void setActive(String active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 
-    public Boolean getCaptadoensistemaaistencia() {
-        return captadoensistemaaistencia;
-    }
+  
 
-    public void setCaptadoensistemaaistencia(Boolean captadoensistemaaistencia) {
-        this.captadoensistemaaistencia = captadoensistemaaistencia;
-    }
-
-    public Boolean getEssekeccionada() {
-        return essekeccionada;
-    }
-
-    public void setEssekeccionada(Boolean essekeccionada) {
-        this.essekeccionada = essekeccionada;
-    }
-
-   
     @Override
     public boolean equals(Object object) {
         if (!(object instanceof Boletas)) {
@@ -230,4 +237,5 @@ public class Boletas {
         }
         return true;
     }
+
 }

@@ -81,6 +81,7 @@ public class Entrancees {
         this.iddepartament = iddepartament;
     }
 
+   
  @Override
     public boolean equals(Object object) {
         if (!(object instanceof Entrancees)) {

@@ -19,7 +19,7 @@ public class Departament {
     private Integer iddepartament;
     @Secondary
     private String departament;
-    private String active;
+    private Boolean active;
     private String shortname;
    
 @Referenced(collection = "Headquarters",
@@ -33,7 +33,7 @@ private String isapprovalauthorityrequired;
     public Departament() {
     }
 
-    public Departament(Integer iddepartament, String departament, String active, String shortname, Headquarters headquarters, String isapprovalchietunitrequired, String isapprovalauthorityrequired) {
+    public Departament(Integer iddepartament, String departament, Boolean active, String shortname, Headquarters headquarters, String isapprovalchietunitrequired, String isapprovalauthorityrequired) {
         this.iddepartament = iddepartament;
         this.departament = departament;
         this.active = active;
@@ -59,11 +59,11 @@ private String isapprovalauthorityrequired;
         this.departament = departament;
     }
 
-    public String getActive() {
+    public Boolean getActive() {
         return active;
     }
 
-    public void setActive(String active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 
@@ -99,7 +99,9 @@ private String isapprovalauthorityrequired;
         this.isapprovalauthorityrequired = isapprovalauthorityrequired;
     }
 
-  @Override
+  
+  
+ @Override
     public boolean equals(Object object) {
         if (!(object instanceof Departament)) {
             return false;
@@ -110,6 +112,5 @@ private String isapprovalauthorityrequired;
         }
         return true;
     }
- 
 
 }

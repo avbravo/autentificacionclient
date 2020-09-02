@@ -21,14 +21,14 @@ public class Applicative {
     private String path;
     private String image;
     private String description;
-    private String active;
+    private Boolean active;
     private String shortname;
   
   
     public Applicative() {
     }
 
-    public Applicative(Integer idapplicative, String applicative, String path, String image, String description, String active, String shortname) {
+    public Applicative(Integer idapplicative, String applicative, String path, String image, String description, Boolean active, String shortname) {
         this.idapplicative = idapplicative;
         this.applicative = applicative;
         this.path = path;
@@ -37,6 +37,7 @@ public class Applicative {
         this.active = active;
         this.shortname = shortname;
     }
+
 
     public Integer getIdapplicative() {
         return idapplicative;
@@ -78,13 +79,15 @@ public class Applicative {
         this.description = description;
     }
 
-    public String getActive() {
+    public Boolean getActive() {
         return active;
     }
 
-    public void setActive(String active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
+
+  
 
     public String getShortname() {
         return shortname;
@@ -94,8 +97,7 @@ public class Applicative {
         this.shortname = shortname;
     }
 
-   
-@Override
+   @Override
     public boolean equals(Object object) {
         if (!(object instanceof Applicative)) {
             return false;
@@ -107,6 +109,7 @@ public class Applicative {
         return true;
     }
  
+
   
    
   

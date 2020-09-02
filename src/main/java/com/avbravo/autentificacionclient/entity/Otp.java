@@ -72,9 +72,7 @@ public class Otp {
     public void setUsed(String used) {
         this.used = used;
     }
-
-   
-    @Override
+ @Override
     public boolean equals(Object object) {
         if (!(object instanceof Otp)) {
             return false;
@@ -86,5 +84,7 @@ public class Otp {
         return true;
     }
 
+   
+  
   
 }

@@ -21,17 +21,19 @@ public class Institution {
     private Integer idinstitution;
     @Secondary
     private String institution;
-    private String active;
+    private Boolean active;
   
 
     public Institution() {
     }
 
-    public Institution(Integer idinstitution, String institution, String active) {
+    public Institution(Integer idinstitution, String institution, Boolean active) {
         this.idinstitution = idinstitution;
         this.institution = institution;
         this.active = active;
     }
+
+   
 
     public Integer getIdinstitution() {
         return idinstitution;
@@ -49,16 +51,16 @@ public class Institution {
         this.institution = institution;
     }
 
-    public String getActive() {
+    public Boolean getActive() {
         return active;
     }
 
-    public void setActive(String active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 
-   
-   @Override
+ 
+    @Override
     public boolean equals(Object object) {
         if (!(object instanceof Institution)) {
             return false;
@@ -69,5 +71,6 @@ public class Institution {
         }
         return true;
     }
+   
 
 }
