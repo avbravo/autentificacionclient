@@ -9,6 +9,7 @@ import com.avbravo.autentificacionclient.entity.Departament;
 import com.avbravo.autentificacionclient.entity.User;
 import com.avbravo.jmoordb.anotations.Embedded;
 import com.avbravo.jmoordb.anotations.Id;
+import com.avbravo.jmoordb.anotations.Ignore;
 import com.avbravo.jmoordb.anotations.Referenced;
 import java.util.Date;
 import java.util.List;
@@ -49,29 +50,12 @@ public class Boletas {
     private String tipojustificacionsalud;
 
     private String active;
+    
+    private Boolean captadoensistemaaistencia;
+    @Ignore
+    private Boolean  essekeccionada;
 
     public Boletas() {
-    }
-
-    public Boletas(Integer idboleta, Date fecha, User user, Departament departament, String archivo, String archivo2, String archivo3, String tipoboleta, Date fechainicial, Date fechafinal, String observacion, String tipojustificacon, String estadounidad, String estadoautoridad, List<Autorizacionhistorial> autorizacionhistorial, String numeroincapadicadsalud, String tipojustificacionsalud, String active) {
-        this.idboleta = idboleta;
-        this.fecha = fecha;
-        this.user = user;
-        this.departament = departament;
-        this.archivo = archivo;
-        this.archivo2 = archivo2;
-        this.archivo3 = archivo3;
-        this.tipoboleta = tipoboleta;
-        this.fechainicial = fechainicial;
-        this.fechafinal = fechafinal;
-        this.observacion = observacion;
-        this.tipojustificacon = tipojustificacon;
-        this.estadounidad = estadounidad;
-        this.estadoautoridad = estadoautoridad;
-        this.autorizacionhistorial = autorizacionhistorial;
-        this.numeroincapadicadsalud = numeroincapadicadsalud;
-        this.tipojustificacionsalud = tipojustificacionsalud;
-        this.active = active;
     }
 
     public Integer getIdboleta() {
@@ -218,8 +202,24 @@ public class Boletas {
         this.active = active;
     }
 
-    
-     @Override
+    public Boolean getCaptadoensistemaaistencia() {
+        return captadoensistemaaistencia;
+    }
+
+    public void setCaptadoensistemaaistencia(Boolean captadoensistemaaistencia) {
+        this.captadoensistemaaistencia = captadoensistemaaistencia;
+    }
+
+    public Boolean getEssekeccionada() {
+        return essekeccionada;
+    }
+
+    public void setEssekeccionada(Boolean essekeccionada) {
+        this.essekeccionada = essekeccionada;
+    }
+
+   
+    @Override
     public boolean equals(Object object) {
         if (!(object instanceof Boletas)) {
             return false;
