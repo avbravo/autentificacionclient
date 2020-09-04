@@ -256,6 +256,38 @@ public class BoletasServices implements Serializable {
         return suggestions;
     }
     // </editor-fold>
+     // <editor-fold defaultstate="collapsed" desc="List<Boletas> findByIdDepartament(Integer iddepartament) ">
+    public List<Boletas> findByIdDepartament(Integer iddepartament) {
+        List<Boletas> suggestions = new ArrayList<>();
+        try {
+
+          
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/filterbyiddepartament/")
+                    .path("/{iddepartament}")
+                    .resolveTemplate("iddepartament", iddepartament)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Boletas>>() {
+                    });
+
+        } catch (Exception e) {
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println("findByIdDepartament) " + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog("findByIdDepartament)", e.getLocalizedMessage());
+        }
+
+        return suggestions;
+    }
+    // </editor-fold>
+    
+    
+    
+    
+    
+    
+    
 
     // <editor-fold defaultstate="collapsed" desc="String showDate(Date date)">
     public String showDate(Date date) {
