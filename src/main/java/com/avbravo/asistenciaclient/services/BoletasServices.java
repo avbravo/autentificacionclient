@@ -201,38 +201,7 @@ public class BoletasServices implements Serializable {
     }
 
     // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="Boletas findByBoleta(Integer idboleta) ">
-    /**
-     * consulta por codigo_pedido impresa
-     *
-     * @param codigo_
-     * @return
-     */
-    public List<Boletas> findByIddepartament(Integer iddepartament) {
-        List<Boletas> boletasList = new ArrayList<>();
-        try {
-
-//            Client client = ClientBuilder.newClient();
-//            client.register(authentificationProducer.httpAuthenticationFeature());
-//              WebTarget target = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/findall");
-//            boletas = client
-//                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/search/")
-//                    .path("/{idboleta}")
-//                    .resolveTemplate("idboleta", idboleta)
-//                    .request(MediaType.APPLICATION_JSON)
-//                    .get(Boletas.class
-//                    );
-//            
-//             GenericType<List<Boletas>> data = new GenericType<List<Boletas>>() {
-//            };
-//   boletasList = target.request(MediaType.APPLICATION_JSON).get(data);
-        } catch (Exception e) {
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("findByidboletas() " + e.getLocalizedMessage());
-        }
-        return boletasList;
-    }
-    // </editor-fold>
+  
 
     // <editor-fold defaultstate="collapsed" desc="List<Boletas> complete( String query)">
     public List<Boletas> complete(String query) {
@@ -256,6 +225,32 @@ public class BoletasServices implements Serializable {
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("complete() " + e.getLocalizedMessage());
             JmoordbUtil.errorDialog("complete()", e.getLocalizedMessage());
+        }
+
+        return suggestions;
+    }
+    // </editor-fold>
+
+     // <editor-fold defaultstate="collapsed" desc="List<Boletas> findByUsername(String username)">
+    public List<Boletas> findByUsername(String username) {
+        List<Boletas> suggestions = new ArrayList<>();
+        try {
+
+          
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/filterbyusername/")
+                    .path("/{username}")
+                    .resolveTemplate("username", username)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Boletas>>() {
+                    });
+
+        } catch (Exception e) {
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println("findByUsername) " + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog("findByUsername)", e.getLocalizedMessage());
         }
 
         return suggestions;

@@ -57,6 +57,9 @@ public class Boletas {
     private Boolean  essekeccionada;
     public Boletas() {
     }
+    
+    
+    
 
     public Boolean getEssekeccionada() {
         return essekeccionada;
