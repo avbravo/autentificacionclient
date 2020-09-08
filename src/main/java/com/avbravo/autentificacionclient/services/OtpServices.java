@@ -35,7 +35,8 @@ public class OtpServices implements Serializable {
     private static final String PASS = "pass";
     private static final String FAIL = "fail";
     private static final String SUCCESS_RESULT = "<result>success</result>";
-
+  Exception exception;
+  
     @Inject
     MicroservicesProducer microservicesProducer;
 
@@ -57,6 +58,7 @@ public class OtpServices implements Serializable {
             otpList = target.request(MediaType.APPLICATION_JSON).get(data);
 
         } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("findAll()" + e.getLocalizedMessage());
         }
@@ -83,6 +85,7 @@ public class OtpServices implements Serializable {
             ));
             return true;
         } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("errort" + e.getLocalizedMessage());
         }
@@ -109,6 +112,7 @@ public class OtpServices implements Serializable {
             ));
             return true;
         } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("errort" + e.getLocalizedMessage());
         }
@@ -135,6 +139,7 @@ public class OtpServices implements Serializable {
             ));
             return true;
         } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("errort" + e.getLocalizedMessage());
         }
@@ -165,6 +170,7 @@ public class OtpServices implements Serializable {
             return Optional.of(otp);
             //String result = FAIL;
         } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("findByidotp() " + e.getLocalizedMessage());
         }
@@ -191,6 +197,7 @@ public class OtpServices implements Serializable {
                     });
 
         } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("complete() " + e.getLocalizedMessage());
             JmoordbUtil.errorDialog("complete()", e.getLocalizedMessage());

@@ -35,7 +35,9 @@ public class RoleServices implements Serializable {
     private static final String PASS = "pass";
     private static final String FAIL = "fail";
     private static final String SUCCESS_RESULT = "<result>success</result>";
+  Exception exception;
 
+  
     @Inject
     MicroservicesProducer microservicesProducer;
 
@@ -57,6 +59,7 @@ public class RoleServices implements Serializable {
             roleList = target.request(MediaType.APPLICATION_JSON).get(data);
 
         } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("findAll()" + e.getLocalizedMessage());
         }
@@ -83,6 +86,7 @@ public class RoleServices implements Serializable {
             ));
             return true;
         } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("errort" + e.getLocalizedMessage());
         }
@@ -109,6 +113,7 @@ public class RoleServices implements Serializable {
             ));
             return true;
         } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("errort" + e.getLocalizedMessage());
         }
@@ -135,6 +140,7 @@ public class RoleServices implements Serializable {
             ));
             return true;
         } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("errort" + e.getLocalizedMessage());
         }
@@ -165,6 +171,7 @@ public class RoleServices implements Serializable {
             return Optional.of(role);
             //String result = FAIL;
         } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("findByIdapplicativ() " + e.getLocalizedMessage());
         }
@@ -191,6 +198,7 @@ public class RoleServices implements Serializable {
                     });
 
         } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("complete() " + e.getLocalizedMessage());
             JmoordbUtil.errorDialog("complete()", e.getLocalizedMessage());

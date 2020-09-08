@@ -35,7 +35,7 @@ public class DepartamentServices implements Serializable {
     private static final String PASS = "pass";
     private static final String FAIL = "fail";
     private static final String SUCCESS_RESULT = "<result>success</result>";
-
+  Exception exception;
     @Inject
     MicroservicesProducer microservicesProducer;
 
@@ -57,6 +57,7 @@ public class DepartamentServices implements Serializable {
             departamentList = target.request(MediaType.APPLICATION_JSON).get(data);
 
         } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("findAll()" + e.getLocalizedMessage());
         }
@@ -82,7 +83,8 @@ public class DepartamentServices implements Serializable {
             System.out.println(response.readEntity(String.class
             ));
             return true;
-        } catch (Exception e) {
+        } catch (Exception e) { 
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("errort" + e.getLocalizedMessage());
         }
@@ -109,6 +111,7 @@ public class DepartamentServices implements Serializable {
             ));
             return true;
         } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("errort" + e.getLocalizedMessage());
         }
@@ -135,6 +138,7 @@ public class DepartamentServices implements Serializable {
             ));
             return true;
         } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("errort" + e.getLocalizedMessage());
         }
@@ -165,6 +169,7 @@ public class DepartamentServices implements Serializable {
             return Optional.of(departament);
             //String result = FAIL;
         } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("findByiddepartament() " + e.getLocalizedMessage());
         }
@@ -191,6 +196,7 @@ public class DepartamentServices implements Serializable {
                     });
 
         } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("complete() " + e.getLocalizedMessage());
             JmoordbUtil.errorDialog("complete()", e.getLocalizedMessage());

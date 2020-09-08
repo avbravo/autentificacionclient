@@ -32,7 +32,7 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 public class BoletasServices implements Serializable {
-// <editor-fold defaultstate="collapsed" desc=" metodo()">
+// <editor-fold defaultstate="collapsed" desc=" field()">
 
     String directoryLogger = JmoordbUtil.isLinux() ? JmoordbUtil.userHome() + JmoordbUtil.fileSeparator() + "autentificacionclient" + JmoordbUtil.fileSeparator() + "logs" + JmoordbUtil.fileSeparator() + "logger.json" : "C:\\autentificacionclient\\logs\\logger.json";
     private static final String PASS = "pass";
