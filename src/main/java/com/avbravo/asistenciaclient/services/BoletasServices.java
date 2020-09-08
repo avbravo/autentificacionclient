@@ -63,7 +63,7 @@ public class BoletasServices implements Serializable {
             boletasList = target.request(MediaType.APPLICATION_JSON).get(data);
 
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + ex.getLocalizedMessage());
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("findAll()" + e.getLocalizedMessage());
         }
@@ -91,7 +91,7 @@ public class BoletasServices implements Serializable {
 
             return true;
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + ex.getLocalizedMessage());
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("errort" + e.getLocalizedMessage());
         }
@@ -119,7 +119,7 @@ public class BoletasServices implements Serializable {
             //  System.out.println("Response " + response.readEntity(String.class));
             return true;
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + ex.getLocalizedMessage());
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             System.out.println("update" + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
 
@@ -169,12 +169,12 @@ public class BoletasServices implements Serializable {
 
             //  System.out.println("*** Call result = " + callResult);
             if (callResult.equals("<result>success</result>")) {
-                exception = new Exception(response.readEntity(String.class));
+                 // exception = new Exception(response.readEntity(String.class));
                 return true;
             }
 
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + ex.getLocalizedMessage());
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("errort" + e.getLocalizedMessage());
         }
@@ -205,7 +205,7 @@ public class BoletasServices implements Serializable {
             return Optional.of(boletas);
             //String result = FAIL;
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + ex.getLocalizedMessage());
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("findByidboletas() " + e.getLocalizedMessage());
         }
@@ -232,7 +232,7 @@ public class BoletasServices implements Serializable {
                     });
 
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + ex.getLocalizedMessage());
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("complete() " + e.getLocalizedMessage());
             JmoordbUtil.errorDialog("complete()", e.getLocalizedMessage());
@@ -258,7 +258,7 @@ public class BoletasServices implements Serializable {
                     });
 
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + ex.getLocalizedMessage());
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("findByUsername) " + e.getLocalizedMessage());
             JmoordbUtil.errorDialog("findByUsername)", e.getLocalizedMessage());
@@ -284,7 +284,7 @@ public class BoletasServices implements Serializable {
                     });
 
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + ex.getLocalizedMessage());
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("findByIdDepartament) " + e.getLocalizedMessage());
             JmoordbUtil.errorDialog("findByIdDepartament)", e.getLocalizedMessage());
@@ -313,7 +313,7 @@ public class BoletasServices implements Serializable {
                     });
 
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + ex.getLocalizedMessage());
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
@@ -329,7 +329,7 @@ public class BoletasServices implements Serializable {
         try {
             h = JmoordbDateUtil.dateFormatToString(date, "dd/MM/yyyy");
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + ex.getLocalizedMessage());
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.errorMessage("showDate() " + e.getLocalizedMessage());
         }
         return h;
@@ -341,7 +341,7 @@ public class BoletasServices implements Serializable {
         try {
             h = JmoordbDateUtil.hourFromDateToString(date);
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + ex.getLocalizedMessage());
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.errorMessage("showHour() " + e.getLocalizedMessage());
         }
         return h;
