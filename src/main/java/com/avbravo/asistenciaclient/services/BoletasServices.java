@@ -79,6 +79,8 @@ public class BoletasServices implements Serializable {
             Response response = invocationBuilder.post(Entity.entity(boletas, MediaType.APPLICATION_JSON));
 
             System.out.println(response.getStatus());
+              System.out.println(response.readEntity(String.class
+            ));
             if (response.getStatus() == 400) {
                 return false;
             }
@@ -276,6 +278,34 @@ public class BoletasServices implements Serializable {
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("findByIdDepartament) " + e.getLocalizedMessage());
             JmoordbUtil.errorDialog("findByIdDepartament)", e.getLocalizedMessage());
+        }
+
+        return suggestions;
+    }
+    // </editor-fold>
+    
+     // <editor-fold defaultstate="collapsed" desc="List<Boletas> betweendate( String fieldstart, String start, String fieldend,String end)">
+    public List<Boletas> betweendate( String fieldstart, String start, String fieldend,String end){
+        List<Boletas> suggestions = new ArrayList<>();
+        try {
+
+            System.out.println("-------invocare microservices");
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                   .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/betweendate/")
+                   .queryParam("fieldstart",fieldstart )
+                     .queryParam("start", start)
+                     .queryParam("fieldend", fieldend)
+                     .queryParam("end", end)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Boletas>>() {
+                    });
+
+        } catch (Exception e) {
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println(JmoordbUtil.nameOfMethod()+ " " + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
         }
 
         return suggestions;

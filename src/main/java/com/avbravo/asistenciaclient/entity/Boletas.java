@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class Boletas {
 
-    @Id
+   @Id
     private Integer idboleta;
     private Date fecha;
     @Referenced(collection = "User",
@@ -43,7 +43,7 @@ public class Boletas {
     private String tipojustificacon;
     private String estadounidad;
     private String estadoautoridad;
-      private String gradoconsanguinidad;
+    private String gradoconsanguinidad;
     @Embedded
     private List<Autorizacionhistorial> autorizacionhistorial;
     @Embedded
@@ -57,9 +57,6 @@ public class Boletas {
     private Boolean  essekeccionada;
     public Boletas() {
     }
-    
-    
-    
 
     public Boolean getEssekeccionada() {
         return essekeccionada;
