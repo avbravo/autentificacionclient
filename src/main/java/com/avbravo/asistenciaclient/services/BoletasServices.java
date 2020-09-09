@@ -298,8 +298,8 @@ public class BoletasServices implements Serializable {
     public List<Boletas> betweendate(String fieldstart, String start, String fieldend, String end) {
         List<Boletas> suggestions = new ArrayList<>();
         try {
-
-            System.out.println("-------invocare microservices");
+System.out.println("----------------------------------------------------------");
+            System.out.println("---SERVICES ----"+start + " end "+end);
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
