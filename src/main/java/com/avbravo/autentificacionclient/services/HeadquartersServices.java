@@ -41,6 +41,18 @@ public class HeadquartersServices implements Serializable {
 
     @Inject
     AuthentificationProducer authentificationProducer;
+     // <editor-fold defaultstate="collapsed" desc=" set/get)">
+    
+    
+    public Exception getException() {
+        return exception;
+    }
+
+    public void setException(Exception exception) {
+        this.exception = exception;
+    }
+    
+// </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="List<Headquarters> findAll()">
     public List<Headquarters> findAll() {
@@ -78,6 +90,7 @@ public class HeadquartersServices implements Serializable {
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
+                 exception = new Exception(response.readEntity(String.class));
                 return false;
             }
             System.out.println(response.readEntity(String.class
@@ -105,6 +118,7 @@ public class HeadquartersServices implements Serializable {
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
+                 exception = new Exception(response.readEntity(String.class));
                 return false;
             }
             System.out.println(response.readEntity(String.class
@@ -132,6 +146,7 @@ public class HeadquartersServices implements Serializable {
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
+                 exception = new Exception(response.readEntity(String.class));
                 return false;
             }
             System.out.println(response.readEntity(String.class

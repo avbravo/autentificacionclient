@@ -39,6 +39,19 @@ public class PingServices implements Serializable {
 
     @Inject
     AuthentificationProducer authentificationProducer;
+    
+     // <editor-fold defaultstate="collapsed" desc=" set/get)">
+    
+    
+    public Exception getException() {
+        return exception;
+    }
+
+    public void setException(Exception exception) {
+        this.exception = exception;
+    }
+    
+// </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="List<Applicative> findAll()">
     public List<Applicative> findAll() {

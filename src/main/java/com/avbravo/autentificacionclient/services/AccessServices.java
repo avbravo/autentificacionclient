@@ -35,13 +35,29 @@ public class AccessServices implements Serializable {
     private static final String PASS = "pass";
     private static final String FAIL = "fail";
     private static final String SUCCESS_RESULT = "<result>success</result>";
-      Exception exception;
+    Exception exception;
 
     @Inject
     MicroservicesProducer microservicesProducer;
 
     @Inject
     AuthentificationProducer authentificationProducer;
+    // <editor-fold defaultstate="collapsed" desc=" set/get)">
+    
+    
+    public Exception getException() {
+        return exception;
+    }
+
+    public void setException(Exception exception) {
+        this.exception = exception;
+    }
+    
+// </editor-fold>
+
+    
+    
+    
 
 // <editor-fold defaultstate="collapsed" desc="List<Access> findAll()">
     public List<Access> findAll() {
@@ -79,10 +95,11 @@ public class AccessServices implements Serializable {
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
+                 exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-            System.out.println(response.readEntity(String.class
-            ));
+//            System.out.println(response.readEntity(String.class
+//            ));
             return true;
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
@@ -106,10 +123,11 @@ public class AccessServices implements Serializable {
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
+                 exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-            System.out.println(response.readEntity(String.class
-            ));
+//            System.out.println(response.readEntity(String.class
+//            ));
             return true;
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
@@ -133,6 +151,7 @@ public class AccessServices implements Serializable {
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
+                 exception = new Exception(response.readEntity(String.class));
                 return false;
             }
             System.out.println(response.readEntity(String.class

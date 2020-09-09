@@ -41,6 +41,19 @@ public class ApplicativeServices implements Serializable {
 
     @Inject
     AuthentificationProducer authentificationProducer;
+    
+     // <editor-fold defaultstate="collapsed" desc=" set/get)">
+    
+    
+    public Exception getException() {
+        return exception;
+    }
+
+    public void setException(Exception exception) {
+        this.exception = exception;
+    }
+    
+// </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="List<Applicative> findAll()">
     public List<Applicative> findAll() {
@@ -78,10 +91,11 @@ public class ApplicativeServices implements Serializable {
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
+                 exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-            System.out.println(response.readEntity(String.class
-            ));
+//            System.out.println(response.readEntity(String.class
+//            ));
             return true;
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
@@ -105,10 +119,11 @@ public class ApplicativeServices implements Serializable {
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
+                 exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-            System.out.println(response.readEntity(String.class
-            ));
+//            System.out.println(response.readEntity(String.class
+//            ));
             return true;
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
@@ -132,6 +147,7 @@ public class ApplicativeServices implements Serializable {
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
+                 exception = new Exception(response.readEntity(String.class));
                 return false;
             }
             System.out.println(response.readEntity(String.class

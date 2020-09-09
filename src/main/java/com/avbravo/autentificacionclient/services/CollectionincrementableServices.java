@@ -41,6 +41,19 @@ public class CollectionincrementableServices implements Serializable {
 
     @Inject
     AuthentificationProducer authentificationProducer;
+    
+     // <editor-fold defaultstate="collapsed" desc=" set/get)">
+    
+    
+    public Exception getException() {
+        return exception;
+    }
+
+    public void setException(Exception exception) {
+        this.exception = exception;
+    }
+    
+// </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="List<Collectionincrementable> findAll()">
     public List<Collectionincrementable> findAll() {
@@ -78,6 +91,7 @@ public class CollectionincrementableServices implements Serializable {
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
+                 exception = new Exception(response.readEntity(String.class));
                 return false;
             }
             System.out.println(response.readEntity(String.class
@@ -105,6 +119,7 @@ public class CollectionincrementableServices implements Serializable {
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
+                 exception = new Exception(response.readEntity(String.class));
                 return false;
             }
             System.out.println(response.readEntity(String.class
@@ -132,6 +147,7 @@ public class CollectionincrementableServices implements Serializable {
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
+                 exception = new Exception(response.readEntity(String.class));
                 return false;
             }
             System.out.println(response.readEntity(String.class

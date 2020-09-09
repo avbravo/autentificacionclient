@@ -102,7 +102,7 @@ public class BoletasServices implements Serializable {
 // <editor-fold defaultstate="collapsed" desc="Boolean update(Boletas boletas)">
     public Boolean update(Boletas boletas) {
         try {
-            System.out.println(">>>> Cliente invocando updatre" + boletas.getIdboleta());
+   
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
