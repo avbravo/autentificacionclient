@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.avbravo.autentificacionclient.services;
+package com.avbravo.asistenciaclient.services;
 
-import com.avbravo.autentificacionclient.entity.User;
 import com.avbravo.autentificacionclient.producer.AuthentificationProducer;
 import com.avbravo.autentificacionclient.producer.MicroservicesProducer;
+import com.avbravo.jmoordb.pojos.JmoordbEmailMaster;
 import com.avbravo.jmoordb.util.JmoordbUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,9 +29,9 @@ import javax.ws.rs.core.Response;
  * @author avbravo
  */
 @Stateless
-public class UserServices implements Serializable {
+public class JmoordbEmailMasterServices implements Serializable {
 
-    String directoryLogger = JmoordbUtil.isLinux() ? JmoordbUtil.userHome() + JmoordbUtil.fileSeparator() + "autentificacionclient" + JmoordbUtil.fileSeparator() + "logs" + JmoordbUtil.fileSeparator() + "logger.json" : "C:\\autentificacionclient\\logs\\logger.json";
+String directoryLogger = JmoordbUtil.isLinux() ? JmoordbUtil.userHome() + JmoordbUtil.fileSeparator() + "autentificacionclient" + JmoordbUtil.fileSeparator() + "logs" + JmoordbUtil.fileSeparator() + "logger.json" : "C:\\autentificacionclient\\logs\\logger.json";
     private static final String PASS = "pass";
     private static final String FAIL = "fail";
     private static final String SUCCESS_RESULT = "<result>success</result>";
@@ -56,39 +56,39 @@ public class UserServices implements Serializable {
     
 // </editor-fold>
 
-// <editor-fold defaultstate="collapsed" desc="List<User> findAll()">
-    public List<User> findAll() {
-        List<User> userList = new ArrayList<>();
+// <editor-fold defaultstate="collapsed" desc="List<JmoordbEmailMaster> findAll()">
+    public List<JmoordbEmailMaster> findAll() {
+        List<JmoordbEmailMaster> jmoordbEmailMasterList = new ArrayList<>();
         try {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
-            WebTarget target = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/findall");
+            WebTarget target = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/jmoordbemailmaster/findall");
 
-            GenericType<List<User>> data = new GenericType<List<User>>() {
+            GenericType<List<JmoordbEmailMaster>> data = new GenericType<List<JmoordbEmailMaster>>() {
             };
 
-            userList = target.request(MediaType.APPLICATION_JSON).get(data);
+            jmoordbEmailMasterList = target.request(MediaType.APPLICATION_JSON).get(data);
 
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("findAll()" + e.getLocalizedMessage());
         }
-        return userList;
+        return jmoordbEmailMasterList;
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Boolean add(User user)">
-    public Boolean add(User user) {
+    // <editor-fold defaultstate="collapsed" desc="Boolean add(JmoordbEmailMaster jmoordbEmailMaster)">
+    public Boolean add(JmoordbEmailMaster jmoordbEmailMaster) {
         try {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/add");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/resources/jmoordbemailmaster/add");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.post(Entity.entity(user, MediaType.APPLICATION_JSON));
+            Response response = invocationBuilder.post(Entity.entity(jmoordbEmailMaster, MediaType.APPLICATION_JSON));
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
@@ -107,16 +107,16 @@ public class UserServices implements Serializable {
     }
 // </editor-fold>
 
-// <editor-fold defaultstate="collapsed" desc="Boolean update(User user)">
-    public Boolean update(User user) {
+// <editor-fold defaultstate="collapsed" desc="Boolean update(JmoordbEmailMaster jmoordbEmailMaster)">
+    public Boolean update(JmoordbEmailMaster jmoordbEmailMaster) {
         try {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/update");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/resources/jmoordbemailmaster/update");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.put(Entity.entity(user, MediaType.APPLICATION_JSON));
+            Response response = invocationBuilder.put(Entity.entity(jmoordbEmailMaster, MediaType.APPLICATION_JSON));
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
@@ -134,17 +134,17 @@ public class UserServices implements Serializable {
         return false;
     }
 // </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="Boolean delete(User user)">
+// <editor-fold defaultstate="collapsed" desc="Boolean delete(JmoordbEmailMaster jmoordbEmailMaster)">
 
-    public Boolean delete(User user) {
+    public Boolean delete(JmoordbEmailMaster jmoordbEmailMaster) {
         try {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/delete");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/resources/jmoordbemailmaster/delete");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.post(Entity.entity(user, MediaType.APPLICATION_JSON));
+            Response response = invocationBuilder.post(Entity.entity(jmoordbEmailMaster, MediaType.APPLICATION_JSON));
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
@@ -163,36 +163,36 @@ public class UserServices implements Serializable {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="User findByUsername(String username) ">
+    // <editor-fold defaultstate="collapsed" desc="JmoordbEmailMaster findByJmoordbEmailMastername(String jmoordbEmailMastername) ">
     /**
      * consulta por codigo_pedido impresa
      *
      * @param codigo_
      * @return
      */
-    public Optional<User> findByUsername(String username) {
-        User user = new User();
+    public Optional<JmoordbEmailMaster> findByEmail(String email) {
+        JmoordbEmailMaster jmoordbEmailMaster = new JmoordbEmailMaster();
         try {
         
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
-            user = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/search/")
-                    .path("/{username}")
-                    .resolveTemplate("username", username)
+            jmoordbEmailMaster = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/resources/jmoordbemailmaster/search/")
+                    .path("/{email}")
+                    .resolveTemplate("email", email)
                     .request(MediaType.APPLICATION_JSON)
-                    .get(User.class
+                    .get(JmoordbEmailMaster.class
                     );
-            if(user == null || user.getIduser()== null || user.getUsername() == null || user.getUsername().isEmpty()){
+            if(jmoordbEmailMaster == null || jmoordbEmailMaster.getEmail()== null || jmoordbEmailMaster.getEmail()== null || jmoordbEmailMaster.getEmail().isEmpty()){
               
                  return Optional.empty();
             }
       
-            return Optional.of(user);
+            return Optional.of(jmoordbEmailMaster);
             //String result = FAIL;
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-              System.out.println("findBUsername() " + e.getLocalizedMessage());
+              System.out.println("findBJmoordbEmailMastername() " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
           
         }
@@ -201,9 +201,9 @@ public class UserServices implements Serializable {
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="List<User> complete( String query)">
-    public List<User> complete(String query) {
-        List<User> suggestions = new ArrayList<>();
+    // <editor-fold defaultstate="collapsed" desc="List<JmoordbEmailMaster> complete( String query)">
+    public List<JmoordbEmailMaster> complete(String query) {
+        List<JmoordbEmailMaster> suggestions = new ArrayList<>();
         try {
 
             if (query == null || query.isEmpty()) {
@@ -212,11 +212,11 @@ public class UserServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/autocomplete/query/")
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/jmoordbemailmaste/complete/query/")
                     .path("/{nombre}")
                     .resolveTemplate("nombre", query)
                     .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<User>>() {
+                    .get(new GenericType<List<JmoordbEmailMaster>>() {
                     });
 
         } catch (Exception e) {
