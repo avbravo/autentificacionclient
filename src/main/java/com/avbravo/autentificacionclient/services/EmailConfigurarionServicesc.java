@@ -7,12 +7,17 @@ package com.avbravo.asistenciaclient.services;
 
 import com.avbravo.autentificacionclient.producer.AuthentificationProducer;
 import com.avbravo.autentificacionclient.producer.MicroservicesProducer;
-import com.avbravo.jmoordb.pojos.JmoordbEmailMaster;
+import com.avbravo.jmoordb.email.JmoordbEmailMaster;
+import com.avbravo.jmoordb.email.JmoordbManagerEmailOld;
 import com.avbravo.jmoordb.util.JmoordbUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.client.Client;
@@ -35,6 +40,10 @@ String directoryLogger = JmoordbUtil.isLinux() ? JmoordbUtil.userHome() + Jmoord
     private static final String PASS = "pass";
     private static final String FAIL = "fail";
     private static final String SUCCESS_RESULT = "<result>success</result>";
+    JmoordbEmailMaster jmoordbMmanagerEmail = new JmoordbEmailMaster();
+    
+JmoordbManagerEmailOld  jmoordbManagerEmailOld = new JmoordbManagerEmailOld ();
+
   Exception exception;
 
     @Inject
@@ -163,7 +172,7 @@ String directoryLogger = JmoordbUtil.isLinux() ? JmoordbUtil.userHome() + Jmoord
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="JmoordbEmailMaster findByJmoordbEmailMastername(String jmoordbEmailMastername) ">
+    // <editor-fold defaultstate="collapsed" desc="Optional<JmoordbEmailMaster> findByEmail(String email)">
     /**
      * consulta por codigo_pedido impresa
      *
@@ -230,4 +239,50 @@ String directoryLogger = JmoordbUtil.isLinux() ? JmoordbUtil.userHome() + Jmoord
     }
     // </editor-fold>
 
+     // <editor-fold defaultstate="collapsed" desc="Future<String> sendEmailAsync(String emailreceptor, String titulo, String mensaje, String emailemisor, String passwordemisor)">
+    public Future<String> sendEmailAsync(String emailreceptor, String titulo, String mensaje, String emailemisor, String passwordemisor) throws InterruptedException {
+
+        CompletableFuture<String> completableFuture
+                = new CompletableFuture<>();
+
+        Executors.newCachedThreadPool().submit(new Callable<Object>() {
+
+            @Override
+            public Object call() throws Exception {
+
+               jmoordbManagerEmailOld.sendOutlook(emailreceptor, titulo, mensaje, emailemisor, passwordemisor);
+
+                completableFuture.complete("enviado");
+
+                return null;
+            }
+        });
+
+        return completableFuture;
+    }// </editor-fold>
+//    // <editor-fold defaultstate="collapsed" desc="Future<String> sendEmailCccBccAsync(String[] to, String[] cc, String[] bcc, String titulo, String mensaje, String emailemisor, String passwordemisor)">
+//
+
+    public Future<String> sendEmailCccBccAsync(String[] to, String[] cc, String[] bcc, String titulo, String mensaje, String emailemisor, String passwordemisor) throws InterruptedException {
+
+        CompletableFuture<String> completableFuture
+                = new CompletableFuture<>();
+
+        Executors.newCachedThreadPool().submit(new Callable<Object>() {
+            @Override
+            public Object call() throws Exception {
+
+               jmoordbManagerEmailOld.sendOutlook(to, cc, bcc, titulo, mensaje, emailemisor, passwordemisor, false);
+                completableFuture.complete("enviado");
+
+                return null;
+            }
+        });
+
+        return completableFuture;
+    }// </editor-fold>
+
+    
+    
+  
 }
