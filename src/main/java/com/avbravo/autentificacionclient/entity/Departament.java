@@ -43,6 +43,22 @@ private Boolean isapprovalauthorityrequired;
         this.isapprovalauthorityrequired = isapprovalauthorityrequired;
     }
 
+    public Boolean getIsapprovalchietunitrequired() {
+        return isapprovalchietunitrequired;
+    }
+
+    public void setIsapprovalchietunitrequired(Boolean isapprovalchietunitrequired) {
+        this.isapprovalchietunitrequired = isapprovalchietunitrequired;
+    }
+
+    public Boolean getIsapprovalauthorityrequired() {
+        return isapprovalauthorityrequired;
+    }
+
+    public void setIsapprovalauthorityrequired(Boolean isapprovalauthorityrequired) {
+        this.isapprovalauthorityrequired = isapprovalauthorityrequired;
+    }
+
    
 
     public Integer getIddepartament() {
