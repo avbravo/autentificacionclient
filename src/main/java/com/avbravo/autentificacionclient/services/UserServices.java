@@ -281,6 +281,7 @@ public class UserServices implements Serializable {
         return suggestions;
     }
     // </editor-fold>
+    
      // <editor-fold defaultstate="collapsed" desc="List<User>  searchAutoridad( Boolean isauthority) >
     /**
      * Busca los usuarios que sean autoridad (isauthority = true
@@ -298,6 +299,37 @@ public class UserServices implements Serializable {
                     .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/searchautoridad/")
                     .path("/{isauthority}")
                     .resolveTemplate("isauthority", isauthority)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<User>>() {
+                    });
+
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println(JmoordbUtil.nameOfMethod() + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+        }
+
+        return suggestions;
+    }
+    // </editor-fold>
+     // <editor-fold defaultstate="collapsed" desc="List<User>  searchAutoridad( Boolean isauthority) >
+    /**
+     * Busca los usuarios que sean autoridad (isauthority = true
+     * o que no sean autoridad isauthority = false)
+     * Recuerde que es una lista embebida de muchos roles
+     
+     */
+    public List<User>  searchRecursosHumanos( Boolean ishumanresourcesauthority) {
+        List<User> suggestions = new ArrayList<>();
+        try {
+
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/searchrecursoshumanos/")
+                    .path("/{ishumanresourcesauthority}")
+                    .resolveTemplate("ishumanresourcesauthority", ishumanresourcesauthority)
                     .request(MediaType.APPLICATION_JSON)
                     .get(new GenericType<List<User>>() {
                     });
