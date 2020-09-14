@@ -222,8 +222,91 @@ public class UserServices implements Serializable {
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("complete() " + e.getLocalizedMessage());
-            JmoordbUtil.errorDialog("complete()", e.getLocalizedMessage());
+            System.out.println(JmoordbUtil.nameOfMethod()+ e.getLocalizedMessage());
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+        }
+
+        return suggestions;
+    }
+    // </editor-fold>
+
+    
+     // <editor-fold defaultstate="collapsed" desc="List<User> searchByIdDepartament(Integer iddepartament) ">
+    public List<User> searchByIdDepartament(Integer iddepartament) {
+        List<User> suggestions = new ArrayList<>();
+        try {
+
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/searchbyiddepartament/")
+                    .path("/{iddepartament}")
+                    .resolveTemplate("iddepartament", iddepartament)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<User>>() {
+                    });
+
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println(JmoordbUtil.nameOfMethod() + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+        }
+
+        return suggestions;
+    }
+    // </editor-fold>
+     // <editor-fold defaultstate="collapsed" desc="List<User> searchJefeUnidadDelDepartament(Integer iddepartament) ">
+    public List<User> searchJefeUnidadDelDepartament(Integer iddepartament) {
+        List<User> suggestions = new ArrayList<>();
+        try {
+
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/searchjefeunidadepartament/")
+                    .path("/{iddepartament}")
+                    .resolveTemplate("iddepartament", iddepartament)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<User>>() {
+                    });
+
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println(JmoordbUtil.nameOfMethod() + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+        }
+
+        return suggestions;
+    }
+    // </editor-fold>
+     // <editor-fold defaultstate="collapsed" desc="List<User>  searchAutoridad( Boolean isauthority) >
+    /**
+     * Busca los usuarios que sean autoridad (isauthority = true
+     * o que no sean autoridad isauthority = false)
+     * Recuerde que es una lista embebida de muchos roles
+     
+     */
+    public List<User>  searchAutoridad( Boolean isauthority) {
+        List<User> suggestions = new ArrayList<>();
+        try {
+
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/searchautoridad/")
+                    .path("/{isauthority}")
+                    .resolveTemplate("isauthority", isauthority)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<User>>() {
+                    });
+
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println(JmoordbUtil.nameOfMethod() + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
         }
 
         return suggestions;

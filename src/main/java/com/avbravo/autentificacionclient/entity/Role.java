@@ -23,32 +23,27 @@ public class Role {
     private String role;
     private Boolean active;
 
-    private String isauthority;
+    private Boolean isauthority;
 
     public Role() {
     }
 
-    public Role(Integer idrole, String role, Boolean active, String isauthority) {
+    public Role(Integer idrole, String role, Boolean active, Boolean isauthority) {
         this.idrole = idrole;
         this.role = role;
         this.active = active;
         this.isauthority = isauthority;
     }
 
-  
-
-    public String getIsauthority() {
+    public Boolean getIsauthority() {
         return isauthority;
     }
 
-    public void setIsauthority(String isauthority) {
+    public void setIsauthority(Boolean isauthority) {
         this.isauthority = isauthority;
     }
 
   
-    
-    
-    
 
     public Integer getIdrole() {
         return idrole;

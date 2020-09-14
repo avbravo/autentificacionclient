@@ -5,8 +5,7 @@
  */
 package com.avbravo.autentificacionclient.entity;
 
-import com.avbravo.asistencia.entity.*;
-import com.avbravo.autentificacion.entity.*;
+
 import com.avbravo.jmoordb.anotations.Id;
 import com.avbravo.jmoordb.anotations.Referenced;
 

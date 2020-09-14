@@ -15,30 +15,28 @@ import java.util.Date;
  *
  */
 public class Otp {
-@Id
+
+    @Id
     private Integer idotp;
- 
-@Referenced(collection = "User",
+
+    @Referenced(collection = "User",
             field = "iduser", javatype = "Integer", lazy = false,
             repository = "com.avbravo.autentificacion.repository.UsertRepository")
     private User user;
 
-
     private Date expiry;
-    
-    private String used;
- 
+
+    private Boolean used;
+
     public Otp() {
     }
 
-    public Otp(Integer idotp, User user, Date expiry, String used) {
+    public Otp(Integer idotp, User user, Date expiry, Boolean used) {
         this.idotp = idotp;
         this.user = user;
         this.expiry = expiry;
         this.used = used;
     }
-
-   
 
     public Integer getIdotp() {
         return idotp;
@@ -48,7 +46,6 @@ public class Otp {
         this.idotp = idotp;
     }
 
-   
     public User getUser() {
         return user;
     }
@@ -65,26 +62,24 @@ public class Otp {
         this.expiry = expiry;
     }
 
-    public String getUsed() {
+    public Boolean getUsed() {
         return used;
     }
 
-    public void setUsed(String used) {
+    public void setUsed(Boolean used) {
         this.used = used;
     }
- @Override
+
+    @Override
     public boolean equals(Object object) {
         if (!(object instanceof Otp)) {
             return false;
         }
-       Otp other = (Otp) object;
-        if ((this.idotp== null && other.idotp != null) || (this.idotp != null && !this.idotp.equals(other.idotp))) {
+        Otp other = (Otp) object;
+        if ((this.idotp == null && other.idotp != null) || (this.idotp != null && !this.idotp.equals(other.idotp))) {
             return false;
         }
         return true;
     }
 
-   
-  
-  
 }

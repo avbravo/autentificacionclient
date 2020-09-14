@@ -27,13 +27,13 @@ public class Departament {
             repository = "com.avbravo.autentificacion.repository.HeadquartersRepository")
     private Headquarters headquarters;
 
-private String isapprovalchietunitrequired;
-private String isapprovalauthorityrequired;
+private Boolean isapprovalchietunitrequired;
+private Boolean isapprovalauthorityrequired;
     
     public Departament() {
     }
 
-    public Departament(Integer iddepartament, String departament, Boolean active, String shortname, Headquarters headquarters, String isapprovalchietunitrequired, String isapprovalauthorityrequired) {
+    public Departament(Integer iddepartament, String departament, Boolean active, String shortname, Headquarters headquarters, Boolean isapprovalchietunitrequired, Boolean isapprovalauthorityrequired) {
         this.iddepartament = iddepartament;
         this.departament = departament;
         this.active = active;
@@ -42,6 +42,8 @@ private String isapprovalauthorityrequired;
         this.isapprovalchietunitrequired = isapprovalchietunitrequired;
         this.isapprovalauthorityrequired = isapprovalauthorityrequired;
     }
+
+   
 
     public Integer getIddepartament() {
         return iddepartament;
@@ -83,22 +85,7 @@ private String isapprovalauthorityrequired;
         this.headquarters = headquarters;
     }
 
-    public String getIsapprovalchietunitrequired() {
-        return isapprovalchietunitrequired;
-    }
-
-    public void setIsapprovalchietunitrequired(String isapprovalchietunitrequired) {
-        this.isapprovalchietunitrequired = isapprovalchietunitrequired;
-    }
-
-    public String getIsapprovalauthorityrequired() {
-        return isapprovalauthorityrequired;
-    }
-
-    public void setIsapprovalauthorityrequired(String isapprovalauthorityrequired) {
-        this.isapprovalauthorityrequired = isapprovalauthorityrequired;
-    }
-
+    
   
   
  @Override
