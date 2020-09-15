@@ -182,6 +182,29 @@ public class BoletasServices implements Serializable {
     }
 // </editor-fold>
 
+        // <editor-fold defaultstate="collapsed" desc="String showDate(Date date)">
+    public String showDate(Date date) {
+        String h = "";
+        try {
+            h = JmoordbDateUtil.dateFormatToString(date, "dd/MM/yyyy");
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.errorMessage("showDate() " + e.getLocalizedMessage());
+        }
+        return h;
+    }// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="String showHour(Date date)">
+
+    public String showHour(Date date) {
+        String h = "";
+        try {
+            h = JmoordbDateUtil.hourFromDateToString(date);
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.errorMessage("showHour() " + e.getLocalizedMessage());
+        }
+        return h;
+    }// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Boletas findByBoleta(Integer idboleta) ">
     /**
      * consulta por codigo_pedido impresa
@@ -322,29 +345,34 @@ System.out.println("----------------------------------------------------------")
         return suggestions;
     }
     // </editor-fold>
-
-    // <editor-fold defaultstate="collapsed" desc="String showDate(Date date)">
-    public String showDate(Date date) {
-        String h = "";
+    // <editor-fold defaultstate="collapsed" desc="List<Boletas> userEstadoUnidadOr(String userame, String estadounidad1, String estadounidad2) ">
+    public List<Boletas> userEstadoUnidadOr(String username, String estadounidad1, String estadounidad2) {
+        List<Boletas> suggestions = new ArrayList<>();
         try {
-            h = JmoordbDateUtil.dateFormatToString(date, "dd/MM/yyyy");
+System.out.println("----------------------------------------------------------");
+       
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/userestaadounidador/")
+                    .queryParam("username", username)
+                    .queryParam("estadounidad1", estadounidad1)
+                    .queryParam("estadounidad2", estadounidad2)
+                                        .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Boletas>>() {
+                    });
+
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.errorMessage("showDate() " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
         }
-        return h;
-    }// </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="String showHour(Date date)">
 
-    public String showHour(Date date) {
-        String h = "";
-        try {
-            h = JmoordbDateUtil.hourFromDateToString(date);
-        } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.errorMessage("showHour() " + e.getLocalizedMessage());
-        }
-        return h;
-    }// </editor-fold>
+        return suggestions;
+    }
+    // </editor-fold>
+
+
 
 }
