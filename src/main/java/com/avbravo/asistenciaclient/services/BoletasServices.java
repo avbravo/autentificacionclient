@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -102,7 +103,7 @@ public class BoletasServices implements Serializable {
 // <editor-fold defaultstate="collapsed" desc="Boolean update(Boletas boletas)">
     public Boolean update(Boletas boletas) {
         try {
-   
+
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
@@ -169,7 +170,7 @@ public class BoletasServices implements Serializable {
 
             //  System.out.println("*** Call result = " + callResult);
             if (callResult.equals("<result>success</result>")) {
-                 // exception = new Exception(response.readEntity(String.class));
+                // exception = new Exception(response.readEntity(String.class));
                 return true;
             }
 
@@ -182,7 +183,7 @@ public class BoletasServices implements Serializable {
     }
 // </editor-fold>
 
-        // <editor-fold defaultstate="collapsed" desc="String showDate(Date date)">
+    // <editor-fold defaultstate="collapsed" desc="String showDate(Date date)">
     public String showDate(Date date) {
         String h = "";
         try {
@@ -206,6 +207,7 @@ public class BoletasServices implements Serializable {
         return h;
     }// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Boletas findByBoleta(Integer idboleta) ">
+
     /**
      * consulta por codigo_pedido impresa
      *
@@ -321,8 +323,7 @@ public class BoletasServices implements Serializable {
     public List<Boletas> betweendate(String fieldstart, String start, String fieldend, String end) {
         List<Boletas> suggestions = new ArrayList<>();
         try {
-System.out.println("----------------------------------------------------------");
-            System.out.println("---SERVICES ----"+start + " end "+end);
+
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
@@ -345,20 +346,31 @@ System.out.println("----------------------------------------------------------")
         return suggestions;
     }
     // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="List<Boletas> userEstadoUnidadOr(String userame, String estadounidad1, String estadounidad2) ">
-    public List<Boletas> userEstadoUnidadOr(String username, String estadounidad1, String estadounidad2) {
+    // <editor-fold defaultstate="collapsed" desc="List<Boletas> betweendateWithFilter(String fieldstart, String start, String fieldend, String end)
+    /**
+     * 
+     * @param fieldstart
+     * @param start
+     * @param fieldend
+     * @param end
+     * @return 
+     */
+    public List<Boletas> betweendateWithFilter(String fieldstart, String start, String fieldend, String end, String fieldname, String value, String fieldtype) {
         List<Boletas> suggestions = new ArrayList<>();
         try {
-System.out.println("----------------------------------------------------------");
-       
+
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/userestaadounidador/")
-                    .queryParam("username", username)
-                    .queryParam("estadounidad1", estadounidad1)
-                    .queryParam("estadounidad2", estadounidad2)
-                                        .request(MediaType.APPLICATION_JSON)
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/betweendateaditionalfilter/")
+                    .queryParam("fieldstart", fieldstart)
+                    .queryParam("start", start)
+                    .queryParam("fieldend", fieldend)
+                    .queryParam("end", end)
+                    .queryParam("fieldname", fieldname)
+                    .queryParam("value",value)
+                    .queryParam("fieldtype", fieldtype)
+                    .request(MediaType.APPLICATION_JSON)
                     .get(new GenericType<List<Boletas>>() {
                     });
 
@@ -372,7 +384,162 @@ System.out.println("----------------------------------------------------------")
         return suggestions;
     }
     // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="List<Boletas> userEstadoUnidadOr(String userame, String estadounidad1, String estadounidad2) ">
 
+    /**
+     * Consulta las boletas por usuario y el (estadounidad = or estadounidad=)
+     *
+     * @param username
+     * @param estadounidad1
+     * @param estadounidad2
+     * @return
+     */
+    public List<Boletas> userEstadoUnidadOr(String username, String estadounidad1, String estadounidad2) {
+        List<Boletas> suggestions = new ArrayList<>();
+        try {
+            System.out.println("----------------------------------------------------------");
 
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/userestaadounidador/")
+                    .queryParam("username", username)
+                    .queryParam("estadounidad1", estadounidad1)
+                    .queryParam("estadounidad2", estadounidad2)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Boletas>>() {
+                    });
+
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+        }
+
+        return suggestions;
+    }
+
+    // </editor-fold>
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="List<Boletas> userEstadoAutoridadOr(String username, String estadoautoridad1, String estadoautoridad2)">
+    /**
+     * Consulta las boletas por usuario y el (estadoautoridad = or
+     * estadoautoridad=)
+     *
+     * @param username
+     * @param estadounidad1
+     * @param estadounidad2
+     * @return
+     */
+    public List<Boletas> userEstadoAutoridadOr(String username, String estadoautoridad1, String estadoautoridad2) {
+        List<Boletas> suggestions = new ArrayList<>();
+        try {
+            System.out.println("----------------------------------------------------------");
+
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/userestaadoautoridador/")
+                    .queryParam("username", username)
+                    .queryParam("estadoautoridad1", estadoautoridad1)
+                    .queryParam("estadoautoridad2", estadoautoridad2)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Boletas>>() {
+                    });
+
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+        }
+
+        return suggestions;
+    }
+    // </editor-fold>
+ 
+    // <editor-fold defaultstate="collapsed" desc="List<Boletas> departamentEstadoUnidadOr(Integer iddepartament, String estadounidad1, String estadounidad2) ">
+
+    
+    /**
+     * Consulta las boletas por departamento y el (estadounidad = or estadounidad=)
+     * @param iddepartament
+     * @param estadounidad1
+     * @param estadounidad2
+     * @return 
+     */
+    public List<Boletas> departamentEstadoUnidadOr(Integer iddepartament, String estadounidad1, String estadounidad2) {
+        List<Boletas> suggestions = new ArrayList<>();
+        try {
+            System.out.println("----------------------------------------------------------");
+
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/departamentestadounidador/")
+                    .queryParam("iddepartament",iddepartament)
+                    .queryParam("estadounidad1", estadounidad1)
+                    .queryParam("estadounidad2", estadounidad2)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Boletas>>() {
+                    });
+
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+        }
+
+        return suggestions;
+    }
+
+    // </editor-fold>
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="List<Boletas> departamentEstadoAutoridadOr(Integer iddepartament, String estadoautoridad1, String estadoautoridad2)">
+    
+    /**
+     * Consulta las boletas por departamento y el (estadoautoridad= or estadoautoridad=)
+     * @param iddepartament
+     * @param estadoautoridad1
+     * @param estadoautoridad2
+     * @return 
+     */
+    public List<Boletas> departamentEstadoAutoridadOr(Integer iddepartament, String estadoautoridad1, String estadoautoridad2) {
+        List<Boletas> suggestions = new ArrayList<>();
+        try {
+            System.out.println("----------------------------------------------------------");
+
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/departamentestadoautoridador/")
+                   .queryParam("iddepartament",iddepartament)
+                    .queryParam("estadoautoridad1", estadoautoridad1)
+                    .queryParam("estadoautoridad2", estadoautoridad2)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Boletas>>() {
+                    });
+
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+        }
+
+        return suggestions;
+    }
+    // </editor-fold>
+    
+    
+    
+    
+    
+    
+    
 
 }
