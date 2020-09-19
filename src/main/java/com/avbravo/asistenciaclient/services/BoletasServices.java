@@ -358,7 +358,15 @@ public class BoletasServices implements Serializable {
     public List<Boletas> betweendateWithFilter(String fieldstart, String start, String fieldend, String end, String fieldname, String value, String fieldtype) {
         List<Boletas> suggestions = new ArrayList<>();
         try {
-
+            System.out.println("---------------------SERVICES-----------");
+                     System.out.println( 
+                    "fieldstart "+ fieldstart + " start "+start
+                    +" fieldend "+ fieldend
+                    +" end "+ end
+                    +"\nfieldname "+ fieldname
+                    +" value "+value
+                    +" fieldtype "+ fieldtype);
+                    
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
