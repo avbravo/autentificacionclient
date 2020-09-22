@@ -345,28 +345,49 @@ public class BoletasServices implements Serializable {
 
         return suggestions;
     }
+
     // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="List<Boletas> betweendateUsingHours( String fieldstart, String start, String fieldend,String end)">
+    public List<Boletas> betweendateUsingHours(String fieldstart, String start, String fieldend, String end) {
+        List<Boletas> suggestions = new ArrayList<>();
+        try {
+
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/betweendateUsinghours/")
+                    .queryParam("fieldstart", fieldstart)
+                    .queryParam("start", start)
+                    .queryParam("fieldend", fieldend)
+                    .queryParam("end", end)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Boletas>>() {
+                    });
+
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+        }
+
+        return suggestions;
+    }
+    // </editor-fold>
+
     // <editor-fold defaultstate="collapsed" desc="List<Boletas> betweendateWithFilter(String fieldstart, String start, String fieldend, String end)
     /**
-     * 
+     *
      * @param fieldstart
      * @param start
      * @param fieldend
      * @param end
-     * @return 
+     * @return
      */
     public List<Boletas> betweendateWithFilter(String fieldstart, String start, String fieldend, String end, String fieldname, String value, String fieldtype) {
         List<Boletas> suggestions = new ArrayList<>();
         try {
-            System.out.println("---------------------SERVICES-----------");
-                     System.out.println( 
-                    "fieldstart "+ fieldstart + " start "+start
-                    +" fieldend "+ fieldend
-                    +" end "+ end
-                    +"\nfieldname "+ fieldname
-                    +" value "+value
-                    +" fieldtype "+ fieldtype);
-                    
+
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
@@ -376,7 +397,46 @@ public class BoletasServices implements Serializable {
                     .queryParam("fieldend", fieldend)
                     .queryParam("end", end)
                     .queryParam("fieldname", fieldname)
-                    .queryParam("value",value)
+                    .queryParam("value", value)
+                    .queryParam("fieldtype", fieldtype)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Boletas>>() {
+                    });
+
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+        }
+
+        return suggestions;
+    }
+
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="List<Boletas> betweendateWithFilterUsingHours(String fieldstart, String start, String fieldend, String end)
+    /**
+     *
+     * @param fieldstart
+     * @param start
+     * @param fieldend
+     * @param end
+     * @return
+     */
+    public List<Boletas> betweendateWithFilterUsingHours(String fieldstart, String start, String fieldend, String end, String fieldname, String value, String fieldtype) {
+        List<Boletas> suggestions = new ArrayList<>();
+        try {
+
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/betweendateaditionalfilterUsingHours/")
+                    .queryParam("fieldstart", fieldstart)
+                    .queryParam("start", start)
+                    .queryParam("fieldend", fieldend)
+                    .queryParam("end", end)
+                    .queryParam("fieldname", fieldname)
+                    .queryParam("value", value)
                     .queryParam("fieldtype", fieldtype)
                     .request(MediaType.APPLICATION_JSON)
                     .get(new GenericType<List<Boletas>>() {
@@ -429,8 +489,6 @@ public class BoletasServices implements Serializable {
     }
 
     // </editor-fold>
-    
-    
     // <editor-fold defaultstate="collapsed" desc="List<Boletas> userEstadoAutoridadOr(String username, String estadoautoridad1, String estadoautoridad2)">
     /**
      * Consulta las boletas por usuario y el (estadoautoridad = or
@@ -467,16 +525,16 @@ public class BoletasServices implements Serializable {
         return suggestions;
     }
     // </editor-fold>
- 
-    // <editor-fold defaultstate="collapsed" desc="List<Boletas> departamentEstadoUnidadOr(Integer iddepartament, String estadounidad1, String estadounidad2) ">
 
-    
+    // <editor-fold defaultstate="collapsed" desc="List<Boletas> departamentEstadoUnidadOr(Integer iddepartament, String estadounidad1, String estadounidad2) ">
     /**
-     * Consulta las boletas por departamento y el (estadounidad = or estadounidad=)
+     * Consulta las boletas por departamento y el (estadounidad = or
+     * estadounidad=)
+     *
      * @param iddepartament
      * @param estadounidad1
      * @param estadounidad2
-     * @return 
+     * @return
      */
     public List<Boletas> departamentEstadoUnidadOr(Integer iddepartament, String estadounidad1, String estadounidad2) {
         List<Boletas> suggestions = new ArrayList<>();
@@ -487,7 +545,7 @@ public class BoletasServices implements Serializable {
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
                     .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/departamentestadounidador/")
-                    .queryParam("iddepartament",iddepartament)
+                    .queryParam("iddepartament", iddepartament)
                     .queryParam("estadounidad1", estadounidad1)
                     .queryParam("estadounidad2", estadounidad2)
                     .request(MediaType.APPLICATION_JSON)
@@ -505,16 +563,15 @@ public class BoletasServices implements Serializable {
     }
 
     // </editor-fold>
-    
-    
     // <editor-fold defaultstate="collapsed" desc="List<Boletas> departamentEstadoAutoridadOr(Integer iddepartament, String estadoautoridad1, String estadoautoridad2)">
-    
     /**
-     * Consulta las boletas por departamento y el (estadoautoridad= or estadoautoridad=)
+     * Consulta las boletas por departamento y el (estadoautoridad= or
+     * estadoautoridad=)
+     *
      * @param iddepartament
      * @param estadoautoridad1
      * @param estadoautoridad2
-     * @return 
+     * @return
      */
     public List<Boletas> departamentEstadoAutoridadOr(Integer iddepartament, String estadoautoridad1, String estadoautoridad2) {
         List<Boletas> suggestions = new ArrayList<>();
@@ -525,7 +582,7 @@ public class BoletasServices implements Serializable {
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
                     .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/departamentestadoautoridador/")
-                   .queryParam("iddepartament",iddepartament)
+                    .queryParam("iddepartament", iddepartament)
                     .queryParam("estadoautoridad1", estadoautoridad1)
                     .queryParam("estadoautoridad2", estadoautoridad2)
                     .request(MediaType.APPLICATION_JSON)
@@ -542,12 +599,87 @@ public class BoletasServices implements Serializable {
         return suggestions;
     }
     // </editor-fold>
-    
-    
-    
-    
-    
-    
-    
+    // <editor-fold defaultstate="collapsed" desc="Integer  count(Boolean active)">
 
+    /**
+     * Consulta las boletas por departamento y el (estadoautoridad= or
+     * estadoautoridad=)
+     *
+     * @param iddepartament
+     * @param estadoautoridad1
+     * @param estadoautoridad2
+     * @return
+     */
+    public Integer count(Boolean active) {
+        Integer total = 0;
+        try {
+
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+
+            WebTarget webTarget
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/count")
+                            .queryParam("active", active);
+
+            Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+            Response response = invocationBuilder.get();
+            if (response.getStatus() == 201) {
+                total = Integer.parseInt(response.readEntity(String.class));
+
+            }
+
+            if (response.getStatus() == 400) {
+                exception = new Exception(response.readEntity(String.class));
+                return 0;
+            }
+
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+        }
+
+        return total;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Integer countBetweendate(String fieldstart, String start, String fieldend, String end)">
+    public Integer countBetweendate(String fieldstart, String start, String fieldend, String end) {
+        Integer total = 0;
+        try {
+
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+
+            WebTarget webTarget
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/countbetweendate")
+                            .queryParam("fieldstart", fieldstart)
+                            .queryParam("start", start)
+                            .queryParam("fieldend", fieldend)
+                            .queryParam("end", end);
+
+            Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+            Response response = invocationBuilder.get();
+            if (response.getStatus() == 201) {
+                total = Integer.parseInt(response.readEntity(String.class));
+
+            }
+
+            if (response.getStatus() == 400) {
+                exception = new Exception(response.readEntity(String.class));
+                return 0;
+            }
+
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+        }
+
+        return total;
+    }
+
+    // </editor-fold>
 }

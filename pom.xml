@@ -49,7 +49,7 @@ jmoordb
           <dependency>
             <groupId>com.github.avbravo</groupId>
             <artifactId>jmoordb</artifactId>
-            <version>0.69</version>
+            <version>0.71</version>
         </dependency>
         
 <!-- <dependency>
