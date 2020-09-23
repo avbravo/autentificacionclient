@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -682,4 +681,131 @@ public class BoletasServices implements Serializable {
     }
 
     // </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="Integer countBetweendateUsingHours(String fieldstart, String start, String fieldend, String end)">
+    public Integer countBetweendateUsingHours(String fieldstart, String start, String fieldend, String end) {
+        Integer total = 0;
+        try {
+
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+
+            WebTarget webTarget
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/countbetweendateusignhours")
+                            .queryParam("fieldstart", fieldstart)
+                            .queryParam("start", start)
+                            .queryParam("fieldend", fieldend)
+                            .queryParam("end", end);
+
+            Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+            Response response = invocationBuilder.get();
+            if (response.getStatus() == 201) {
+                total = Integer.parseInt(response.readEntity(String.class));
+
+            }
+
+            if (response.getStatus() == 400) {
+                exception = new Exception(response.readEntity(String.class));
+                return 0;
+            }
+
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+        }
+
+        return total;
+    }
+
+    // </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="Integer countBetweendateWithFilter(String fieldstart, String start, String fieldend, String end, String fieldname, String value, String fieldtype)">
+    public Integer countBetweendateWithFilter(String fieldstart, String start, String fieldend, String end,
+            String fieldname, String value, String fieldtype) {
+        Integer total = 0;
+        try {
+
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+
+            WebTarget webTarget
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/countbetweendateaditionalfilter")
+                            .queryParam("fieldstart", fieldstart)
+                            .queryParam("start", start)
+                            .queryParam("fieldend", fieldend)
+                            .queryParam("end", end)
+                            .queryParam("fieldname", fieldname)
+                            .queryParam("value", value)
+                            .queryParam("fieldtype", fieldtype);
+
+            Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+            Response response = invocationBuilder.get();
+            if (response.getStatus() == 201) {
+                total = Integer.parseInt(response.readEntity(String.class));
+
+            }
+
+            if (response.getStatus() == 400) {
+                exception = new Exception(response.readEntity(String.class));
+                return 0;
+            }
+
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+        }
+
+        return total;
+    }
+
+    // </editor-fold>
+//
+// <editor-fold defaultstate="collapsed" desc="Integer countBetweendateWithFilter(String fieldstart, String start, String fieldend, String end, String fieldname, String value, String fieldtype)">
+    public Integer countBetweendateWithFilterUsingHours(String fieldstart, String start, String fieldend, String end,
+            String fieldname, String value, String fieldtype) {
+        Integer total = 0;
+        try {
+
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+
+            WebTarget webTarget
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/countbetweendateaditionalfilterusinghours")
+                            .queryParam("fieldstart", fieldstart)
+                            .queryParam("start", start)
+                            .queryParam("fieldend", fieldend)
+                            .queryParam("end", end)
+                            .queryParam("fieldname", fieldname)
+                            .queryParam("value", value)
+                            .queryParam("fieldtype", fieldtype);
+
+            Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+            Response response = invocationBuilder.get();
+            if (response.getStatus() == 201) {
+                total = Integer.parseInt(response.readEntity(String.class));
+
+            }
+
+            if (response.getStatus() == 400) {
+                exception = new Exception(response.readEntity(String.class));
+                return 0;
+            }
+
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+        }
+
+        return total;
+    }
+
+    // </editor-fold>
+    
+    
+    
+    
 }
