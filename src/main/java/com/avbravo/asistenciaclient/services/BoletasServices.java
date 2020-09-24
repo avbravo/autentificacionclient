@@ -524,8 +524,7 @@ public class BoletasServices implements Serializable {
     public List<Boletas> userEstadoUnidadOr(String username, String estadounidad1, String estadounidad2) {
         List<Boletas> suggestions = new ArrayList<>();
         try {
-            System.out.println("----------------------------------------------------------");
-
+  
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
@@ -893,10 +892,37 @@ public class BoletasServices implements Serializable {
     }
 
     // </editor-fold>
+      // <editor-fold defaultstate="collapsed" desc="List<Boletas> findByUserAndField( String username,String field, String value)">
+    public List<Boletas> findByUserAndField( String username,String field, String value){
+        List<Boletas> suggestions = new ArrayList<>();
+        try {
+
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+           suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/findbbyuserandfield/")
+                    .queryParam("user.username", username)
+                   .queryParam("field", field)
+                   .queryParam("value", value)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Boletas>>() {
+                    });
+
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println("findByEstadoUnidadAndEstadoAutoridad() " + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog("findByEstadoUnidadAndEstadoAutoridad(()", e.getLocalizedMessage());
+        }
+
+        return suggestions;
+    }
+
+    // </editor-fold>
       // <editor-fold defaultstate="collapsed" desc="List<Boletas> findByEstadoUnidadAndEstadoAutoridad@QueryParam("estadounidad") String estadounidad,             @QueryParam("estadoautoridad") String estadoautoridad)">
-    public List<Boletas> findByUserAndField( String username,
+    public List<Boletas> findByUserAndFieldType( String username,
             String field,
-           String value){
+           String value, String fieldtype){
         List<Boletas> suggestions = new ArrayList<>();
         try {
 
