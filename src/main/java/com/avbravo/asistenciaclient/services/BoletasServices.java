@@ -208,12 +208,11 @@ public class BoletasServices implements Serializable {
         return h;
     }// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Boletas findByBoleta(Integer idboleta) ">
-
+   
     /**
-     * consulta por codigo_pedido impresa
-     *
-     * @param codigo_
-     * @return
+     * 
+     * @param idboleta
+     * @return 
      */
     public Optional<Boletas> findByIdboleta(Integer idboleta) {
         Boletas boletas = new Boletas();
@@ -222,7 +221,7 @@ public class BoletasServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             boletas = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/search/")
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/findbyidboleta/")
                     .path("/{idboleta}")
                     .resolveTemplate("idboleta", idboleta)
                     .request(MediaType.APPLICATION_JSON)
@@ -233,12 +232,158 @@ public class BoletasServices implements Serializable {
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("findByidboletas() " + e.getLocalizedMessage());
+            System.out.println( JmoordbUtil.nameOfMethod() + e.getLocalizedMessage());
         }
         return Optional.empty();
     }
 
     // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="Boletas findByBoleta(Integer idboleta) ">
+   
+    /**
+     * 
+     * @param idboleta
+     * @return 
+     */
+    public List<Boletas> findByIdDepartament(Integer iddepartament) {
+       List<Boletas> suggestions = new ArrayList<>();
+        try {
+
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+             suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/findbyiddepartament/")
+                    .path("/{iddepartament}")
+                    .resolveTemplate("iddepartament", iddepartament)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Boletas>>() {
+                    });
+            //String result = FAIL;
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println( JmoordbUtil.nameOfMethod() + e.getLocalizedMessage());
+        }
+        return suggestions;
+    }
+
+    // </editor-fold>
+    
+    
+      // <editor-fold defaultstate="collapsed" desc="List<Boletas> findByUsername(String username)">
+    public List<Boletas> findByUsername(String username) {
+        List<Boletas> suggestions = new ArrayList<>();
+        try {
+
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/findbyusername/")
+                    .path("/{username}")
+                    .resolveTemplate("username", username)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Boletas>>() {
+                    });
+
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println("findByUsername) " + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog("findByUsername)", e.getLocalizedMessage());
+        }
+
+        return suggestions;
+    }
+
+    // </editor-fold>
+    
+    
+    
+      // <editor-fold defaultstate="collapsed" desc="List<Boletas> findByAnyField(String fieldname, String value,  String fieldtype,String sortfield, String order)">
+   
+/**
+ * busca por cualquier campo con ordenacion
+ * @param fieldname
+ * @param value
+ * @param fieldtype: integer, double , integer, boolean,date
+ * @param sortfield: nombre del campo a ordenar
+ * @param order: asc, desc
+ * @return 
+ */
+    public List<Boletas> findByAnyField(String fieldname, String value,  String fieldtype,String sortfield, String order ) {  
+       List<Boletas> suggestions = new ArrayList<>();
+        try {
+
+           Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/findbyanyfield/")
+                    .queryParam("fieldname", fieldname)
+                    .queryParam("value", value)
+                    .queryParam("fieldtype", fieldtype)
+                    .queryParam("sortfield", sortfield)
+                    .queryParam("order", order)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Boletas>>() {
+                    });
+            //String result = FAIL;
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println( JmoordbUtil.nameOfMethod() + e.getLocalizedMessage());
+        }
+        return suggestions;
+    }
+
+    // </editor-fold>
+      // <editor-fold defaultstate="collapsed" desc="List<Boletas> findByAnyFieldAndOperatorBooleanOtherField(String fieldname, String value,  String fieldtype,String sortfield, String order)">
+   
+/**
+ * busca por cualquier campo con ordenacion
+ * @param fieldname
+ * @param value
+ * @param fieldtype: integer, double , integer, boolean,date
+ * @param sortfield: nombre del campo a ordenar
+ * @param order: asc, desc
+ * @return 
+ */
+    public List<Boletas> findByAnyFieldOperatorBooleanOtherField(@QueryParam("fieldname")String fieldname, @QueryParam("value") String value, @QueryParam("fieldtype") String fieldtype,
+          @QueryParam("operatorboolean")String operatorboolean,
+            @QueryParam("otherfieldname")String otherfieldname, @QueryParam("othervalue") String othervalue, @QueryParam("otherfieldtype") String otherfieldtype
+             ,@QueryParam("sortfield")String sortfield, @QueryParam("order")String order   
+            ) { 
+       List<Boletas> suggestions = new ArrayList<>();
+        try {
+
+           Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/findbyanyfield/")
+                    .queryParam("fieldname", fieldname)
+                    .queryParam("value", value)
+                    .queryParam("fieldtype", fieldtype)
+                    .queryParam("sortfield", sortfield)
+                    .queryParam("order", order)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Boletas>>() {
+                    });
+            //String result = FAIL;
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println( JmoordbUtil.nameOfMethod() + e.getLocalizedMessage());
+        }
+        return suggestions;
+    }
+
+    // </editor-fold>
+    
+    
+    
+    
+    
+    
+    
     // <editor-fold defaultstate="collapsed" desc="List<Boletas> complete( String query)">
     public List<Boletas> complete(String query) {
         List<Boletas> suggestions = new ArrayList<>();
@@ -268,115 +413,11 @@ public class BoletasServices implements Serializable {
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="List<Boletas> findByUsername(String username)">
-    public List<Boletas> findByUsername(String username) {
-        List<Boletas> suggestions = new ArrayList<>();
-        try {
-
-            Client client = ClientBuilder.newClient();
-            client.register(authentificationProducer.httpAuthenticationFeature());
-            suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/filterbyusername/")
-                    .path("/{username}")
-                    .resolveTemplate("username", username)
-                    .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<Boletas>>() {
-                    });
-
-        } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("findByUsername) " + e.getLocalizedMessage());
-            JmoordbUtil.errorDialog("findByUsername)", e.getLocalizedMessage());
-        }
-
-        return suggestions;
-    }
-
-    // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="List<Boletas> findByEstadoUnidad(@PathParam("estadounidad") String estadounidad)">
-    public List<Boletas> findByEstadoUnidad(String estadounidad) {
-        List<Boletas> suggestions = new ArrayList<>();
-        try {
-
-            Client client = ClientBuilder.newClient();
-            client.register(authentificationProducer.httpAuthenticationFeature());
-            suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/findbyestadounidad/")
-                    .path("/{estadounidad}")
-                    .resolveTemplate("estadounidad", estadounidad)
-                    .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<Boletas>>() {
-                    });
-
-        } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("findByUsername) " + e.getLocalizedMessage());
-            JmoordbUtil.errorDialog("findByUsername)", e.getLocalizedMessage());
-        }
-
-        return suggestions;
-    }
-
-    // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="List<Boletas> findByEstadoUnidad(@PathParam("estadounidad") String estadounidad)>
-    public List<Boletas> findByEstadoAutoridad( String estadoautoridad) {
-        List<Boletas> suggestions = new ArrayList<>();
-        try {
-
-            Client client = ClientBuilder.newClient();
-            client.register(authentificationProducer.httpAuthenticationFeature());
-            suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/findbyestadoautoridad/")
-                    .path("/{estadoautoridad}")
-                    .resolveTemplate("estadoautoridad", estadoautoridad)
-                    .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<Boletas>>() {
-                    });
-
-        } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("findByEstadoAutoridad() " + e.getLocalizedMessage());
-            JmoordbUtil.errorDialog("findByEstadoAutoridad()", e.getLocalizedMessage());
-        }
-
-        return suggestions;
-    }
-
-    // </editor-fold>
+   
     
     
     
-    
-    
-    
-    // <editor-fold defaultstate="collapsed" desc="List<Boletas> findByIdDepartament(Integer iddepartament) ">
-    public List<Boletas> findByIdDepartament(Integer iddepartament) {
-        List<Boletas> suggestions = new ArrayList<>();
-        try {
-
-            Client client = ClientBuilder.newClient();
-            client.register(authentificationProducer.httpAuthenticationFeature());
-            suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/filterbyiddepartament/")
-                    .path("/{iddepartament}")
-                    .resolveTemplate("iddepartament", iddepartament)
-                    .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<Boletas>>() {
-                    });
-
-        } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("findByIdDepartament) " + e.getLocalizedMessage());
-            JmoordbUtil.errorDialog("findByIdDepartament)", e.getLocalizedMessage());
-        }
-
-        return suggestions;
-    }
-    // </editor-fold>
+   
 
     // <editor-fold defaultstate="collapsed" desc="List<Boletas> betweendate( String fieldstart, String start, String fieldend,String end)">
     public List<Boletas> betweendate(String fieldstart, String start, String fieldend, String end) {
@@ -524,7 +565,7 @@ public class BoletasServices implements Serializable {
     public List<Boletas> userEstadoUnidadOr(String username, String estadounidad1, String estadounidad2) {
         List<Boletas> suggestions = new ArrayList<>();
         try {
-  
+
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
@@ -634,7 +675,6 @@ public class BoletasServices implements Serializable {
     public List<Boletas> departamentEstadoAutoridadOr(Integer iddepartament, String estadoautoridad1, String estadoautoridad2) {
         List<Boletas> suggestions = new ArrayList<>();
         try {
-           
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
@@ -864,75 +904,20 @@ public class BoletasServices implements Serializable {
 
     // </editor-fold>
     
-    
-      // <editor-fold defaultstate="collapsed" desc="List<Boletas> findByEstadoUnidadAndEstadoAutoridad@QueryParam("estadounidad") String estadounidad,             @QueryParam("estadoautoridad") String estadoautoridad)">
-    public List<Boletas> findByEstadoUnidadAndEstadoAutoridad( String estadounidad,
-             String estadoautoridad){
-        List<Boletas> suggestions = new ArrayList<>();
-        try {
-
-            Client client = ClientBuilder.newClient();
-            client.register(authentificationProducer.httpAuthenticationFeature());
-           suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/findbbyestadoautoridadandestadounidad/")
-                    .queryParam("estadounidad", estadounidad)
-                   .queryParam("estadoautoridad", estadoautoridad)
-                    .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<Boletas>>() {
-                    });
-
-        } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("findByEstadoUnidadAndEstadoAutoridad() " + e.getLocalizedMessage());
-            JmoordbUtil.errorDialog("findByEstadoUnidadAndEstadoAutoridad(()", e.getLocalizedMessage());
-        }
-
-        return suggestions;
-    }
-
-    // </editor-fold>
-      // <editor-fold defaultstate="collapsed" desc="List<Boletas> findByUserAndField( String username,String field, String value)">
-    public List<Boletas> findByUserAndField( String username,String field, String value){
-        List<Boletas> suggestions = new ArrayList<>();
-        try {
-
-            Client client = ClientBuilder.newClient();
-            client.register(authentificationProducer.httpAuthenticationFeature());
-           suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/findbbyuserandfield/")
-                    .queryParam("user.username", username)
-                   .queryParam("field", field)
-                   .queryParam("value", value)
-                    .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<Boletas>>() {
-                    });
-
-        } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("findByEstadoUnidadAndEstadoAutoridad() " + e.getLocalizedMessage());
-            JmoordbUtil.errorDialog("findByEstadoUnidadAndEstadoAutoridad(()", e.getLocalizedMessage());
-        }
-
-        return suggestions;
-    }
-
-    // </editor-fold>
-      // <editor-fold defaultstate="collapsed" desc="List<Boletas> findByEstadoUnidadAndEstadoAutoridad@QueryParam("estadounidad") String estadounidad,             @QueryParam("estadoautoridad") String estadoautoridad)">
-    public List<Boletas> findByUserAndFieldType( String username,
+    // <editor-fold defaultstate="collapsed" desc="List<Boletas> findByEstadoUnidadAndEstadoAutoridad@QueryParam("estadounidad") String estadounidad,             @QueryParam("estadoautoridad") String estadoautoridad)">
+    public List<Boletas> findByUserAndFieldType(String username,
             String field,
-           String value, String fieldtype){
+            String value, String fieldtype) {
         List<Boletas> suggestions = new ArrayList<>();
         try {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
-           suggestions = client
+            suggestions = client
                     .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/findbbyuserandfield/")
                     .queryParam("user.username", username)
-                   .queryParam("field", field)
-                   .queryParam("value", value)
+                    .queryParam("field", field)
+                    .queryParam("value", value)
                     .request(MediaType.APPLICATION_JSON)
                     .get(new GenericType<List<Boletas>>() {
                     });
@@ -948,5 +933,4 @@ public class BoletasServices implements Serializable {
     }
 
     // </editor-fold>
-    
 }

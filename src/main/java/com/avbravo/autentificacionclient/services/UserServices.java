@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -343,6 +344,122 @@ public class UserServices implements Serializable {
 
         return suggestions;
     }
+    // </editor-fold>
+    
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="List<User> findByAnyField(String fieldname, String value,  String fieldtype,String sortfield, String order)">
+   
+/**
+ * busca por cualquier campo con ordenacion
+ * @param fieldname
+ * @param value
+ * @param fieldtype: integer, double , integer, boolean,date
+ * @param sortfield: nombre del campo a ordenar
+ * @param order: asc, desc
+ * @return 
+ */
+    public List<User> findByAnyField(String fieldname, String value,  String fieldtype,String sortfield, String order ) {  
+       List<User> suggestions = new ArrayList<>();
+        try {
+
+           Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/findbyanyfield/")
+                    .queryParam("fieldname", fieldname)
+                    .queryParam("value", value)
+                    .queryParam("fieldtype", fieldtype)
+                    .queryParam("sortfield", sortfield)
+                    .queryParam("order", order)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<User>>() {
+                    });
+            //String result = FAIL;
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println( JmoordbUtil.nameOfMethod() + e.getLocalizedMessage());
+        }
+        return suggestions;
+    }
+
+    // </editor-fold>
+      // <editor-fold defaultstate="collapsed" desc="List<User> findByAnyFieldAndOperatorBooleanOtherField(String fieldname, String value,  String fieldtype,String sortfield, String order)">
+   
+/**
+ * busca por cualquier campo con ordenacion
+ * @param fieldname
+ * @param value
+ * @param fieldtype: integer, double , integer, boolean,date
+ * @param sortfield: nombre del campo a ordenar
+ * @param order: asc, desc
+ * @return 
+ */
+    public List<User> findByAnyFieldOperatorBooleanOtherField(@QueryParam("fieldname")String fieldname, @QueryParam("value") String value, @QueryParam("fieldtype") String fieldtype,
+          @QueryParam("operatorboolean")String operatorboolean,
+            @QueryParam("otherfieldname")String otherfieldname, @QueryParam("othervalue") String othervalue, @QueryParam("otherfieldtype") String otherfieldtype
+             ,@QueryParam("sortfield")String sortfield, @QueryParam("order")String order   
+            ) { 
+       List<User> suggestions = new ArrayList<>();
+        try {
+
+           Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/findbyanyfield/")
+                    .queryParam("fieldname", fieldname)
+                    .queryParam("value", value)
+                    .queryParam("fieldtype", fieldtype)
+                    .queryParam("sortfield", sortfield)
+                    .queryParam("order", order)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<User>>() {
+                    });
+            //String result = FAIL;
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println( JmoordbUtil.nameOfMethod() + e.getLocalizedMessage());
+        }
+        return suggestions;
+    }
+
+    // </editor-fold>
+    
+    
+    
+      // <editor-fold defaultstate="collapsed" desc="List<User> findByAnyField(String fieldname, String value,  String fieldtype,String sortfield, String order)">
+ 
+    /**
+     * 
+     * @param iddepartament
+     * @param idrol
+     * @return 
+     */
+    
+    public List<User> findbyIdepartamentIdrol(Integer iddepartament ,Integer idrol ) {  
+       List<User> suggestions = new ArrayList<>();
+        try {
+
+           Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/findbyidepartamentandidrol/")
+                    .queryParam("iddepartament", iddepartament)
+                    .queryParam("idrol", idrol)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<User>>() {
+                    });
+            //String result = FAIL;
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println( JmoordbUtil.nameOfMethod() + e.getLocalizedMessage());
+        }
+        return suggestions;
+    }
+
     // </editor-fold>
 
 }
