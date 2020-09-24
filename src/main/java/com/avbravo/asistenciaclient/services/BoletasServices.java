@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -292,6 +294,64 @@ public class BoletasServices implements Serializable {
     }
 
     // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="List<Boletas> findByEstadoUnidad(@PathParam("estadounidad") String estadounidad)">
+    public List<Boletas> findByEstadoUnidad(String estadounidad) {
+        List<Boletas> suggestions = new ArrayList<>();
+        try {
+
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/findbyestadounidad/")
+                    .path("/{estadounidad}")
+                    .resolveTemplate("estadounidad", estadounidad)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Boletas>>() {
+                    });
+
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println("findByUsername) " + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog("findByUsername)", e.getLocalizedMessage());
+        }
+
+        return suggestions;
+    }
+
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="List<Boletas> findByEstadoUnidad(@PathParam("estadounidad") String estadounidad)>
+    public List<Boletas> findByEstadoAutoridad( String estadoautoridad) {
+        List<Boletas> suggestions = new ArrayList<>();
+        try {
+
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/findbyestadoautoridad/")
+                    .path("/{estadoautoridad}")
+                    .resolveTemplate("estadoautoridad", estadoautoridad)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Boletas>>() {
+                    });
+
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println("findByEstadoAutoridad() " + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog("findByEstadoAutoridad()", e.getLocalizedMessage());
+        }
+
+        return suggestions;
+    }
+
+    // </editor-fold>
+    
+    
+    
+    
+    
+    
     // <editor-fold defaultstate="collapsed" desc="List<Boletas> findByIdDepartament(Integer iddepartament) ">
     public List<Boletas> findByIdDepartament(Integer iddepartament) {
         List<Boletas> suggestions = new ArrayList<>();
@@ -374,7 +434,7 @@ public class BoletasServices implements Serializable {
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="List<Boletas> betweendateWithFilter(String fieldstart, String start, String fieldend, String end)
+    // <editor-fold defaultstate="collapsed" desc="List<Boletas> betweendateWithFilter(String fieldstart, String start, String fieldend, String end)">
     /**
      *
      * @param fieldstart
@@ -413,7 +473,7 @@ public class BoletasServices implements Serializable {
     }
 
     // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="List<Boletas> betweendateWithFilterUsingHours(String fieldstart, String start, String fieldend, String end)
+    // <editor-fold defaultstate="collapsed" desc="List<Boletas> betweendateWithFilterUsingHours(String fieldstart, String start, String fieldend, String end)">
     /**
      *
      * @param fieldstart
@@ -575,7 +635,7 @@ public class BoletasServices implements Serializable {
     public List<Boletas> departamentEstadoAutoridadOr(Integer iddepartament, String estadoautoridad1, String estadoautoridad2) {
         List<Boletas> suggestions = new ArrayList<>();
         try {
-            System.out.println("----------------------------------------------------------");
+           
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
@@ -806,6 +866,61 @@ public class BoletasServices implements Serializable {
     // </editor-fold>
     
     
-    
+      // <editor-fold defaultstate="collapsed" desc="List<Boletas> findByEstadoUnidadAndEstadoAutoridad@QueryParam("estadounidad") String estadounidad,             @QueryParam("estadoautoridad") String estadoautoridad)">
+    public List<Boletas> findByEstadoUnidadAndEstadoAutoridad( String estadounidad,
+             String estadoautoridad){
+        List<Boletas> suggestions = new ArrayList<>();
+        try {
+
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+           suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/findbbyestadoautoridadandestadounidad/")
+                    .queryParam("estadounidad", estadounidad)
+                   .queryParam("estadoautoridad", estadoautoridad)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Boletas>>() {
+                    });
+
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println("findByEstadoUnidadAndEstadoAutoridad() " + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog("findByEstadoUnidadAndEstadoAutoridad(()", e.getLocalizedMessage());
+        }
+
+        return suggestions;
+    }
+
+    // </editor-fold>
+      // <editor-fold defaultstate="collapsed" desc="List<Boletas> findByEstadoUnidadAndEstadoAutoridad@QueryParam("estadounidad") String estadounidad,             @QueryParam("estadoautoridad") String estadoautoridad)">
+    public List<Boletas> findByUserAndField( String username,
+            String field,
+           String value){
+        List<Boletas> suggestions = new ArrayList<>();
+        try {
+
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+           suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/findbbyuserandfield/")
+                    .queryParam("user.username", username)
+                   .queryParam("field", field)
+                   .queryParam("value", value)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Boletas>>() {
+                    });
+
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println("findByEstadoUnidadAndEstadoAutoridad() " + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog("findByEstadoUnidadAndEstadoAutoridad(()", e.getLocalizedMessage());
+        }
+
+        return suggestions;
+    }
+
+    // </editor-fold>
     
 }
