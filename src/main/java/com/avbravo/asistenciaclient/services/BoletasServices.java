@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -336,21 +335,25 @@ public class BoletasServices implements Serializable {
     }
 
     // </editor-fold>
-      // <editor-fold defaultstate="collapsed" desc="List<Boletas> findByAnyFieldAndOperatorBooleanOtherField(String fieldname, String value,  String fieldtype,String sortfield, String order)">
+      // <editor-fold defaultstate="collapsed" desc="List<Boletas> findByAnyFieldOperatorBooleanSecondField(String fieldname, String value,  String fieldtype,String operatorboolean,String fieldnamesecond, String valuesecond, String fieldtypesecond,String sortfield,String order)">
    
 /**
- * busca por cualquier campo con ordenacion
+ * busca 
  * @param fieldname
  * @param value
- * @param fieldtype: integer, double , integer, boolean,date
- * @param sortfield: nombre del campo a ordenar
+ * @param fieldtype: integer , string, date, double, boolean
+ * @param operatorboolean
+ * @param fieldnamesecond
+ * @param valuesecond
+ * @param fieldtypesecond
+ * @param sortfield
  * @param order: asc, desc
  * @return 
  */
-    public List<Boletas> findByAnyFieldOperatorBooleanOtherField(@QueryParam("fieldname")String fieldname, @QueryParam("value") String value, @QueryParam("fieldtype") String fieldtype,
-          @QueryParam("operatorboolean")String operatorboolean,
-            @QueryParam("otherfieldname")String otherfieldname, @QueryParam("othervalue") String othervalue, @QueryParam("otherfieldtype") String otherfieldtype
-             ,@QueryParam("sortfield")String sortfield, @QueryParam("order")String order   
+    public List<Boletas> findByAnyFieldOperatorBooleanSecondField(String fieldname, String value,  String fieldtype,
+       String operatorboolean,
+          String fieldnamesecond, String valuesecond, String fieldtypesecond
+             ,String sortfield,String order   
             ) { 
        List<Boletas> suggestions = new ArrayList<>();
         try {
@@ -358,10 +361,74 @@ public class BoletasServices implements Serializable {
            Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/findbyanyfield/")
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/findbyanyfieldoperatorbooleansecondfield/")
                     .queryParam("fieldname", fieldname)
                     .queryParam("value", value)
                     .queryParam("fieldtype", fieldtype)
+                    
+                    .queryParam("fieldnamesecond", fieldnamesecond)
+                    .queryParam("valuesecond", valuesecond)
+                    .queryParam("fieldtypesecond", fieldtypesecond)
+                    
+                    
+                    .queryParam("sortfield", sortfield)
+                    .queryParam("order", order)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Boletas>>() {
+                    });
+            //String result = FAIL;
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println( JmoordbUtil.nameOfMethod() + e.getLocalizedMessage());
+        }
+        return suggestions;
+    }
+
+    // </editor-fold>
+      // <editor-fold defaultstate="collapsed" desc="List<Boletas> indByAnyFieldOperatorBooleanSecondFieldOperatorBooleaSecondFieldThree(....")">
+   
+/**
+ * busca 
+ * @param fieldname
+ * @param value
+ * @param fieldtype: integer , string, date, double, boolean
+ * @param operatorboolean
+ * @param fieldnamesecond
+ * @param valuesecond
+ * @param fieldtypesecond
+ * @param sortfield
+ * @param order: asc, desc
+ * @return 
+ */
+    public List<Boletas> findByAnyFieldOperatorBooleanSecondFieldOperatorBooleaSecondFieldThree(@QueryParam("fieldname")String fieldname, @QueryParam("value") String value, @QueryParam("fieldtype") String fieldtype,
+          @QueryParam("operatorboolean")String operatorboolean,
+            @QueryParam("fieldnamesecond")String fieldnamesecond, @QueryParam("valuesecond") String valuesecond, @QueryParam("fieldtypesecond") String fieldtypesecond
+             ,@QueryParam("operatorbooleansecond")String operatorbooleansecond,
+              @QueryParam("fieldnamethird")String fieldnamethird, @QueryParam("valuethird") String valuethird, @QueryParam("fieldtypethird") String fieldtypethird
+             
+             ,@QueryParam("sortfield")String sortfield, @QueryParam("order")String order   
+            ){
+       List<Boletas> suggestions = new ArrayList<>();
+        try {
+
+           Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/findbyanyfieldoperatorbooleansecondfield/")
+                    .queryParam("fieldname", fieldname)
+                    .queryParam("value", value)
+                    .queryParam("fieldtype", fieldtype)
+                    
+                    .queryParam("fieldnamesecond", fieldnamesecond)
+                    .queryParam("valuesecond", valuesecond)
+                    .queryParam("fieldtypesecond", fieldtypesecond)
+                    
+                    .queryParam("fieldnamethird", fieldnamethird)
+                    .queryParam("valuethird", valuethird)
+                    .queryParam("fieldtypethird", fieldtypethird)
+                    
+                    
                     .queryParam("sortfield", sortfield)
                     .queryParam("order", order)
                     .request(MediaType.APPLICATION_JSON)

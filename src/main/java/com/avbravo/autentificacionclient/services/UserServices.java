@@ -314,6 +314,7 @@ public class UserServices implements Serializable {
         return suggestions;
     }
     // </editor-fold>
+    
      // <editor-fold defaultstate="collapsed" desc="List<User>  searchAutoridad( Boolean isauthority) >
     /**
      * Busca los usuarios que sean autoridad (isauthority = true
@@ -429,7 +430,7 @@ public class UserServices implements Serializable {
     
     
     
-      // <editor-fold defaultstate="collapsed" desc="List<User> findByAnyField(String fieldname, String value,  String fieldtype,String sortfield, String order)">
+      // <editor-fold defaultstate="collapsed" desc="List<User> findbyIdepartamentIdrol(Integer iddepartament ,Integer idrol )">
  
     /**
      * 
@@ -461,5 +462,118 @@ public class UserServices implements Serializable {
     }
 
     // </editor-fold>
+    
+    
+    
+      // <editor-fold defaultstate="collapsed" desc="List<User> findByAnyFieldOperatorBooleanSecondField(String fieldname, String value,  String fieldtype,String operatorboolean,String fieldnamesecond, String valuesecond, String fieldtypesecond,String sortfield,String order)">
+   
+/**
+ * busca 
+ * @param fieldname
+ * @param value
+ * @param fieldtype: integer , string, date, double, boolean
+ * @param operatorboolean
+ * @param fieldnamesecond
+ * @param valuesecond
+ * @param fieldtypesecond
+ * @param sortfield
+ * @param order: asc, desc
+ * @return 
+ */
+    public List<User> findByAnyFieldOperatorBooleanSecondField(String fieldname, String value,  String fieldtype,
+       String operatorboolean,
+          String fieldnamesecond, String valuesecond, String fieldtypesecond
+             ,String sortfield,String order   
+            ) { 
+       List<User> suggestions = new ArrayList<>();
+        try {
+
+           Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/findbyanyfieldoperatorbooleansecondfield/")
+                    .queryParam("fieldname", fieldname)
+                    .queryParam("value", value)
+                    .queryParam("fieldtype", fieldtype)
+                    
+                    .queryParam("fieldnamesecond", fieldnamesecond)
+                    .queryParam("valuesecond", valuesecond)
+                    .queryParam("fieldtypesecond", fieldtypesecond)
+                    
+                    
+                    .queryParam("sortfield", sortfield)
+                    .queryParam("order", order)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<User>>() {
+                    });
+            //String result = FAIL;
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println( JmoordbUtil.nameOfMethod() + e.getLocalizedMessage());
+        }
+        return suggestions;
+    }
+
+    // </editor-fold>
+      // <editor-fold defaultstate="collapsed" desc="List<User> indByAnyFieldOperatorBooleanSecondFieldOperatorBooleaSecondFieldThree(....")">
+   
+/**
+ * busca 
+ * @param fieldname
+ * @param value
+ * @param fieldtype: integer , string, date, double, boolean
+ * @param operatorboolean
+ * @param fieldnamesecond
+ * @param valuesecond
+ * @param fieldtypesecond
+ * @param sortfield
+ * @param order: asc, desc
+ * @return 
+ */
+    public List<User> findByAnyFieldOperatorBooleanSecondFieldOperatorBooleaSecondFieldThree(@QueryParam("fieldname")String fieldname, @QueryParam("value") String value, @QueryParam("fieldtype") String fieldtype,
+          @QueryParam("operatorboolean")String operatorboolean,
+            @QueryParam("fieldnamesecond")String fieldnamesecond, @QueryParam("valuesecond") String valuesecond, @QueryParam("fieldtypesecond") String fieldtypesecond
+             ,@QueryParam("operatorbooleansecond")String operatorbooleansecond,
+              @QueryParam("fieldnamethird")String fieldnamethird, @QueryParam("valuethird") String valuethird, @QueryParam("fieldtypethird") String fieldtypethird
+             
+             ,@QueryParam("sortfield")String sortfield, @QueryParam("order")String order   
+            ){
+       List<User> suggestions = new ArrayList<>();
+        try {
+
+           Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/findbyanyfieldoperatorbooleansecondfield/")
+                    .queryParam("fieldname", fieldname)
+                    .queryParam("value", value)
+                    .queryParam("fieldtype", fieldtype)
+                    
+                    .queryParam("fieldnamesecond", fieldnamesecond)
+                    .queryParam("valuesecond", valuesecond)
+                    .queryParam("fieldtypesecond", fieldtypesecond)
+                    
+                    .queryParam("fieldnamethird", fieldnamethird)
+                    .queryParam("valuethird", valuethird)
+                    .queryParam("fieldtypethird", fieldtypethird)
+                    
+                    
+                    .queryParam("sortfield", sortfield)
+                    .queryParam("order", order)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<User>>() {
+                    });
+            //String result = FAIL;
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println( JmoordbUtil.nameOfMethod() + e.getLocalizedMessage());
+        }
+        return suggestions;
+    }
+
+    // </editor-fold>
+    
 
 }
