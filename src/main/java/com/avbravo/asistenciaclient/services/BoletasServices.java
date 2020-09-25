@@ -386,7 +386,7 @@ public class BoletasServices implements Serializable {
     }
 
     // </editor-fold>
-      // <editor-fold defaultstate="collapsed" desc="List<Boletas> indByAnyFieldOperatorBooleanSecondFieldOperatorBooleaSecondFieldThree(....")">
+      // <editor-fold defaultstate="collapsed" desc="List<Boletas> findByAnyFieldOperatorBooleanSecondFieldOperatorBooleaSecondFieldThree(....")">
    
 /**
  * busca 
@@ -1005,7 +1005,7 @@ public class BoletasServices implements Serializable {
     
     
     
-    // <editor-fold defaultstate="collapsed" desc="Integer countBetweendateWithFilter(String fieldstart, String start, String fieldend, String end, String fieldname, String value, String fieldtype)">
+    // <editor-fold defaultstate="collapsed" desc="BooleanisAvailableBetweenDateHours(String fieldstart, String start, String fieldend, String end, String fieldname, String value, String fieldtype)">
     public Boolean isAvailableBetweenDateHours(String fieldstart, String start, String fieldend, String end,
             String fieldname, String value, String fieldtype) {
        Boolean found =false;
