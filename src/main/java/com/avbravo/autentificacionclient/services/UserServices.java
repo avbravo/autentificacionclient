@@ -591,7 +591,7 @@ public class UserServices implements Serializable {
            Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/findbyidepartamentandidrol/")
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/findbyemail/")
                     .queryParam("email", email)
                                         .request(MediaType.APPLICATION_JSON)
                     .get(new GenericType<List<User>>() {
