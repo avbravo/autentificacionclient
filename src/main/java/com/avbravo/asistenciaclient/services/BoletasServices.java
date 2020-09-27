@@ -183,29 +183,7 @@ public class BoletasServices implements Serializable {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="String showDate(Date date)">
-    public String showDate(Date date) {
-        String h = "";
-        try {
-            h = JmoordbDateUtil.dateFormatToString(date, "dd/MM/yyyy");
-        } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.errorMessage("showDate() " + e.getLocalizedMessage());
-        }
-        return h;
-    }// </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="String showHour(Date date)">
-
-    public String showHour(Date date) {
-        String h = "";
-        try {
-            h = JmoordbDateUtil.hourFromDateToString(date);
-        } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.errorMessage("showHour() " + e.getLocalizedMessage());
-        }
-        return h;
-    }// </editor-fold>
+   
     // <editor-fold defaultstate="collapsed" desc="Boletas findByBoleta(Integer idboleta) ">
    
     /**
@@ -450,6 +428,7 @@ public class BoletasServices implements Serializable {
     
     
     
+ 
     
     // <editor-fold defaultstate="collapsed" desc="List<Boletas> complete( String query)">
     public List<Boletas> complete(String query) {
@@ -1054,4 +1033,30 @@ public class BoletasServices implements Serializable {
     }
 
     // </editor-fold>
+    
+    
+    
+     // <editor-fold defaultstate="collapsed" desc="String showDate(Date date)">
+    public String showDate(Date date) {
+        String h = "";
+        try {
+            h = JmoordbDateUtil.dateFormatToString(date, "dd/MM/yyyy");
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.errorMessage("showDate() " + e.getLocalizedMessage());
+        }
+        return h;
+    }// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="String showHour(Date date)">
+
+    public String showHour(Date date) {
+        String h = "";
+        try {
+            h = JmoordbDateUtil.hourFromDateToString(date);
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.errorMessage("showHour() " + e.getLocalizedMessage());
+        }
+        return h;
+    }// </editor-fold>
 }

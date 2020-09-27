@@ -283,7 +283,7 @@ public class UserServices implements Serializable {
     }
     // </editor-fold>
     
-     // <editor-fold defaultstate="collapsed" desc="List<User>  searchAutoridad( Boolean isauthority) >
+     // <editor-fold defaultstate="collapsed" desc="List<User>  searchAutoridad( Boolean isauthority)" >
     /**
      * Busca los usuarios que sean autoridad (isauthority = true
      * o que no sean autoridad isauthority = false)
@@ -315,7 +315,7 @@ public class UserServices implements Serializable {
     }
     // </editor-fold>
     
-     // <editor-fold defaultstate="collapsed" desc="List<User>  searchAutoridad( Boolean isauthority) >
+     // <editor-fold defaultstate="collapsed" desc="List<User>  searchAutoridad( Boolean isauthority)" >
     /**
      * Busca los usuarios que sean autoridad (isauthority = true
      * o que no sean autoridad isauthority = false)
@@ -575,5 +575,35 @@ public class UserServices implements Serializable {
 
     // </editor-fold>
     
+  // <editor-fold defaultstate="collapsed" desc="List<User> findbyEmail(String email )">
+ 
+    /**
+     * 
+     * @param iddepartament
+     * @param idrol
+     * @return 
+     */
+    
+    public List<User> findbyEmail(String email ) {  
+       List<User> suggestions = new ArrayList<>();
+        try {
 
+           Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/findbyidepartamentandidrol/")
+                    .queryParam("email", email)
+                                        .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<User>>() {
+                    });
+            //String result = FAIL;
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println( JmoordbUtil.nameOfMethod() + e.getLocalizedMessage());
+        }
+        return suggestions;
+    }
+
+    // </editor-fold>
 }

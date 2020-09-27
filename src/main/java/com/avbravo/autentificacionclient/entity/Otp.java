@@ -23,6 +23,8 @@ public class Otp {
             field = "iduser", javatype = "Integer", lazy = false,
             repository = "com.avbravo.autentificacion.repository.UsertRepository")
     private User user;
+    
+    private Integer otp;
 
     private Date expiry;
 
@@ -31,13 +33,15 @@ public class Otp {
     public Otp() {
     }
 
-    public Otp(Integer idotp, User user, Date expiry, Boolean used) {
+    public Otp(Integer idotp, User user, Integer otp, Date expiry, Boolean used) {
         this.idotp = idotp;
         this.user = user;
+        this.otp = otp;
         this.expiry = expiry;
         this.used = used;
     }
 
+   
     public Integer getIdotp() {
         return idotp;
     }
@@ -70,6 +74,17 @@ public class Otp {
         this.used = used;
     }
 
+    public Integer getOtp() {
+        return otp;
+    }
+
+    public void setOtp(Integer otp) {
+        this.otp = otp;
+    }
+    
+    
+    
+
     @Override
     public boolean equals(Object object) {
         if (!(object instanceof Otp)) {
@@ -81,5 +96,4 @@ public class Otp {
         }
         return true;
     }
-
 }

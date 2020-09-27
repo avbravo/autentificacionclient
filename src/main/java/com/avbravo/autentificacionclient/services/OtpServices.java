@@ -5,16 +5,25 @@
  */
 package com.avbravo.autentificacionclient.services;
 
+import com.avbravo.asistenciaclient.entity.Boletas;
 import com.avbravo.autentificacionclient.entity.Otp;
 import com.avbravo.autentificacionclient.producer.AuthentificationProducer;
 import com.avbravo.autentificacionclient.producer.MicroservicesProducer;
+import com.avbravo.jmoordb.util.JmoordbDateUtil;
 import com.avbravo.jmoordb.util.JmoordbUtil;
+import com.mongodb.client.model.Filters;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -23,6 +32,8 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.bson.Document;
+import org.bson.conversions.Bson;
 
 /**
  *
@@ -134,7 +145,7 @@ public class OtpServices implements Serializable {
         return false;
     }
 // </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="Boolean update(Otp otp)">
+// <editor-fold defaultstate="collapsed" desc="Boolean delete (Otp otp)">
 
     public Boolean delete(Otp otp) {
         try {
@@ -222,5 +233,100 @@ public class OtpServices implements Serializable {
         return suggestions;
     }
     // </editor-fold>
+    
+    
+ // <editor-fold defaultstate="collapsed" desc="String showDate(Date date)">
+    public String showDate(Date date) {
+        String h = "";
+        try {
+            h = JmoordbDateUtil.dateFormatToString(date, "dd/MM/yyyy");
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.errorMessage("showDate() " + e.getLocalizedMessage());
+        }
+        return h;
+    }// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="String showHour(Date date)">
+
+    public String showHour(Date date) {
+        String h = "";
+        try {
+            h = JmoordbDateUtil.hourFromDateToString(date);
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.errorMessage("showHour() " + e.getLocalizedMessage());
+        }
+        return h;
+    }
+// </editor-fold>    
+    
+    
+    
+      // <editor-fold defaultstate="collapsed" desc=" @Path("/findbyanyfield")">
+
+   /**
+    * 
+    * @param otp
+    * @param username
+    * @return 
+    */
+    @GET
+    @Path("/findbyanyfield")
+    @RolesAllowed({"admin"})
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Otp> findByOtpAndUsername( Integer otp,  String username)  { 
+        List<Otp> list = new ArrayList<>();
+        try {
+   Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            list = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/otp/findbyotpandusername/")
+                    .queryParam("otp", otp)
+                    .queryParam("username", username)
+                   
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Otp>>() {
+                    });
+        } catch (Exception e) {
+            System.out.println(JmoordbUtil.nameOfMethod() + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+        }
+
+        return list;
+    }
+// </editor-fold>
+      // <editor-fold defaultstate="collapsed" desc=" @Path("/findbyanyfield")">
+
+   /**
+    * 
+    * @param otp
+    * @param username
+    * @return 
+    */
+    @GET
+    @Path("/findbyanyfield")
+    @RolesAllowed({"admin"})
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Otp> findByEmail(  String email)  { 
+        List<Otp> list = new ArrayList<>();
+        try {
+   Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            list = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/otp/findbyemail/")
+                    .queryParam("email", email)
+                   
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Otp>>() {
+                    });
+        } catch (Exception e) {
+            System.out.println(JmoordbUtil.nameOfMethod() + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+        }
+
+        return list;
+    }
+// </editor-fold>
+    
 
 }
