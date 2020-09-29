@@ -16,31 +16,34 @@ import java.util.Date;
  */
 public class Otp {
 
-    @Id
+   @Id
     private Integer idotp;
 
     @Referenced(collection = "User",
             field = "iduser", javatype = "Integer", lazy = false,
-            repository = "com.avbravo.autentificacion.repository.UsertRepository")
+            repository = "com.avbravo.autentificacion.repository.UserRepository")
     private User user;
     
     private Integer otp;
 
-    private Date expiry;
+    private Date expirationdate;
 
     private Boolean used;
+    private Boolean isexpired;
 
     public Otp() {
     }
 
-    public Otp(Integer idotp, User user, Integer otp, Date expiry, Boolean used) {
+    public Otp(Integer idotp, User user, Integer otp, Date expirationdate, Boolean used, Boolean isexpired) {
         this.idotp = idotp;
         this.user = user;
         this.otp = otp;
-        this.expiry = expiry;
+        this.expirationdate = expirationdate;
         this.used = used;
+        this.isexpired = isexpired;
     }
 
+ 
    
     public Integer getIdotp() {
         return idotp;
@@ -58,13 +61,26 @@ public class Otp {
         this.user = user;
     }
 
-    public Date getExpiry() {
-        return expiry;
+    public Date getExpirationdate() {
+        return expirationdate;
     }
 
-    public void setExpiry(Date expiry) {
-        this.expiry = expiry;
+    public void setExpirationdate(Date expirationdate) {
+        this.expirationdate = expirationdate;
     }
+
+    public Boolean getIsexpired() {
+        return isexpired;
+    }
+
+    public void setIsexpired(Boolean isexpired) {
+        this.isexpired = isexpired;
+    }
+
+   
+    
+    
+    
 
     public Boolean getUsed() {
         return used;
@@ -96,4 +112,5 @@ public class Otp {
         }
         return true;
     }
+
 }

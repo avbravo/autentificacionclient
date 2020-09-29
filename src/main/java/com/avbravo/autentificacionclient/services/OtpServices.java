@@ -262,27 +262,25 @@ public class OtpServices implements Serializable {
     
     
     
-      // <editor-fold defaultstate="collapsed" desc=" @Path("/findbyanyfield")">
 
-   /**
-    * 
-    * @param otp
-    * @param username
-    * @return 
-    */
-    @GET
-    @Path("/findbyanyfield")
-    @RolesAllowed({"admin"})
+       // <editor-fold defaultstate="collapsed" desc="List<Otp> findByOtpAndIduser( Integer otp,  Integer iduser)" >
+/**
+ * Busca el opt por otp y iduser
+ * @param otp
+ * @param iduser
+ * @return 
+ */
+
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Otp> findByOtpAndUsername( Integer otp,  String username)  { 
+    public List<Otp> findByOtpAndIduser( Integer otp,  Integer iduser)  { 
         List<Otp> list = new ArrayList<>();
         try {
    Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             list = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/otp/findbyotpandusername/")
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/otp/findbyotpandiduser/")
                     .queryParam("otp", otp)
-                    .queryParam("username", username)
+                    .queryParam("iduser", iduser)
                    
                     .request(MediaType.APPLICATION_JSON)
                     .get(new GenericType<List<Otp>>() {
@@ -295,38 +293,5 @@ public class OtpServices implements Serializable {
         return list;
     }
 // </editor-fold>
-      // <editor-fold defaultstate="collapsed" desc=" @Path("/findbyanyfield")">
-
-   /**
-    * 
-    * @param otp
-    * @param username
-    * @return 
-    */
-    @GET
-    @Path("/findbyanyfield")
-    @RolesAllowed({"admin"})
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Otp> findByEmail(  String email)  { 
-        List<Otp> list = new ArrayList<>();
-        try {
-   Client client = ClientBuilder.newClient();
-            client.register(authentificationProducer.httpAuthenticationFeature());
-            list = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/otp/findbyemail/")
-                    .queryParam("email", email)
-                   
-                    .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<Otp>>() {
-                    });
-        } catch (Exception e) {
-            System.out.println(JmoordbUtil.nameOfMethod() + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-        }
-
-        return list;
-    }
-// </editor-fold>
-    
 
 }
