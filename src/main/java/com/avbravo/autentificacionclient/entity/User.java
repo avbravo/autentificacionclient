@@ -41,7 +41,7 @@ public class User {
     public User() {
     }
 
-    public User(Integer iduser, String username, String password, String name, String email, String cellphone, String sex, String photo, List<Profile> profile, Boolean active) {
+    public User(Integer iduser, String username, String password, String name, String email, String cellphone, String sex, String photo, String identificationcard, String socialsecuritynumber, List<Profile> profile, Boolean active) {
         this.iduser = iduser;
         this.username = username;
         this.password = password;
@@ -50,10 +50,13 @@ public class User {
         this.cellphone = cellphone;
         this.sex = sex;
         this.photo = photo;
+        this.identificationcard = identificationcard;
+        this.socialsecuritynumber = socialsecuritynumber;
         this.profile = profile;
         this.active = active;
     }
 
+   
   
     
     
@@ -64,6 +67,22 @@ public class User {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public String getIdentificationcard() {
+        return identificationcard;
+    }
+
+    public void setIdentificationcard(String identificationcard) {
+        this.identificationcard = identificationcard;
+    }
+
+    public String getSocialsecuritynumber() {
+        return socialsecuritynumber;
+    }
+
+    public void setSocialsecuritynumber(String socialsecuritynumber) {
+        this.socialsecuritynumber = socialsecuritynumber;
     }
 
   
