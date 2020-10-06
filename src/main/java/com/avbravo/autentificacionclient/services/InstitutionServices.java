@@ -31,6 +31,7 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 public class InstitutionServices implements Serializable {
+        String directoryLogger = JmoordbUtil.isLinux() ? JmoordbUtil.userHome() + JmoordbUtil.fileSeparator() + "autentificacionclient" + JmoordbUtil.fileSeparator() + "logs" + JmoordbUtil.fileSeparator() + "logger.json" : "C:\\autentificacionclient\\logs\\logger.json";
     private static final String PASS = "pass";
     private static final String FAIL = "fail";
     private static final String SUCCESS_RESULT = "<result>success</result>";
@@ -221,5 +222,30 @@ public class InstitutionServices implements Serializable {
         return suggestions;
     }
     // </editor-fold>
+      // <editor-fold defaultstate="collapsed" desc="List<Integer> lisfOfPage(Integer rowPage)">
+    public List<Integer> listOfPage(Integer rowPage) {
+        List<Integer> suggestions = new ArrayList<>();
+        try {
 
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/listofpage/")
+                    .queryParam("rowPage", rowPage)
+                    
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Integer>>() {
+                    });
+
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println("lisfOfPage() " + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog("lisfOfPage()", e.getLocalizedMessage());
+        }
+
+        return suggestions;
+    }
+
+    // </editor-fold>
 }
