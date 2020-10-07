@@ -234,7 +234,7 @@ public class CollectionincrementableServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/listofpage/")
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/collectionincrementable/listofpage/")
                     .queryParam("rowPage", rowPage)
                     
                     .request(MediaType.APPLICATION_JSON)

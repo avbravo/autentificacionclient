@@ -5,25 +5,19 @@
  */
 package com.avbravo.autentificacionclient.services;
 
-import com.avbravo.asistenciaclient.entity.Boletas;
 import com.avbravo.autentificacionclient.entity.Otp;
 import com.avbravo.autentificacionclient.producer.AuthentificationProducer;
 import com.avbravo.autentificacionclient.producer.MicroservicesProducer;
 import com.avbravo.jmoordb.util.JmoordbDateUtil;
 import com.avbravo.jmoordb.util.JmoordbUtil;
-import com.mongodb.client.model.Filters;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -32,8 +26,6 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import org.bson.Document;
-import org.bson.conversions.Bson;
 
 /**
  *
@@ -303,7 +295,7 @@ public class OtpServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/listofpage/")
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/otp/listofpage/")
                     .queryParam("rowPage", rowPage)
                     
                     .request(MediaType.APPLICATION_JSON)

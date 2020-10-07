@@ -232,7 +232,7 @@ public class ProfileServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/listofpage/")
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/profile/listofpage/")
                     .queryParam("rowPage", rowPage)
                     
                     .request(MediaType.APPLICATION_JSON)
