@@ -9,6 +9,7 @@ import com.avbravo.asistenciaclient.entity.Boletas;
 import com.avbravo.autentificacionclient.producer.AuthentificationProducer;
 import com.avbravo.autentificacionclient.producer.MicroservicesProducer;
 import com.avbravo.jmoordb.util.JmoordbDateUtil;
+import com.avbravo.jmoordb.util.JmoordbDocument;
 import com.avbravo.jmoordb.util.JmoordbUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,11 +22,13 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
+import static javax.ws.rs.client.Entity.json;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.glassfish.jersey.uri.UriComponent;
 
 /**
  *
@@ -1086,5 +1089,72 @@ public class BoletasServices implements Serializable {
     }
 
     // </editor-fold>
+
+
+       
+// <editor-fold defaultstate="collapsed" desc=" List<Boletas> jsonQuery(@QueryParam("query") String query , @QueryParam("sort") String sort, @QueryParam("pagenumber") Integer pageNumber, @QueryParam("rowforpage") Integer rowForPage )">
+  public  List<Boletas> jsonQuery( String query ,  String sort,
+     Integer pageNumber,  Integer rowForPage ){
+        List<Boletas> suggestions = new ArrayList<>();
+        try {
+ 
+//            String encoded = UriComponent.encode(query, UriComponent.Type.QUERY_PARAM_SPACE_ENCODED);
+//            String encodedSort = UriComponent.encode(sort, UriComponent.Type.QUERY_PARAM_SPACE_ENCODED);
+            
+        
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/jsonquery/")                    
+                    .queryParam("query", JmoordbDocument.encodeJson(query))
+                    .queryParam("sort",JmoordbDocument.encodeJson(sort))
+                    .queryParam("pagenumber", pageNumber)
+                    .queryParam("rowforpage", rowForPage)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Boletas>>() {
+                    });
+
+//            
+//WebTarget target = target("test/text");
+//Response response = target.queryParam("text", encoded).request().get();
+
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println(JmoordbUtil.nameOfMethod()+ e.getLocalizedMessage());
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+        }
+
+        return suggestions;
+    }
+    // </editor-fold>   
+  
+  // <editor-fold defaultstate="collapsed" desc=" List<Boletas> jsonQueryWithoutPagination( @QueryParam("query") String query , @QueryParam("sort") String sort  ){">
+   public List<Boletas> jsonQueryWithoutPagination( String query ,  String sort  ){
+        List<Boletas> suggestions = new ArrayList<>();
+        try {
+
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/jsonquerywithoutpagination/")                    
+                 .queryParam("query", JmoordbDocument.encodeJson(query))
+                    .queryParam("sort",JmoordbDocument.encodeJson(sort))
+                  
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Boletas>>() {
+                    });
+
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println("lisfOfPage() " + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog("lisfOfPage()", e.getLocalizedMessage());
+        }
+
+        return suggestions;
+    }
+    // </editor-fold>   
+    
     
 }
