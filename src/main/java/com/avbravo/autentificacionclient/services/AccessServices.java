@@ -56,9 +56,6 @@ public class AccessServices implements Serializable {
 // </editor-fold>
 
     
-    
-    
-
 // <editor-fold defaultstate="collapsed" desc="List<Access> findAll()">
     public List<Access> findAll() {
         List<Access> accessList = new ArrayList<>();
