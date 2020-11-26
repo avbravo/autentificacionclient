@@ -9,39 +9,52 @@ import com.avbravo.jmoordb.util.JmoordbUtil;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Properties;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Named;
+import javax.inject.Inject;
+import javax.inject.Provider;
+import org.eclipse.microprofile.config.Config;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 /**
  *
  * @author avbravo
  */
-@Named
-@ApplicationScoped
 public class MicroservicesProducer implements Serializable {
 
     String directoryLogger = JmoordbUtil.isLinux() ? JmoordbUtil.userHome() + JmoordbUtil.fileSeparator() + "autentificacionclient" + JmoordbUtil.fileSeparator() + "logs" + JmoordbUtil.fileSeparator() + "logger.json" : "C:\\autentificacionclient\\logs\\logger.json";
     private String url = null;
+    // <editor-fold defaultstate="collapsed" desc="Microprofile Config">
+    @Inject
+    private Config config;
+    //otp
+    @Inject
+    @ConfigProperty(name = "userSecurity", defaultValue = "")
+    private Provider<String> userSecurity;
+    @Inject
+    @ConfigProperty(name = "passwordSecurity", defaultValue = "")
+    private Provider<String> passwordSecurity;
+
+    //#--Path Images
+    @Inject
+    @ConfigProperty(name = "pathBaseLinuxAddUserHome", defaultValue = "true")
+    private Provider<Boolean> pathBaseLinuxAddUserHome;
+
+    @Inject
+    @ConfigProperty(name = "pathLinux", defaultValue = " ")
+    private Provider<String> pathLinux;
+    @Inject
+    @ConfigProperty(name = "pathWindows", defaultValue = " ")
+    private Provider<String> pathWindows;
+    @Inject
+    @ConfigProperty(name = "urlMicroservices", defaultValue = " ")
+    private Provider<String> urlMicroservices;
+    // </editor-fold>
 
     public String microservicesHost() {
 
         try {
 
             if (url == null) {
-
-                InputStream inputStream = getClass()
-                        .getClassLoader().getResourceAsStream("microservices.properties");
-                Properties prop = new Properties();
-
-                if (inputStream != null) {
-
-                    prop.load(inputStream);
-                    url = prop.getProperty("url");
-
-                    //  System.out.println("el url del microservices es "+url);
-                } else {
-                    JmoordbUtil.errorMessage("No se puede cargar el archivo microservices.properties");
-                }
+                url = JmoordbUtil.desencriptar(urlMicroservices.get());
 
             }
         } catch (Exception e) {
@@ -50,5 +63,4 @@ public class MicroservicesProducer implements Serializable {
         }
         return url;
     }
-
 }

@@ -10,8 +10,13 @@ import static com.avbravo.jmoordb.util.JmoordbUtil.isLinux;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Properties;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Provider;
+import org.eclipse.microprofile.config.Config;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 
 /**
@@ -23,8 +28,47 @@ import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 public class AuthentificationProducer implements Serializable {
 
     String directoryLogger = isLinux() ? JmoordbUtil.userHome() + JmoordbUtil.fileSeparator() + "autentificacionclient" + JmoordbUtil.fileSeparator() + "logs" + JmoordbUtil.fileSeparator() + "logger.json" : "C:\\auctentifcacionclient\\logs\\logger.json";
-    private String user = null;
-    private String password = null;
+    String userAutentification;
+    String passwordAutentification;
+    // <editor-fold defaultstate="collapsed" desc="Microprofile Config">
+    @Inject
+    private Config config;
+    //otp
+    @Inject
+    @ConfigProperty(name = "userSecurity", defaultValue = "")
+    private Provider<String> userSecurity;
+    @Inject
+    @ConfigProperty(name = "passwordSecurity", defaultValue = "")
+    private Provider<String> passwordSecurity;
+
+    //#--Path Images
+    @Inject
+    @ConfigProperty(name = "pathBaseLinuxAddUserHome", defaultValue = "true")
+    private Provider<Boolean> pathBaseLinuxAddUserHome;
+
+    @Inject
+    @ConfigProperty(name = "pathLinux", defaultValue = " ")
+    private Provider<String> pathLinux;
+    @Inject
+    @ConfigProperty(name = "pathWindows", defaultValue = " ")
+    private Provider<String> pathWindows;
+    @Inject
+    @ConfigProperty(name = "urlMicroservices", defaultValue = " ")
+    private Provider<String> urlMicroservices;
+ // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="init">
+    @PostConstruct
+    public void init() {
+        try {
+       
+        } catch (Exception e) {
+           
+        }
+
+    }
+
+   
+    // </editor-fold> 
 
     // <editor-fold defaultstate="collapsed" desc="HttpAuthenticationFeature httpAuthenticationFeature()">
     /**
@@ -35,8 +79,9 @@ public class AuthentificationProducer implements Serializable {
     public HttpAuthenticationFeature httpAuthenticationFeature() {
         HttpAuthenticationFeature httpAuthenticationFeature = null;
         try {
-            readAuthentificationProperties();
-            httpAuthenticationFeature = HttpAuthenticationFeature.basic(user, password);
+             userAutentification = JmoordbUtil.desencriptar(userSecurity.get());
+            passwordAutentification = JmoordbUtil.desencriptar(passwordSecurity.get());
+            httpAuthenticationFeature = HttpAuthenticationFeature.basic(userAutentification,  passwordAutentification);
 
         } catch (Exception e) {
            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
@@ -48,50 +93,6 @@ public class AuthentificationProducer implements Serializable {
     }
 
     // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="Boolean readAuthentificationProperties()">
-    /**
-     * Lee los archivos de configuracion de los properties
-     *
-     * @return
-     */
-    private Boolean readAuthentificationProperties() {
-
-        try {
-
-            if (user == null) {
-
-                InputStream inputStream = getClass()
-                        .getClassLoader().getResourceAsStream("authentification.properties");
-                Properties prop = new Properties();
-
-                if (inputStream != null) {
-
-                    prop.load(inputStream);
-                    if (prop.getProperty("user") == null) {
-                        JmoordbUtil.warningDialog("Advertencia", "Consulte al desarrollador no se encuentra el usuario de autentificacion");
-                    } else {
-                        user = prop.getProperty("user");
-                        user = JmoordbUtil.desencriptar(user);
-                    }
-                    if (prop.getProperty("password") == null) {
-                        JmoordbUtil.warningDialog("Advertencia", "Consulte al desarrollador no se encuentra el password del usuario de autentificacion");
-                    } else {
-                        password = prop.getProperty("password");
-                        password = JmoordbUtil.desencriptar(password);
-                    }
-
-                    return true;
-                } else {
-                  JmoordbUtil.errorMessage("No se puede cargar el archivo authentification.properties");
-                }
-
-            }
-        } catch (Exception e) {
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-        JmoordbUtil.errorMessage("readAuthentificationProperties() " + e.getLocalizedMessage());
-        }
-        return false;
-    }
-    // </editor-fold>
+   
 
 }

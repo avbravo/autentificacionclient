@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.avbravo</groupId>
     <artifactId>autentificacionclient</artifactId>
-    <version>0.30.100</version>
+    <version>0.31</version>
     <packaging>ejb</packaging>
     <name>autentificacionclient</name>
     
@@ -14,10 +14,17 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <jakartaee>8.0</jakartaee>
+         <microprofile.version>3.1</microprofile.version>
     </properties>
     
     <dependencies>
-     
+     <dependency>
+            <groupId>org.eclipse.microprofile</groupId>
+            <artifactId>microprofile</artifactId>
+            <version>${microprofile.version}</version>
+            <type>pom</type>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
