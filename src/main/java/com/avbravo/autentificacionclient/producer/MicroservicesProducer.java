@@ -9,7 +9,9 @@ import com.avbravo.jmoordb.util.JmoordbUtil;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Properties;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Provider;
 import org.eclipse.microprofile.config.Config;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
@@ -18,6 +20,8 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
  *
  * @author avbravo
  */
+@Named
+@ApplicationScoped
 public class MicroservicesProducer implements Serializable {
 
     String directoryLogger = JmoordbUtil.isLinux() ? JmoordbUtil.userHome() + JmoordbUtil.fileSeparator() + "autentificacionclient" + JmoordbUtil.fileSeparator() + "logs" + JmoordbUtil.fileSeparator() + "logger.json" : "C:\\autentificacionclient\\logs\\logger.json";
@@ -54,7 +58,7 @@ public class MicroservicesProducer implements Serializable {
         try {
 
             if (url == null) {
-                url = JmoordbUtil.desencriptar(urlMicroservices.get());
+                url = urlMicroservices.get();
 
             }
         } catch (Exception e) {
