@@ -165,10 +165,10 @@ public class EmailServices implements Serializable {
         List<User> list = new ArrayList<>();
         try {
             listToAdd.forEach(u->{
-                System.out.println("-........searching .... "+u.getEmail());
+              
                 if(!listSource.contains(u)){
                     listSource.add(u);
-                    System.out.println(".........{not found addin}.....");
+
                 }
               }
             );
