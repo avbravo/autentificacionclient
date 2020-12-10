@@ -88,7 +88,7 @@ public class EmailServices implements Serializable {
             } else {
                 userJefeUnidad.stream().filter(u -> (!boletas.getUser().getUsername().equals(u.getUsername()))).forEachOrdered(u -> {
                     list.add(u);
-                    System.out.println("add jefeunudad----> " + u.getUsername());
+
                 });
             }
         } catch (Exception e) {
@@ -112,7 +112,7 @@ public class EmailServices implements Serializable {
                 userAutoridadList.forEach(u->{
                    if(!list.contains(u)){
                        list.add(u);
-                          System.out.println(".............(++ autoridad)---> " + u.getUsername());
+                          
                    }
                 });
             }
@@ -137,7 +137,7 @@ public class EmailServices implements Serializable {
 
                 userRecursosHumanosList.forEach(u->{
                 if(!list.contains(u)){
-                   System.out.println(".............(++ recursoshumanos)---> " + u.getUsername());
+
                     list.add(u);
                 }
                 }
