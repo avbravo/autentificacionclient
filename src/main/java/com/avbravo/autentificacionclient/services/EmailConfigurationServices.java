@@ -44,7 +44,7 @@ public class EmailConfigurationServices implements Serializable {
     private static final String FAIL = "fail";
     private static final String SUCCESS_RESULT = "<result>success</result>";
     
-    JmoordbEmailSender jmoordbEmailSender= new  JmoordbEmailSender  ();
+    JmoordbEmailSender jmoordbEmailSender= new  JmoordbEmailSender();
     Exception exception;
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="inject()">
