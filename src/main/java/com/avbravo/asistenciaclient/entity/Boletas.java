@@ -55,6 +55,10 @@ public class Boletas {
     private Boolean captadoensistemaaistencia;
     @Ignore
     private Boolean  essekeccionada;
+    
+    @Ignore
+    private String comentario;
+    
     public Boletas() {
     }
 
