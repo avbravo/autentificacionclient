@@ -62,6 +62,18 @@ public class Boletas {
     public Boletas() {
     }
 
+    public String getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
+    }
+
+    
+    
+    
+    
     public Boolean getEssekeccionada() {
         return essekeccionada;
     }
