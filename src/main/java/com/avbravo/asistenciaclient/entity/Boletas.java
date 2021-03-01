@@ -54,7 +54,7 @@ public class Boletas {
     
     private Boolean captadoensistemaaistencia;
     @Ignore
-    private Boolean  essekeccionada;
+    private Boolean  esseleccionada;
     
     @Ignore
     private String comentario;
@@ -70,18 +70,19 @@ public class Boletas {
         this.comentario = comentario;
     }
 
-    
-    
-    
-    
-    public Boolean getEssekeccionada() {
-        return essekeccionada;
+    public Boolean getEsseleccionada() {
+        return esseleccionada;
     }
 
-    public void setEssekeccionada(Boolean essekeccionada) {
-        this.essekeccionada = essekeccionada;
+    public void setEsseleccionada(Boolean esseleccionada) {
+        this.esseleccionada = esseleccionada;
     }
 
+    
+    
+    
+    
+   
   
     
     
