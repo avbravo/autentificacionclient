@@ -1157,4 +1157,46 @@ public class BoletasServices implements Serializable {
     // </editor-fold>   
     
     
+   
+    // <editor-fold defaultstate="collapsed" desc="Integer countJsonQuery(String query)">
+
+    /**
+     * devuelve el contador de documentos en base a un json query
+     * @param query
+     * @return 
+     */
+    public Integer countJsonQuery(String query) {
+        Integer total = 0;
+        try {
+
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+
+            WebTarget webTarget
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/countjsonquery")
+                             .queryParam("query", JmoordbDocument.encodeJson(query));
+
+            Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+            Response response = invocationBuilder.get();
+            if (response.getStatus() == 201) {
+                total = Integer.parseInt(response.readEntity(String.class));
+
+            }
+
+            if (response.getStatus() == 400) {
+                exception = new Exception(response.readEntity(String.class));
+                return 0;
+            }
+
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+        }
+
+        return total;
+    }
+    // </editor-fold>
+
 }
