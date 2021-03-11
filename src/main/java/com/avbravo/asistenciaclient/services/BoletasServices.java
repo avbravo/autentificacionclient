@@ -8,6 +8,7 @@ package com.avbravo.asistenciaclient.services;
 import com.avbravo.asistenciaclient.entity.Boletas;
 import com.avbravo.autentificacionclient.producer.AuthentificationProducer;
 import com.avbravo.autentificacionclient.producer.MicroservicesProducer;
+import com.avbravo.jmoordb.mongodb.repository.Repository;
 import com.avbravo.jmoordb.util.JmoordbDateUtil;
 import com.avbravo.jmoordb.util.JmoordbDocument;
 import com.avbravo.jmoordb.util.JmoordbUtil;
@@ -16,6 +17,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.QueryParam;
@@ -1063,34 +1068,35 @@ public class BoletasServices implements Serializable {
         return h;
     }// </editor-fold>
     
-      // <editor-fold defaultstate="collapsed" desc="List<Integer> lisfOfPage(Integer rowPage)">
-    public List<Integer> listOfPage(Integer rowPage) {
-        List<Integer> suggestions = new ArrayList<>();
-        try {
+     
 
-            Client client = ClientBuilder.newClient();
-            client.register(authentificationProducer.httpAuthenticationFeature());
-            suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/listofpage/")
-                    .queryParam("rowPage", rowPage)
-                    
-                    .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<Integer>>() {
-                    });
+ // <editor-fold defaultstate="collapsed" desc="List<Integer> arrayListOfPage(Integer numberOfPage) ">
+    /**
+     * Devuele un array list en base al numero de paginas pasadaas
+     *
+     * @param rowsForPage
+     * @param doc
+     * @return
+     */
+    public List<Integer> arrayListOfPage(Integer numberOfPage) {
+        List<Integer> pages = new ArrayList<>();
+        try {
+       pages = IntStream.range(1,numberOfPage)
+            .boxed()
+            .collect(Collectors.toList());
+            return pages;
 
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("lisfOfPage() " + e.getLocalizedMessage());
-            JmoordbUtil.errorDialog("lisfOfPage()", e.getLocalizedMessage());
+            System.out.println("------------------------------------------------------------------------------------------------");
+            System.out.println("Class:" + JmoordbUtil.nameOfClass() + " Metodo:" + JmoordbUtil.nameOfMethod());
+            System.out.println("Error " + e.getLocalizedMessage());
+            System.out.println("------------------------------------------------------------------------------------------------");
+            Logger.getLogger(Repository.class.getName() + "listOfPage()").log(Level.SEVERE, null, e);
+            exception = new Exception("listOfPage()", e);
         }
-
-        return suggestions;
+        return pages;
     }
-
     // </editor-fold>
-
-
        
 // <editor-fold defaultstate="collapsed" desc=" List<Boletas> jsonQuery(@QueryParam("query") String query , @QueryParam("sort") String sort, @QueryParam("pagenumber") Integer pageNumber, @QueryParam("rowforpage") Integer rowForPage )">
   public  List<Boletas> jsonQuery( String query ,  String sort,
