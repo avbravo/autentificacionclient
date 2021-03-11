@@ -1070,37 +1070,7 @@ public class BoletasServices implements Serializable {
     
      
 
- // <editor-fold defaultstate="collapsed" desc="List<Integer> arrayListOfPage(Integer numberOfPage) ">
-    /**
-     * Devuele un array list en base al numero de paginas pasadaas
-     *
-     * @param rowsForPage
-     * @param doc
-     * @return
-     */
-    public List<Integer> arrayListOfNumber(Integer numberOfPage) {
-        List<Integer> pages = new ArrayList<>();
-        try {
-            System.out.println("====================================================");
-            System.out.println(" numberOfPage a convertir en list "+ numberOfPage);
-       pages = IntStream.range(1,numberOfPage+1)
-            .boxed()
-            .collect(Collectors.toList());
-       
-             System.out.println(" tamaño de pages.size() "+pages.size());
-            return pages;
-
-        } catch (Exception e) {
-            System.out.println("------------------------------------------------------------------------------------------------");
-            System.out.println("Class:" + JmoordbUtil.nameOfClass() + " Metodo:" + JmoordbUtil.nameOfMethod());
-            System.out.println("Error " + e.getLocalizedMessage());
-            System.out.println("------------------------------------------------------------------------------------------------");
-            Logger.getLogger(Repository.class.getName() + "listOfPage()").log(Level.SEVERE, null, e);
-            exception = new Exception("listOfPage()", e);
-        }
-        return pages;
-    }
-    // </editor-fold>
+ 
        
 // <editor-fold defaultstate="collapsed" desc=" List<Boletas> jsonQuery(@QueryParam("query") String query , @QueryParam("sort") String sort, @QueryParam("pagenumber") Integer pageNumber, @QueryParam("rowforpage") Integer rowForPage )">
   public  List<Boletas> jsonQuery( String query ,  String sort,
