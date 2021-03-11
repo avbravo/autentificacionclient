@@ -1078,12 +1078,16 @@ public class BoletasServices implements Serializable {
      * @param doc
      * @return
      */
-    public List<Integer> arrayListOfPage(Integer numberOfPage) {
+    public List<Integer> arrayListOfNumber(Integer numberOfPage) {
         List<Integer> pages = new ArrayList<>();
         try {
-       pages = IntStream.range(1,numberOfPage)
+            System.out.println("====================================================");
+            System.out.println(" numberOfPage a convertir en list "+ numberOfPage);
+       pages = IntStream.range(1,numberOfPage+1)
             .boxed()
             .collect(Collectors.toList());
+       
+             System.out.println(" tamaño de pages.size() "+pages.size());
             return pages;
 
         } catch (Exception e) {
