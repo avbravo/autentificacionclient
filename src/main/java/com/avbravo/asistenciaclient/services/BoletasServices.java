@@ -41,7 +41,7 @@ import org.glassfish.jersey.uri.UriComponent;
  * @author avbravo
  */
 @Stateless
-public class BoletasServices implements Serializable , IServices{
+public class BoletasServices implements Serializable {
 // <editor-fold defaultstate="collapsed" desc=" field()">
 
     String directoryLogger = JmoordbUtil.isLinux() ? JmoordbUtil.userHome() + JmoordbUtil.fileSeparator() + "autentificacionclient" + JmoordbUtil.fileSeparator() + "logs" + JmoordbUtil.fileSeparator() + "logger.json" : "C:\\autentificacionclient\\logs\\logger.json";
@@ -1074,7 +1074,7 @@ public class BoletasServices implements Serializable , IServices{
  
        
 // <editor-fold defaultstate="collapsed" desc=" List<Boletas> jsonQuery(@QueryParam("query") String query , @QueryParam("sort") String sort, @QueryParam("pagenumber") Integer pageNumber, @QueryParam("rowforpage") Integer rowForPage )">
-    @Override
+
   public  List<Boletas> jsonQuery( String query ,  String sort,
      Integer pageNumber,  Integer rowForPage ){
         List<Boletas> suggestions = new ArrayList<>();
@@ -1112,7 +1112,7 @@ public class BoletasServices implements Serializable , IServices{
     // </editor-fold>   
   
   // <editor-fold defaultstate="collapsed" desc=" List<Boletas> jsonQueryWithoutPagination( @QueryParam("query") String query , @QueryParam("sort") String sort  ){">
-    @Override
+   
    public List<Boletas> jsonQueryWithoutPagination( String query ,  String sort  ){
         List<Boletas> suggestions = new ArrayList<>();
         try {
@@ -1148,7 +1148,7 @@ public class BoletasServices implements Serializable , IServices{
      * @param query
      * @return 
      */
-    @Override
+
     public Integer countJsonQuery(String query) {
         Integer total = 0;
         try {
