@@ -222,30 +222,5 @@ public class HeadquartersServices implements Serializable {
     // </editor-fold>
 
     
-          // <editor-fold defaultstate="collapsed" desc="List<Integer> lisfOfPage(Integer rowPage)">
-    public List<Integer> listOfPage(Integer rowPage) {
-        List<Integer> suggestions = new ArrayList<>();
-        try {
-
-            Client client = ClientBuilder.newClient();
-            client.register(authentificationProducer.httpAuthenticationFeature());
-            suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/headquarterss/listofpage/")
-                    .queryParam("rowPage", rowPage)
-                    
-                    .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<Integer>>() {
-                    });
-
-        } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("lisfOfPage() " + e.getLocalizedMessage());
-            JmoordbUtil.errorDialog("lisfOfPage()", e.getLocalizedMessage());
-        }
-
-        return suggestions;
-    }
-
-    // </editor-fold>
+      
 }
