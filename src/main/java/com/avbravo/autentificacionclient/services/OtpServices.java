@@ -9,6 +9,7 @@ import com.avbravo.autentificacionclient.entity.Otp;
 import com.avbravo.autentificacionclient.producer.AuthentificationProducer;
 import com.avbravo.autentificacionclient.producer.MicroservicesProducer;
 import com.avbravo.jmoordb.util.JmoordbDateUtil;
+import com.avbravo.jmoordb.util.JmoordbDocument;
 import com.avbravo.jmoordb.util.JmoordbUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -287,5 +288,107 @@ public class OtpServices implements Serializable {
 // </editor-fold>
 
     
-      
+       
+       
+// <editor-fold defaultstate="collapsed" desc=" List<Otp> jsonQuery(@QueryParam("query") String query , @QueryParam("sort") String sort, @QueryParam("pagenumber") Integer pageNumber, @QueryParam("rowforpage") Integer rowForPage )">
+
+  public  List<Otp> jsonQuery( String query ,  String sort,
+     Integer pageNumber,  Integer rowForPage ){
+        List<Otp> suggestions = new ArrayList<>();
+        try {
+ 
+
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/otp/jsonquery/")                    
+                    .queryParam("query", JmoordbDocument.encodeJson(query))
+                    .queryParam("sort",JmoordbDocument.encodeJson(sort))
+                    .queryParam("pagenumber", pageNumber)
+                    .queryParam("rowforpage", rowForPage)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Otp>>() {
+                    });
+
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println(JmoordbUtil.nameOfMethod()+ e.getLocalizedMessage());
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+        }
+
+        return suggestions;
+    }
+    // </editor-fold>   
+  
+  // <editor-fold defaultstate="collapsed" desc=" List<Otp> jsonQueryWithoutPagination( @QueryParam("query") String query , @QueryParam("sort") String sort  ){">
+   
+   public List<Otp> jsonQueryWithoutPagination( String query ,  String sort  ){
+        List<Otp> suggestions = new ArrayList<>();
+        try {
+
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/otp/jsonquerywithoutpagination/")                    
+                 .queryParam("query", JmoordbDocument.encodeJson(query))
+                    .queryParam("sort",JmoordbDocument.encodeJson(sort))
+                  
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Otp>>() {
+                    });
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println("lisfOfPage() " + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog("lisfOfPage()", e.getLocalizedMessage());
+        }
+
+        return suggestions;
+    }
+    // </editor-fold>   
+    
+    
+   
+    // <editor-fold defaultstate="collapsed" desc="Integer countJsonQuery(String query)">
+
+    /**
+     * devuelve el contador de documentos en base a un json query
+     * @param query
+     * @return 
+     */
+
+    public Integer countJsonQuery(String query) {
+        Integer total = 0;
+        try {
+
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+
+            WebTarget webTarget
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/otp/countjsonquery")
+                             .queryParam("query", JmoordbDocument.encodeJson(query));
+
+            Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+            Response response = invocationBuilder.get();
+            if (response.getStatus() == 201) {
+                total = Integer.parseInt(response.readEntity(String.class));
+
+            }
+
+            if (response.getStatus() == 400) {
+                exception = new Exception(response.readEntity(String.class));
+                return 0;
+            }
+
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+        }
+
+        return total;
+    }
+    // </editor-fold>
 }

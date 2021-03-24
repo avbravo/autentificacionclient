@@ -7,6 +7,7 @@ package com.avbravo.autentificacionclient.services;
 
 import com.avbravo.asistenciaclient.entity.Boletas;
 import com.avbravo.autentificacionclient.entity.User;
+import com.avbravo.jmoordb.util.JmoordbDocument;
 import com.avbravo.jmoordb.util.JmoordbUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,6 +16,13 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -182,5 +190,6 @@ public class EmailServices implements Serializable {
 // </editor-fold>
     
    
-   
+    
+ 
 }
