@@ -985,9 +985,9 @@ public class BoletasServices implements Serializable {
     
     
     
-    // <editor-fold defaultstate="collapsed" desc="BooleanisAvailableBetweenDateHours(String fieldstart, String start, String fieldend, String end, String fieldname, String value, String fieldtype)">
-    public Boolean isAvailableBetweenDateHours(String fieldstart, String start, String fieldend, String end,
-            String fieldname, String value, String fieldtype) {
+    // <editor-fold defaultstate="collapsed" desc="BooleanisAvailableBetweenDateHours(String query, String fieldstart, String start, String fieldend, String end)">
+    public Boolean isAvailableBetweenDateHours(String query, String fieldstart, String start, String fieldend, String end
+          ) {
        Boolean found =false;
         try {
 
@@ -1000,9 +1000,7 @@ public class BoletasServices implements Serializable {
                             .queryParam("start", start)
                             .queryParam("fieldend", fieldend)
                             .queryParam("end", end)
-                            .queryParam("fieldname", fieldname)
-                            .queryParam("value", value)
-                            .queryParam("fieldtype", fieldtype);
+                            .queryParam("query", query);
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.get();
@@ -1034,6 +1032,55 @@ public class BoletasServices implements Serializable {
     }
 
     // </editor-fold>
+//    // <editor-fold defaultstate="collapsed" desc="BooleanisAvailableBetweenDateHours(String fieldstart, String start, String fieldend, String end, String fieldname, String value, String fieldtype)">
+//    public Boolean isAvailableBetweenDateHours(String fieldstart, String start, String fieldend, String end,
+//            String fieldname, String value, String fieldtype) {
+//       Boolean found =false;
+//        try {
+//
+//            Client client = ClientBuilder.newClient();
+//            client.register(authentificationProducer.httpAuthenticationFeature());
+//
+//            WebTarget webTarget
+//                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/isAvailableBetweenDateHours")
+//                            .queryParam("fieldstart", fieldstart)
+//                            .queryParam("start", start)
+//                            .queryParam("fieldend", fieldend)
+//                            .queryParam("end", end)
+//                            .queryParam("fieldname", fieldname)
+//                            .queryParam("value", value)
+//                            .queryParam("fieldtype", fieldtype);
+//
+//            Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+//            Response response = invocationBuilder.get();
+//            if (response.getStatus() == 201) {
+//                String result= response.readEntity(String.class);
+//                if(result.equals("true")){
+//                    return true;
+//                }else{
+//                    return false;
+//                }
+//                
+//       
+//
+//            }
+//
+//            if (response.getStatus() == 400) {
+//                exception = new Exception(response.readEntity(String.class));
+//                return false;
+//            }
+//
+//        } catch (Exception e) {
+//            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+//            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+//            System.out.println(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+//            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+//        }
+//
+//        return found;
+//    }
+//
+//    // </editor-fold>
     
     
     
