@@ -1000,7 +1000,8 @@ public class BoletasServices implements Serializable {
                             .queryParam("start", start)
                             .queryParam("fieldend", fieldend)
                             .queryParam("end", end)
-                            .queryParam("query", query);
+                            .queryParam("query", JmoordbDocument.encodeJson(query));
+//                            .queryParam("query", query);
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.get();
