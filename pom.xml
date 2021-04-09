@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.avbravo</groupId>
     <artifactId>autentificacionclient</artifactId>
-    <version>0.39</version>
+    <version>0.40</version>
     <packaging>ejb</packaging>
     <name>autentificacionclient</name>
     
@@ -36,7 +36,7 @@
      <dependency>
             <groupId>com.github.avbravo</groupId>
             <artifactId>jmoordb</artifactId>
-            <version>1.4</version>
+            <version>1.5</version>
         </dependency>
 <!--        
          <dependency>
