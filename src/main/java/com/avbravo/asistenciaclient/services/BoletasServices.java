@@ -988,6 +988,7 @@ public class BoletasServices implements Serializable {
     // <editor-fold defaultstate="collapsed" desc="BooleanisAvailableBetweenDateHours(String query, String fieldstart, String start, String fieldend, String end)">
     public Boolean isAvailableBetweenDateHours(String query, String fieldstart, String start, String fieldend, String end
           ) {
+     
        Boolean found =false;
         try {
 
@@ -1004,12 +1005,17 @@ public class BoletasServices implements Serializable {
 //                            .queryParam("query", query);
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+
             Response response = invocationBuilder.get();
+     
             if (response.getStatus() == 201) {
+          
                 String result= response.readEntity(String.class);
                 if(result.equals("true")){
+          
                     return true;
                 }else{
+           
                     return false;
                 }
                 
@@ -1019,10 +1025,12 @@ public class BoletasServices implements Serializable {
 
             if (response.getStatus() == 400) {
                 exception = new Exception(response.readEntity(String.class));
+              
                 return false;
             }
 
         } catch (Exception e) {
+           
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
