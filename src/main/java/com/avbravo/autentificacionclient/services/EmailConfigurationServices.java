@@ -225,7 +225,7 @@ public class EmailConfigurationServices implements Serializable {
     }
 
     // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="Optional<EmailConfiguration> findByEmail(String email)  ">
+    // <editor-fold defaultstate="collapsed" desc="Optional<EmailConfiguration> findByIdApplicative(Integer idapplicative) ">
     /**
      * 
      * @param codigo_
