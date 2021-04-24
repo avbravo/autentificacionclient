@@ -23,7 +23,7 @@ public class EmailConfiguration {
     private String mailSmtpAuth;
     private String mailSmtpPort;
     private String mailSmtpStarttlsEnable;
-    @Referenced(collection = "Headquarters",
+    @Referenced(collection = "Applicstive",
             field = "idapplicative", javatype = "Integer", lazy = false,
             repository = "com.avbravo.autentificacion.repository.ApplicativeRepository")
     private Applicative applicative;
