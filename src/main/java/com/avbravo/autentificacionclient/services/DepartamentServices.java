@@ -135,7 +135,7 @@ public class DepartamentServices implements Serializable {
         return false;
     }
 // </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="Boolean update(Departament departament)">
+// <editor-fold defaultstate="collapsed" desc="Boolean delete(Departament departament)">
 
     public Boolean delete(Departament departament) {
         try {
