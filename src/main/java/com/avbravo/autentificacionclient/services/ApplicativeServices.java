@@ -173,7 +173,7 @@ public class ApplicativeServices implements Serializable {
     public Optional<Applicative> findByIdapplicative(Integer idapplicative) {
         Applicative applicative = new Applicative();
         try {
-
+         
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             applicative = client
@@ -185,8 +185,10 @@ public class ApplicativeServices implements Serializable {
                     );
             
             if(applicative == null  || applicative.getIdapplicative() == null){
+           
                  return Optional.empty();
             }
+           
             return Optional.of(applicative);
             //String result = FAIL;
         } catch (Exception e) {

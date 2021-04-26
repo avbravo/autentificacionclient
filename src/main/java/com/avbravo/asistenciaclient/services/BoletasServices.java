@@ -129,32 +129,7 @@ public class BoletasServices implements Serializable {
         return false;
     }
 // </editor-fold>
-//// <editor-fold defaultstate="collapsed" desc="Boolean delete(Boletas boletas)">
-//
-//    public Boolean delete(Boletas boletas) {
-//        try {
-//            Client client = ClientBuilder.newClient();
-//            client.register(authentificationProducer.httpAuthenticationFeature());
-//            WebTarget webTarget
-//                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/delete");
-//
-//            Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-//            Response response = invocationBuilder.post(Entity.entity(boletas, MediaType.APPLICATION_JSON));
-//
-//            System.out.println(response.getStatus());
-//            if (response.getStatus() == 400) {
-//                return false;
-//            }
-//            System.out.println(response.readEntity(String.class
-//            ));
-//            return true;
-//        } catch (Exception e) {
-//            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-//            System.out.println("errort" + e.getLocalizedMessage());
-//        }
-//        return false;
-//    }
-//// </editor-fold>
+
 // <editor-fold defaultstate="collapsed" desc="Boolean delete(Boletas boletas)">
 
     public Boolean delete(Boletas boletas) {

@@ -121,7 +121,7 @@ public class EmailConfigurationServices implements Serializable {
 // <editor-fold defaultstate="collapsed" desc="Boolean update(EmailConfiguration emailConfiguration)">
     public Boolean update(EmailConfiguration emailConfiguration) {
         try {
-   
+          
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
@@ -131,10 +131,11 @@ public class EmailConfigurationServices implements Serializable {
             Response response = invocationBuilder.put(Entity.entity(emailConfiguration, MediaType.APPLICATION_JSON));
 
             if (response.getStatus() == 400 || response.getStatus() == 405) {
-
                 exception = new Exception(response.readEntity(String.class));
+           
                 return false;
             }
+ 
             //  System.out.println("Response " + response.readEntity(String.class));
             return true;
         } catch (Exception e) {
@@ -151,18 +152,20 @@ public class EmailConfigurationServices implements Serializable {
 
     public Boolean delete(EmailConfiguration emailConfiguration) {
         try {
+            
+            System.out.println("---->Servives delete,......");
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
 //            WebTarget webTarget  = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/emailconfiguration/delete");
 
             String callResult = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/emailconfiguration/delete")
-                    .path("/{idboleta}")
-                    .resolveTemplate("idboleta", emailConfiguration.getIdEmailConfiguration())
+                    .path("/{idemailconfiguration}")
+                    .resolveTemplate("idemailconfiguration", emailConfiguration.getIdEmailConfiguration())
                     .request(MediaType.APPLICATION_XML)
                     .delete(String.class);
 
             //  System.out.println("*** Call result = " + callResult);
-            if (callResult.equals("<result>success</result>")) {
+            if (callResult.equals("Ok")) {
                  // exception = new Exception(response.readEntity(String.class));
                 return true;
             }
