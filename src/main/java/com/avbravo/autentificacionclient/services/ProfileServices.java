@@ -186,6 +186,10 @@ public class ProfileServices implements Serializable {
                     .request(MediaType.APPLICATION_JSON)
                     .get(Profile.class
                     );
+            
+            if(profile == null || profile.getIdprofile() == null){
+                  return Optional.empty();
+            }
             return Optional.of(profile);
             //String result = FAIL;
         } catch (Exception e) {

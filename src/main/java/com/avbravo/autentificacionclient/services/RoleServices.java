@@ -185,6 +185,9 @@ public class RoleServices implements Serializable {
                     .request(MediaType.APPLICATION_JSON)
                     .get(Role.class
                     );
+            if(role == null || role.getIdrole() == null){
+               return Optional.empty();  
+            }
             return Optional.of(role);
             //String result = FAIL;
         } catch (Exception e) {

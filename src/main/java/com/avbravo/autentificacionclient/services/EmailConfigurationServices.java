@@ -46,6 +46,18 @@ public class EmailConfigurationServices implements Serializable {
     
     JmoordbEmailSender jmoordbEmailSender= new  JmoordbEmailSender();
     Exception exception;
+
+    public Exception getException() {
+        return exception;
+    }
+
+    public void setException(Exception exception) {
+        this.exception = exception;
+    }
+    
+    
+    
+    
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="inject()">
     @Inject
@@ -183,6 +195,9 @@ public class EmailConfigurationServices implements Serializable {
                     .request(MediaType.APPLICATION_JSON)
                     .get(EmailConfiguration.class
                     );
+             if(emailConfiguration == null || emailConfiguration.getIdEmailConfiguration() == null){
+              return Optional.empty();
+            }
             return Optional.of(emailConfiguration);
             //String result = FAIL;
         } catch (Exception e) {
@@ -214,6 +229,9 @@ public class EmailConfigurationServices implements Serializable {
                     .request(MediaType.APPLICATION_JSON)
                     .get(EmailConfiguration.class
                     );
+             if(emailConfiguration == null || emailConfiguration.getIdEmailConfiguration() == null){
+              return Optional.empty();
+            }
             return Optional.of(emailConfiguration);
             //String result = FAIL;
         } catch (Exception e) {
@@ -244,6 +262,10 @@ public class EmailConfigurationServices implements Serializable {
                     .request(MediaType.APPLICATION_JSON)
                     .get(EmailConfiguration.class
                     );
+            
+            if(emailConfiguration == null || emailConfiguration.getIdEmailConfiguration() == null){
+              return Optional.empty();
+            }
             return Optional.of(emailConfiguration);
             //String result = FAIL;
         } catch (Exception e) {

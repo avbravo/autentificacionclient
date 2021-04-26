@@ -184,6 +184,9 @@ public class InstitutionServices implements Serializable {
                     .request(MediaType.APPLICATION_JSON)
                     .get(Institution.class
                     );
+            if(institution == null || institution.getIdinstitution() == null){
+                return Optional.empty();
+            }
             return Optional.of(institution);
             //String result = FAIL;
         } catch (Exception e) {

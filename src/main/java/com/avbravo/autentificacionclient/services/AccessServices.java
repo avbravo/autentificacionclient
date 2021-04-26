@@ -184,6 +184,9 @@ public class AccessServices implements Serializable {
                     .request(MediaType.APPLICATION_JSON)
                     .get(Access.class
                     );
+            if(access == null || access.getIdaccess() == null){
+              return Optional.empty();
+            }
             return Optional.of(access);
             //String result = FAIL;
         } catch (Exception e) {

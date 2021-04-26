@@ -205,6 +205,9 @@ public class BoletasServices implements Serializable {
                     .request(MediaType.APPLICATION_JSON)
                     .get(Boletas.class
                     );
+            if(boletas == null || boletas.getIdboleta() == null){
+                 return Optional.empty();
+            }
             return Optional.of(boletas);
             //String result = FAIL;
         } catch (Exception e) {

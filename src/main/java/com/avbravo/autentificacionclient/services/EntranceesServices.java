@@ -183,6 +183,10 @@ public class EntranceesServices implements Serializable {
                     .request(MediaType.APPLICATION_JSON)
                     .get(Entrancees.class
                     );
+            
+            if(entrancees == null || entrancees.getIdentrancees() == null){
+                 return Optional.empty();
+            }
             return Optional.of(entrancees);
             //String result = FAIL;
         } catch (Exception e) {

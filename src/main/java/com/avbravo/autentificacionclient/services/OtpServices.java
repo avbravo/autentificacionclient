@@ -187,6 +187,9 @@ public class OtpServices implements Serializable {
                     .request(MediaType.APPLICATION_JSON)
                     .get(Otp.class
                     );
+            if(otp == null || otp.getIdotp() == null){
+                     return Optional.empty();
+            }
             return Optional.of(otp);
             //String result = FAIL;
         } catch (Exception e) {

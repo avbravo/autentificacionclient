@@ -183,6 +183,10 @@ public class ApplicativeServices implements Serializable {
                     .request(MediaType.APPLICATION_JSON)
                     .get(Applicative.class
                     );
+            
+            if(applicative == null  || applicative.getIdapplicative() == null){
+                 return Optional.empty();
+            }
             return Optional.of(applicative);
             //String result = FAIL;
         } catch (Exception e) {

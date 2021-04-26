@@ -184,6 +184,10 @@ public class DepartamentServices implements Serializable {
                     .request(MediaType.APPLICATION_JSON)
                     .get(Departament.class
                     );
+            
+            if(departament ==  null || departament.getIddepartament() == null){
+                return Optional.empty();
+            }
             return Optional.of(departament);
             //String result = FAIL;
         } catch (Exception e) {
