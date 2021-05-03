@@ -12,6 +12,7 @@ import com.avbravo.jmoordb.anotations.Secondary;
 import com.avbravo.jmoordb.pojos.UserInfo;
 import java.util.List;
 import java.util.Objects;
+import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
  *
@@ -170,6 +171,8 @@ public class User {
    
  @Override
     public boolean equals(Object object) {
+        
+        
         if (!(object instanceof User)) {
             return false;
         }
@@ -177,7 +180,7 @@ public class User {
         if ((this.iduser == null && other.iduser != null) || (this.iduser != null && !this.iduser.equals(other.iduser))) {
             return false;
         }
-        return true;
+         return EqualsBuilder.reflectionEquals(this, object);
     }
     
 }
