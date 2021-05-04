@@ -13,6 +13,7 @@ import com.avbravo.jmoordb.anotations.Ignore;
 import com.avbravo.jmoordb.anotations.Referenced;
 import java.util.Date;
 import java.util.List;
+import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
  *
@@ -261,7 +262,7 @@ public class Boletas {
         if ((this.idboleta == null && other.idboleta != null) || (this.idboleta != null && !this.idboleta.equals(other.idboleta))) {
             return false;
         }
-        return true;
+   return EqualsBuilder.reflectionEquals(this, object);
     }
 
 }

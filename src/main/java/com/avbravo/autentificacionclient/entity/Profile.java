@@ -7,6 +7,7 @@ package com.avbravo.autentificacionclient.entity;
 
 import com.avbravo.jmoordb.anotations.Id;
 import com.avbravo.jmoordb.anotations.Ignore;
+import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
  *
@@ -119,7 +120,7 @@ public class Profile {
         if ((this.idprofile== null && other.idprofile!= null) || (this.idprofile!= null && !this.idprofile.equals(other.idprofile))) {
             return false;
         }
-        return true;
+   return EqualsBuilder.reflectionEquals(this, object);
     }
 
 }

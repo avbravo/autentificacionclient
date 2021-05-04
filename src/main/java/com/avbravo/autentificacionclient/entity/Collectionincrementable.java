@@ -6,6 +6,7 @@
 package com.avbravo.autentificacionclient.entity;
 
 import com.avbravo.jmoordb.anotations.Id;
+import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
  *
@@ -50,7 +51,7 @@ public class Collectionincrementable {
         if ((this.collections == null && other.collections != null) || (this.collections != null && !this.collections.equals(other.collections))) {
             return false;
         }
-        return true;
+     return EqualsBuilder.reflectionEquals(this, object);
     }
  
    

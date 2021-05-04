@@ -8,6 +8,7 @@ package com.avbravo.autentificacionclient.entity;
 import com.avbravo.jmoordb.anotations.Id;
 import com.avbravo.jmoordb.anotations.Referenced;
 import java.util.Date;
+import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
  *
@@ -110,7 +111,7 @@ public class Otp {
         if ((this.idotp == null && other.idotp != null) || (this.idotp != null && !this.idotp.equals(other.idotp))) {
             return false;
         }
-        return true;
+ return EqualsBuilder.reflectionEquals(this, object);
     }
 
 }

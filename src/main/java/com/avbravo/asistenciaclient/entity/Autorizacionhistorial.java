@@ -9,6 +9,7 @@ import com.avbravo.autentificacionclient.entity.User;
 import com.avbravo.jmoordb.anotations.Id;
 import com.avbravo.jmoordb.anotations.Ignore;
 import java.util.Date;
+import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
  *
@@ -85,7 +86,17 @@ public class Autorizacionhistorial {
         this.user = user;
     }
 
-  
+   @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Autorizacionhistorial)) {
+            return false;
+        }
+       Autorizacionhistorial other = (Autorizacionhistorial) object;
+        if ((this.idautorizacionhistorial== null && other.idautorizacionhistorial != null) || (this.idautorizacionhistorial  != null && !this.idautorizacionhistorial.equals(other.idautorizacionhistorial ))) {
+            return false;
+        }
+      return EqualsBuilder.reflectionEquals(this, object);
+    }
 
   
     

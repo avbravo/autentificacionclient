@@ -10,6 +10,7 @@ import com.avbravo.jmoordb.anotations.Id;
 import com.avbravo.jmoordb.anotations.Secondary;
 import com.avbravo.jmoordb.pojos.UserInfo;
 import java.util.List;
+import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
  *
@@ -95,7 +96,7 @@ public class Role {
         if ((this.idrole == null && other.idrole != null) || (this.idrole != null && !this.idrole.equals(other.idrole))) {
             return false;
         }
-        return true;
+   return EqualsBuilder.reflectionEquals(this, object);
     }
 
 }
