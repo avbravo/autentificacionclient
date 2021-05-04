@@ -8,6 +8,7 @@ package com.avbravo.autentificacionclient.entity;
 import com.avbravo.jmoordb.anotations.Id;
 import com.avbravo.jmoordb.anotations.Referenced;
 import com.avbravo.jmoordb.anotations.Secondary;
+import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
  *
@@ -113,7 +114,7 @@ private Boolean isapprovalauthorityrequired;
         if ((this.iddepartament == null && other.iddepartament != null) || (this.iddepartament != null && !this.iddepartament.equals(other.iddepartament))) {
             return false;
         }
-        return true;
+       return EqualsBuilder.reflectionEquals(this, object);
     }
 
 }

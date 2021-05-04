@@ -9,6 +9,7 @@ import com.avbravo.jmoordb.anotations.Embedded;
 import com.avbravo.jmoordb.anotations.Id;
 import com.avbravo.jmoordb.anotations.Referenced;
 import java.util.List;
+import org.apache.commons.lang.builder.EqualsBuilder;
 
 
 /**
@@ -71,7 +72,7 @@ private List<Entrancees> entrancees;
         if ((this.idaccess == null && other.idaccess != null) || (this.idaccess != null && !this.idaccess.equals(other.idaccess))) {
             return false;
         }
-        return true;
+      return EqualsBuilder.reflectionEquals(this, object);
     }
 
 

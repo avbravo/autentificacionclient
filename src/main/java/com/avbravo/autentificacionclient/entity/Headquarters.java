@@ -11,6 +11,7 @@ import com.avbravo.jmoordb.anotations.Referenced;
 import com.avbravo.jmoordb.anotations.Secondary;
 import com.avbravo.jmoordb.pojos.UserInfo;
 import java.util.List;
+import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
  *
@@ -84,7 +85,7 @@ public class Headquarters {
         if ((this.idheadquarters == null && other.idheadquarters != null) || (this.idheadquarters != null && !this.idheadquarters.equals(other.idheadquarters))) {
             return false;
         }
-        return true;
+     return EqualsBuilder.reflectionEquals(this, object);
     }
 
         

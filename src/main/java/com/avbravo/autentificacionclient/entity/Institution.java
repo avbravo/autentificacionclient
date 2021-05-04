@@ -10,6 +10,7 @@ import com.avbravo.jmoordb.anotations.Id;
 import com.avbravo.jmoordb.anotations.Secondary;
 import com.avbravo.jmoordb.pojos.UserInfo;
 import java.util.List;
+import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
  *
@@ -69,7 +70,7 @@ public class Institution {
         if ((this.idinstitution == null && other.idinstitution != null) || (this.idinstitution != null && !this.idinstitution.equals(other.idinstitution))) {
             return false;
         }
-        return true;
+      return EqualsBuilder.reflectionEquals(this, object);
     }
    
 

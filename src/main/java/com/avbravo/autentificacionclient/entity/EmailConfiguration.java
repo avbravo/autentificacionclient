@@ -8,6 +8,7 @@ package com.avbravo.autentificacionclient.entity;
 
 import com.avbravo.jmoordb.anotations.Id;
 import com.avbravo.jmoordb.anotations.Referenced;
+import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
  *
@@ -138,7 +139,7 @@ public class EmailConfiguration {
         if ((this.email== null && other.email != null) || (this.email != null && !this.email.equals(other.email))) {
             return false;
         }
-        return true;
+      return EqualsBuilder.reflectionEquals(this, object);
     }
     
 }

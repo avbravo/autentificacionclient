@@ -7,6 +7,7 @@ package com.avbravo.autentificacionclient.entity;
 
 import com.avbravo.jmoordb.anotations.Id;
 import com.avbravo.jmoordb.anotations.Secondary;
+import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
  *
@@ -106,7 +107,7 @@ public class Applicative {
         if ((this.idapplicative == null && other.idapplicative != null) || (this.idapplicative != null && !this.idapplicative.equals(other.idapplicative))) {
             return false;
         }
-        return true;
+       return EqualsBuilder.reflectionEquals(this, object);
     }
  
 

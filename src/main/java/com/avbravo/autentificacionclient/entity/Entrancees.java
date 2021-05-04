@@ -7,6 +7,7 @@ package com.avbravo.autentificacionclient.entity;
 
 import com.avbravo.jmoordb.anotations.Id;
 import java.util.Date;
+import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
  *
@@ -91,7 +92,7 @@ public class Entrancees {
         if ((this.identrancees == null && other.identrancees != null) || (this.identrancees != null && !this.identrancees.equals(other.identrancees))) {
             return false;
         }
-        return true;
+ return EqualsBuilder.reflectionEquals(this, object);
     }
    
     
