@@ -51,6 +51,18 @@ public class Collectionincrementable {
         if ((this.collections == null && other.collections != null) || (this.collections != null && !this.collections.equals(other.collections))) {
             return false;
         }
+     return true;
+    }
+ 
+   
+    public boolean equalsReflection(Object object) {
+        if (!(object instanceof Collectionincrementable)) {
+            return false;
+        }
+       Collectionincrementable  other = (Collectionincrementable) object;
+        if ((this.collections == null && other.collections != null) || (this.collections != null && !this.collections.equals(other.collections))) {
+            return false;
+        }
      return EqualsBuilder.reflectionEquals(this, object);
     }
  

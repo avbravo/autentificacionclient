@@ -95,6 +95,17 @@ public class Autorizacionhistorial {
         if ((this.idautorizacionhistorial== null && other.idautorizacionhistorial != null) || (this.idautorizacionhistorial  != null && !this.idautorizacionhistorial.equals(other.idautorizacionhistorial ))) {
             return false;
         }
+      return true;
+    }
+   
+    public boolean equalsReflection(Object object) {
+        if (!(object instanceof Autorizacionhistorial)) {
+            return false;
+        }
+       Autorizacionhistorial other = (Autorizacionhistorial) object;
+        if ((this.idautorizacionhistorial== null && other.idautorizacionhistorial != null) || (this.idautorizacionhistorial  != null && !this.idautorizacionhistorial.equals(other.idautorizacionhistorial ))) {
+            return false;
+        }
       return EqualsBuilder.reflectionEquals(this, object);
     }
 

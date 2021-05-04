@@ -114,6 +114,17 @@ private Boolean isapprovalauthorityrequired;
         if ((this.iddepartament == null && other.iddepartament != null) || (this.iddepartament != null && !this.iddepartament.equals(other.iddepartament))) {
             return false;
         }
+       return true;
+    }
+ 
+    public boolean equalsReflection(Object object) {
+        if (!(object instanceof Departament)) {
+            return false;
+        }
+        Departament other = (Departament) object;
+        if ((this.iddepartament == null && other.iddepartament != null) || (this.iddepartament != null && !this.iddepartament.equals(other.iddepartament))) {
+            return false;
+        }
        return EqualsBuilder.reflectionEquals(this, object);
     }
 

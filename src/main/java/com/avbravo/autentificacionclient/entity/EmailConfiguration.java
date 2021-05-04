@@ -139,6 +139,17 @@ public class EmailConfiguration {
         if ((this.email== null && other.email != null) || (this.email != null && !this.email.equals(other.email))) {
             return false;
         }
+      return true;
+    }
+    
+    public boolean equalsReflection(Object object) {
+        if (!(object instanceof EmailConfiguration)) {
+            return false;
+        }
+      EmailConfiguration other = (EmailConfiguration) object;
+        if ((this.email== null && other.email != null) || (this.email != null && !this.email.equals(other.email))) {
+            return false;
+        }
       return EqualsBuilder.reflectionEquals(this, object);
     }
     

@@ -171,7 +171,37 @@ public class User {
    
  @Override
     public boolean equals(Object object) {
-        
+                
+        if (!(object instanceof User)) {
+            return false;
+        }
+        User other = (User) object;
+        if ((this.iduser == null && other.iduser != null) || (this.iduser != null && !this.iduser.equals(other.iduser))) {
+            return false;
+        }
+           return true;
+
+    }
+
+     @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 19 * hash + Objects.hashCode(this.iduser);
+        hash = 19 * hash + Objects.hashCode(this.username);
+        hash = 19 * hash + Objects.hashCode(this.password);
+        hash = 19 * hash + Objects.hashCode(this.name);
+        hash = 19 * hash + Objects.hashCode(this.email);
+        hash = 19 * hash + Objects.hashCode(this.cellphone);
+        hash = 19 * hash + Objects.hashCode(this.sex);
+        hash = 19 * hash + Objects.hashCode(this.photo);
+        hash = 19 * hash + Objects.hashCode(this.identificationcard);
+        hash = 19 * hash + Objects.hashCode(this.socialsecuritynumber);
+        hash = 19 * hash + Objects.hashCode(this.profile);
+        hash = 19 * hash + Objects.hashCode(this.active);
+        return hash;
+    }
+    public boolean equalsReflection(Object object) {
+     
         
         if (!(object instanceof User)) {
             return false;
@@ -180,7 +210,15 @@ public class User {
         if ((this.iduser == null && other.iduser != null) || (this.iduser != null && !this.iduser.equals(other.iduser))) {
             return false;
         }
+        
+     
          return EqualsBuilder.reflectionEquals(this, object);
     }
+
+   
+    
+    
+    
+    
     
 }

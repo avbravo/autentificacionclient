@@ -96,6 +96,18 @@ public class Role {
         if ((this.idrole == null && other.idrole != null) || (this.idrole != null && !this.idrole.equals(other.idrole))) {
             return false;
         }
+   return true;
+    }
+
+     
+    public boolean equalsReflection(Object object) {
+        if (!(object instanceof Role)) {
+            return false;
+        }
+        Role other = (Role) object;
+        if ((this.idrole == null && other.idrole != null) || (this.idrole != null && !this.idrole.equals(other.idrole))) {
+            return false;
+        }
    return EqualsBuilder.reflectionEquals(this, object);
     }
 

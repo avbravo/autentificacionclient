@@ -120,6 +120,17 @@ public class Profile {
         if ((this.idprofile== null && other.idprofile!= null) || (this.idprofile!= null && !this.idprofile.equals(other.idprofile))) {
             return false;
         }
+   return true;
+    }
+  
+    public boolean equalsReflection(Object object) {
+        if (!(object instanceof Profile)) {
+            return false;
+        }
+        Profile other = (Profile) object;
+        if ((this.idprofile== null && other.idprofile!= null) || (this.idprofile!= null && !this.idprofile.equals(other.idprofile))) {
+            return false;
+        }
    return EqualsBuilder.reflectionEquals(this, object);
     }
 

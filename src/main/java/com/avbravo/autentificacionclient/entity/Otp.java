@@ -111,6 +111,17 @@ public class Otp {
         if ((this.idotp == null && other.idotp != null) || (this.idotp != null && !this.idotp.equals(other.idotp))) {
             return false;
         }
+ return true;
+    }
+    
+    public boolean equalsReflection(Object object) {
+        if (!(object instanceof Otp)) {
+            return false;
+        }
+        Otp other = (Otp) object;
+        if ((this.idotp == null && other.idotp != null) || (this.idotp != null && !this.idotp.equals(other.idotp))) {
+            return false;
+        }
  return EqualsBuilder.reflectionEquals(this, object);
     }
 

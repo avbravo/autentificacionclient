@@ -72,6 +72,17 @@ private List<Entrancees> entrancees;
         if ((this.idaccess == null && other.idaccess != null) || (this.idaccess != null && !this.idaccess.equals(other.idaccess))) {
             return false;
         }
+      return true;
+    }
+
+    public boolean equalsReflection(Object object) {
+        if (!(object instanceof Applicative)) {
+            return false;
+        }
+       Access other = (Access) object;
+        if ((this.idaccess == null && other.idaccess != null) || (this.idaccess != null && !this.idaccess.equals(other.idaccess))) {
+            return false;
+        }
       return EqualsBuilder.reflectionEquals(this, object);
     }
 
