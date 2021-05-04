@@ -262,6 +262,17 @@ public class Boletas {
         if ((this.idboleta == null && other.idboleta != null) || (this.idboleta != null && !this.idboleta.equals(other.idboleta))) {
             return false;
         }
+   return true;
+    }
+    
+    public boolean equalsReflection(Object object) {
+        if (!(object instanceof Boletas)) {
+            return false;
+        }
+        Boletas other = (Boletas) object;
+        if ((this.idboleta == null && other.idboleta != null) || (this.idboleta != null && !this.idboleta.equals(other.idboleta))) {
+            return false;
+        }
    return EqualsBuilder.reflectionEquals(this, object);
     }
 
