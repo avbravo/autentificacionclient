@@ -28,9 +28,9 @@ public class InstitutionDataModel extends ListDataModel<Institution> implements 
     public Institution getRowData(String rowKey) {
         List<Institution> list = (List<Institution>) getWrappedData();
 
-        for (Institution institutiono : list) {
-            if (institutiono.getIdinstitution().equals(rowKey)) {
-                return institutiono;
+        for (Institution institution : list) {
+            if (institution.getIdinstitution().equals(rowKey)) {
+                return institution;
             }
         }
 

@@ -31,7 +31,6 @@ public class BoletasConverter implements Converter{
         if (modelValue == null) {
             return "";
         }
-
         if (modelValue instanceof Boletas) {
           return String.valueOf(((Boletas) modelValue).getIdboleta());
         } else {
