@@ -146,6 +146,7 @@ public class History {
         return EqualsBuilder.reflectionEquals(this, object);
     }
 
+
     public static class Builder {
 
         private Integer idhistory;
