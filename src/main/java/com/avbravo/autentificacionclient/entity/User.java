@@ -10,6 +10,8 @@ import com.avbravo.jmoordb.anotations.Id;
 import com.avbravo.jmoordb.anotations.Referenced;
 import com.avbravo.jmoordb.anotations.Secondary;
 import com.avbravo.jmoordb.pojos.UserInfo;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -32,7 +34,6 @@ public class User {
     private String photo;
     private String identificationcard;
     private String socialsecuritynumber;
-    
 
     @Embedded
     private List<Profile> profile;
@@ -40,6 +41,23 @@ public class User {
     private Boolean active;
 
     public User() {
+    }
+
+    public User(User user) {
+        this.iduser = user.iduser;
+        this.username = user.username;
+        this.password = user.password;
+        this.name = user.name;
+        this.email = user.email;
+        this.cellphone = user.cellphone;
+        this.sex = user.sex;
+        this.photo = user.photo;
+        this.identificationcard = user.identificationcard;
+        this.socialsecuritynumber = user.socialsecuritynumber;
+//        this.profile = user.profile;
+        this.profile = new ArrayList<>(user.profile);
+//        this.profile = Arrays.copyOf(user.profile,user.profile.size(),Profile.class);
+        this.active = user.active;
     }
 
     public User(Integer iduser, String username, String password, String name, String email, String cellphone, String sex, String photo, String identificationcard, String socialsecuritynumber, List<Profile> profile, Boolean active) {
@@ -57,11 +75,6 @@ public class User {
         this.active = active;
     }
 
-   
-  
-    
-    
-    
     public String getPhoto() {
         return photo;
     }
@@ -86,11 +99,6 @@ public class User {
         this.socialsecuritynumber = socialsecuritynumber;
     }
 
-  
-    
-    
-    
-    
     public String getSex() {
         return sex;
     }
@@ -98,11 +106,6 @@ public class User {
     public void setSex(String sex) {
         this.sex = sex;
     }
-
-  
-    
-    
-    
 
     public Integer getIduser() {
         return iduser;
@@ -168,10 +171,9 @@ public class User {
         this.active = active;
     }
 
-   
- @Override
+    @Override
     public boolean equals(Object object) {
-                
+
         if (!(object instanceof User)) {
             return false;
         }
@@ -179,11 +181,11 @@ public class User {
         if ((this.iduser == null && other.iduser != null) || (this.iduser != null && !this.iduser.equals(other.iduser))) {
             return false;
         }
-           return true;
+        return true;
 
     }
 
-     @Override
+    @Override
     public int hashCode() {
         int hash = 3;
         hash = 19 * hash + Objects.hashCode(this.iduser);
@@ -200,9 +202,9 @@ public class User {
         hash = 19 * hash + Objects.hashCode(this.active);
         return hash;
     }
+
     public boolean equalsReflection(Object object) {
-     
-        
+
         if (!(object instanceof User)) {
             return false;
         }
@@ -210,15 +212,8 @@ public class User {
         if ((this.iduser == null && other.iduser != null) || (this.iduser != null && !this.iduser.equals(other.iduser))) {
             return false;
         }
-        
-     
-         return EqualsBuilder.reflectionEquals(this, object);
+
+        return EqualsBuilder.reflectionEquals(this, object);
     }
 
-   
-    
-    
-    
-    
-    
 }
