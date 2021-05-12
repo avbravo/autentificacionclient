@@ -43,6 +43,16 @@ public class Profile {
         this.role = role;
         this.departament = departament;
     }
+    public Profile(Profile perfil) {
+        this.idprofile = perfil.idprofile;
+        this.idapplicative = perfil.idapplicative;
+        this.idrole = perfil.idrole;
+        this.iddepartament = perfil.iddepartament;
+        this.active = perfil.active;
+        this.applicative = perfil.applicative;
+        this.role = perfil.role;
+        this.departament = perfil.departament;
+    }
 
  
 
