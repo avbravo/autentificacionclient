@@ -107,7 +107,7 @@ public class BoletasServices implements Serializable {
      * @return 
      */
     public Integer addReturnid(Boletas boletas) {
-        Integer total =0;
+        Integer id =0;
         try {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
@@ -118,7 +118,7 @@ public class BoletasServices implements Serializable {
             Response response = invocationBuilder.post(Entity.entity(boletas, MediaType.APPLICATION_JSON));
 
               if (response.getStatus() == 201) {
-                total = Integer.parseInt(response.readEntity(String.class));
+                id= Integer.parseInt(response.readEntity(String.class));
 
             }
             
@@ -133,7 +133,7 @@ public class BoletasServices implements Serializable {
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("errort" + e.getLocalizedMessage());
         }
-        return total;
+        return id;
     }
 // </editor-fold>
 
