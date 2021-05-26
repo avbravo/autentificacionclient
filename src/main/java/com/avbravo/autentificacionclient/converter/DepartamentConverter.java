@@ -6,7 +6,6 @@
 package com.avbravo.autentificacionclient.converter;
 
 import com.avbravo.autentificacionclient.entity.Departament;
-import com.avbravo.autentificacionclient.entity.Entrancees;
 import com.avbravo.autentificacionclient.services.DepartamentServices;
 import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
