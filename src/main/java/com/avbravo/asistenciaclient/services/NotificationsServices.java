@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.avbravo.autentificacionclient.services;
+package com.avbravo.asistenciaclient.services;
 // <editor-fold defaultstate="collapsed" desc="import">
 
-import com.avbravo.autentificacionclient.entity.Access;
+import com.avbravo.asistenciaclient.entity.Boletas;
+import com.avbravo.autentificacionclient.entity.Notifications;
+import com.avbravo.autentificacionclient.entity.User;
 import com.avbravo.autentificacionclient.producer.AuthentificationProducer;
 import com.avbravo.autentificacionclient.producer.MicroservicesProducer;
+import com.avbravo.autentificacionclient.services.UserServices;
 import com.avbravo.jmoordb.util.JmoordbDocument;
 import com.avbravo.jmoordb.util.JmoordbUtil;
 import java.io.Serializable;
@@ -31,7 +34,7 @@ import javax.ws.rs.core.Response;
  * @author avbravo
  */
 @Stateless
-public class AccessServices implements Serializable {
+public class NotificationsServices implements Serializable {
 
     String directoryLogger = JmoordbUtil.isLinux() ? JmoordbUtil.userHome() + JmoordbUtil.fileSeparator() + "autentificacionclient" + JmoordbUtil.fileSeparator() + "logs" + JmoordbUtil.fileSeparator() + "logger.json" : "C:\\autentificacionclient\\logs\\logger.json";
     private static final String PASS = "pass";
@@ -44,6 +47,8 @@ public class AccessServices implements Serializable {
 
     @Inject
     AuthentificationProducer authentificationProducer;
+    @Inject
+    UserServices userServices;
     // <editor-fold defaultstate="collapsed" desc=" set/get)">
     
     
@@ -58,39 +63,39 @@ public class AccessServices implements Serializable {
 // </editor-fold>
 
     
-// <editor-fold defaultstate="collapsed" desc="List<Access> findAll()">
-    public List<Access> findAll() {
-        List<Access> accessList = new ArrayList<>();
+// <editor-fold defaultstate="collapsed" desc="List<Notifications> findAll()">
+    public List<Notifications> findAll() {
+        List<Notifications> notificationsboletasList = new ArrayList<>();
         try {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
-            WebTarget target = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/access/findall");
+            WebTarget target = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationsboletas/findall");
 
-            GenericType<List<Access>> data = new GenericType<List<Access>>() {
+            GenericType<List<Notifications>> data = new GenericType<List<Notifications>>() {
             };
 
-            accessList = target.request(MediaType.APPLICATION_JSON).get(data);
+            notificationsboletasList = target.request(MediaType.APPLICATION_JSON).get(data);
 
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("findAll()" + e.getLocalizedMessage());
         }
-        return accessList;
+        return notificationsboletasList;
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Boolean add(Access access)">
-    public Boolean add(Access access) {
+    // <editor-fold defaultstate="collapsed" desc="Boolean add(Notifications notificationsboletas)">
+    public Boolean add(Notifications notificationsboletas) {
         try {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/access/add");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationsboletas/add");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.post(Entity.entity(access, MediaType.APPLICATION_JSON));
+            Response response = invocationBuilder.post(Entity.entity(notificationsboletas, MediaType.APPLICATION_JSON));
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
@@ -109,16 +114,16 @@ public class AccessServices implements Serializable {
     }
 // </editor-fold>
 
-// <editor-fold defaultstate="collapsed" desc="Boolean update(Access access)">
-    public Boolean update(Access access) {
+// <editor-fold defaultstate="collapsed" desc="Boolean update(Notifications notificationsboletas)">
+    public Boolean update(Notifications notificationsboletas) {
         try {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/access/update");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationsboletas/update");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.put(Entity.entity(access, MediaType.APPLICATION_JSON));
+            Response response = invocationBuilder.put(Entity.entity(notificationsboletas, MediaType.APPLICATION_JSON));
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
@@ -136,17 +141,17 @@ public class AccessServices implements Serializable {
         return false;
     }
 // </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="Boolean delete(Access access)">
+// <editor-fold defaultstate="collapsed" desc="Boolean delete(Notifications notificationsboletas)">
 
-    public Boolean delete(Access access) {
+    public Boolean delete(Notifications notificationsboletas) {
         try {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/access/delete");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationsboletas/delete");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.post(Entity.entity(access, MediaType.APPLICATION_JSON));
+            Response response = invocationBuilder.post(Entity.entity(notificationsboletas, MediaType.APPLICATION_JSON));
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
@@ -165,43 +170,43 @@ public class AccessServices implements Serializable {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Access findByAccess(Integer idaccess) ">
+    // <editor-fold defaultstate="collapsed" desc="Notifications findByNotifications(Integer idnotificationsboletas) ">
     /**
      * consulta por codigo_pedido impresa
      *
      * @param codigo_
      * @return
      */
-    public Optional<Access> findByIdaccess(Integer idaccess) {
-        Access access = new Access();
+    public Optional<Notifications> findByIdnotificationsboletas(Integer idnotificationsboletas) {
+        Notifications notifications= new Notifications();
         try {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
-            access = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/access/search/")
-                    .path("/{idaccess}")
-                    .resolveTemplate("idaccess", idaccess)
+            notifications = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationsboletas/search/")
+                    .path("/{idnotificationsboletas}")
+                    .resolveTemplate("idnotificationsboletas", idnotificationsboletas)
                     .request(MediaType.APPLICATION_JSON)
-                    .get(Access.class
+                    .get(Notifications.class
                     );
-            if(access == null || access.getIdaccess() == null){
+            if(notifications == null || notifications.getIdnotifications() == null){
               return Optional.empty();
             }
-            return Optional.of(access);
+            return Optional.of(notifications);
             //String result = FAIL;
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("findByidaccess() " + e.getLocalizedMessage());
+            System.out.println("findByidnotificationsboletas() " + e.getLocalizedMessage());
         }
         return Optional.empty();
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="List<Access> complete( String query)">
-    public List<Access> complete(String query) {
-        List<Access> suggestions = new ArrayList<>();
+    // <editor-fold defaultstate="collapsed" desc="List<Notifications> complete( String query)">
+    public List<Notifications> complete(String query) {
+        List<Notifications> suggestions = new ArrayList<>();
         try {
 
             if (query == null || query.isEmpty()) {
@@ -210,11 +215,11 @@ public class AccessServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/access/autocomplete/")
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationsboletas/autocomplete/")
                     .path("/{query}")
                     .resolveTemplate("query", query)
                     .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<Access>>() {
+                    .get(new GenericType<List<Notifications>>() {
                     });
 
         } catch (Exception e) {
@@ -229,24 +234,24 @@ public class AccessServices implements Serializable {
     // </editor-fold>
 
           
-// <editor-fold defaultstate="collapsed" desc=" List<Access> jsonQuery(@QueryParam("query") String query , @QueryParam("sort") String sort, @QueryParam("pagenumber") Integer pageNumber, @QueryParam("rowforpage") Integer rowForPage )">
+// <editor-fold defaultstate="collapsed" desc=" List<Notifications> jsonQuery(@QueryParam("query") String query , @QueryParam("sort") String sort, @QueryParam("pagenumber") Integer pageNumber, @QueryParam("rowforpage") Integer rowForPage )">
 
-  public  List<Access> jsonQuery( String query ,  String sort,
+  public  List<Notifications> jsonQuery( String query ,  String sort,
      Integer pageNumber,  Integer rowForPage ){
-        List<Access> suggestions = new ArrayList<>();
+        List<Notifications> suggestions = new ArrayList<>();
         try {
  
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/access/jsonquery/")                    
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationsboletas/jsonquery/")                    
                     .queryParam("query", JmoordbDocument.encodeJson(query))
                     .queryParam("sort",JmoordbDocument.encodeJson(sort))
                     .queryParam("pagenumber", pageNumber)
                     .queryParam("rowforpage", rowForPage)
                     .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<Access>>() {
+                    .get(new GenericType<List<Notifications>>() {
                     });
 
         } catch (Exception e) {
@@ -260,21 +265,21 @@ public class AccessServices implements Serializable {
     }
     // </editor-fold>   
   
-  // <editor-fold defaultstate="collapsed" desc=" List<Access> jsonQueryWithoutPagination( @QueryParam("query") String query , @QueryParam("sort") String sort  ){">
+  // <editor-fold defaultstate="collapsed" desc=" List<Notifications> jsonQueryWithoutPagination( @QueryParam("query") String query , @QueryParam("sort") String sort  ){">
    
-   public List<Access> jsonQueryWithoutPagination( String query ,  String sort  ){
-        List<Access> suggestions = new ArrayList<>();
+   public List<Notifications> jsonQueryWithoutPagination( String query ,  String sort  ){
+        List<Notifications> suggestions = new ArrayList<>();
         try {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/access/jsonquerywithoutpagination/")                    
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationsboletas/jsonquerywithoutpagination/")                    
                  .queryParam("query", JmoordbDocument.encodeJson(query))
                     .queryParam("sort",JmoordbDocument.encodeJson(sort))
                   
                     .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<Access>>() {
+                    .get(new GenericType<List<Notifications>>() {
                     });
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
@@ -305,7 +310,7 @@ public class AccessServices implements Serializable {
             client.register(authentificationProducer.httpAuthenticationFeature());
 
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/access/countjsonquery")
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationsboletas/countjsonquery")
                              .queryParam("query", JmoordbDocument.encodeJson(query));
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
@@ -330,5 +335,141 @@ public class AccessServices implements Serializable {
         return total;
     }
     // </editor-fold>
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="List<String> generateList(Boletas boletas, Boolean isJefeUnidad, Boolean isAutoridad, Boolean isRecursosHumanos, String msgJefeUnidad,           String msgAutoridad, String msgRecursos) ">
+    public List<String> generateList(Boletas boletas, Boolean isJefeUnidad, Boolean isAutoridad, Boolean isRecursosHumanos, String msgJefeUnidad,
+            String msgAutoridad, String msgRecursos) {
+        List<String> emailList = new ArrayList<>();
+        List<User> list = new ArrayList<>();
+        try {
+            if (isJefeUnidad) {
+                       list.addAll(searchJefeUnidadDelDepartament(boletas, msgJefeUnidad));
+              }
+            if (isAutoridad) {
+
+                list = sinDuplicados(list, searchAutoridad(msgAutoridad));
+            }
+            if (isRecursosHumanos) {
+
+                list = sinDuplicados(list, searchRecursosHumanos(msgRecursos));
+              
+            }
+            //Carga la lista 
+            if(!list.isEmpty()){
+               list.forEach(u->emailList.add(u.getUsername()));
+            }
+          
+         
+        } catch (Exception e) {
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+        }
+        return emailList;
+    }
+// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc=" searchJefeUnidadDelDepartament">
+    public List<User> searchJefeUnidadDelDepartament(Boletas boletas, String mmsgJefeUnidad) {
+        List<User> list = new ArrayList<>();
+        try {
+            List<User> userJefeUnidad = userServices.searchJefeUnidadDelDepartament(boletas.getDepartament().getIddepartament());
+            if (userJefeUnidad == null || userJefeUnidad.isEmpty()) {
+                JmoordbUtil.warningMessage(mmsgJefeUnidad);
+            } else {
+                userJefeUnidad.stream().filter(u -> (!boletas.getUser().getUsername().equals(u.getUsername()))).forEachOrdered(u -> {
+                    list.add(u);
+
+                });
+            }
+        } catch (Exception e) {
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+        }
+        return list;
+    }
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="List<User> searchAutoridad(String msgAutoridad) ">
+
+    public List<User> searchAutoridad(String msgAutoridad) {
+        List<User> list = new ArrayList<>();
+        try {
+            List<User> userAutoridadList = userServices.searchAutoridad(Boolean.TRUE);
+
+            if (userAutoridadList == null || userAutoridadList.isEmpty()) {
+                JmoordbUtil.warningMessage(msgAutoridad);
+            } else {
+
+             
+                userAutoridadList.forEach(u->{
+                   if(!list.contains(u)){
+                       list.add(u);
+                          
+                   }
+                });
+            }
+
+        } catch (Exception e) {
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+        }
+        return list;
+    }
+// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="List<User> searchRecursosHumanos(String msgRecursos)">
+    public List<User> searchRecursosHumanos(String msgRecursos) {
+        List<User> list = new ArrayList<>();
+        try {
+            List<User> userRecursosHumanosList = userServices.searchRecursosHumanos(Boolean.TRUE);
+
+            if (userRecursosHumanosList == null || userRecursosHumanosList.isEmpty()) {
+                JmoordbUtil.warningMessage(msgRecursos);
+            } else {
+
+
+                userRecursosHumanosList.forEach(u->{
+                if(!list.contains(u)){
+
+                    list.add(u);
+                }
+                }
+                );
+                
+            }
+
+        } catch (Exception e) {
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+        }
+        return list;
+    }
+// </editor-fold>
+
+    
+     // <editor-fold defaultstate="collapsed" desc="List<User> sinDuplicados(List<User> listSource, List<User> listToAdd)">
+    /**
+     * Agrega a la lista el elemento si no esta registrado
+     *
+     * @param listSource
+     * @param listToAdd
+     * @return
+     */
+    public List<User> sinDuplicados(List<User> listSource, List<User> listToAdd) {
+        List<User> list = new ArrayList<>();
+        try {
+            listToAdd.forEach(u->{
+              
+                if(!listSource.contains(u)){
+                    listSource.add(u);
+
+                }
+              }
+            );
+
+
+        } catch (Exception e) {
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+        }
+        return listSource;
+    }
+// </editor-fold>
+    
     
 }
