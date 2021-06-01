@@ -21,7 +21,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -34,6 +33,7 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 // </editor-fold>
+
 /**
  *
  * @author avbravo
@@ -46,7 +46,7 @@ public class NotificationsServices implements Serializable {
     private static final String FAIL = "fail";
     private static final String SUCCESS_RESULT = "<result>success</result>";
     Exception exception;
-
+ Boolean found =false;
     @Inject
     MicroservicesProducer microservicesProducer;
 
@@ -55,8 +55,7 @@ public class NotificationsServices implements Serializable {
     @Inject
     UserServices userServices;
     // <editor-fold defaultstate="collapsed" desc=" set/get)">
-    
-    
+
     public Exception getException() {
         return exception;
     }
@@ -64,10 +63,8 @@ public class NotificationsServices implements Serializable {
     public void setException(Exception exception) {
         this.exception = exception;
     }
-    
-// </editor-fold>
 
-    
+// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="List<Notifications> findAll()">
     public List<Notifications> findAll() {
         List<Notifications> notificationsboletasList = new ArrayList<>();
@@ -104,7 +101,7 @@ public class NotificationsServices implements Serializable {
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
-                 exception = new Exception(response.readEntity(String.class));
+                exception = new Exception(response.readEntity(String.class));
                 return false;
             }
 //            System.out.println(response.readEntity(String.class
@@ -132,7 +129,7 @@ public class NotificationsServices implements Serializable {
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
-                 exception = new Exception(response.readEntity(String.class));
+                exception = new Exception(response.readEntity(String.class));
                 return false;
             }
 //            System.out.println(response.readEntity(String.class
@@ -160,7 +157,7 @@ public class NotificationsServices implements Serializable {
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
-                 exception = new Exception(response.readEntity(String.class));
+                exception = new Exception(response.readEntity(String.class));
                 return false;
             }
             System.out.println(response.readEntity(String.class
@@ -183,7 +180,7 @@ public class NotificationsServices implements Serializable {
      * @return
      */
     public Optional<Notifications> findByIdnotificationsboletas(Integer idnotificationsboletas) {
-        Notifications notifications= new Notifications();
+        Notifications notifications = new Notifications();
         try {
 
             Client client = ClientBuilder.newClient();
@@ -195,8 +192,8 @@ public class NotificationsServices implements Serializable {
                     .request(MediaType.APPLICATION_JSON)
                     .get(Notifications.class
                     );
-            if(notifications == null || notifications.getIdnotifications() == null){
-              return Optional.empty();
+            if (notifications == null || notifications.getIdnotifications() == null) {
+                return Optional.empty();
             }
             return Optional.of(notifications);
             //String result = FAIL;
@@ -238,21 +235,18 @@ public class NotificationsServices implements Serializable {
     }
     // </editor-fold>
 
-          
 // <editor-fold defaultstate="collapsed" desc=" List<Notifications> jsonQuery(@QueryParam("query") String query , @QueryParam("sort") String sort, @QueryParam("pagenumber") Integer pageNumber, @QueryParam("rowforpage") Integer rowForPage )">
-
-  public  List<Notifications> jsonQuery( String query ,  String sort,
-     Integer pageNumber,  Integer rowForPage ){
+    public List<Notifications> jsonQuery(String query, String sort,
+            Integer pageNumber, Integer rowForPage) {
         List<Notifications> suggestions = new ArrayList<>();
         try {
- 
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationsboletas/jsonquery/")                    
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationsboletas/jsonquery/")
                     .queryParam("query", JmoordbDocument.encodeJson(query))
-                    .queryParam("sort",JmoordbDocument.encodeJson(sort))
+                    .queryParam("sort", JmoordbDocument.encodeJson(sort))
                     .queryParam("pagenumber", pageNumber)
                     .queryParam("rowforpage", rowForPage)
                     .request(MediaType.APPLICATION_JSON)
@@ -262,27 +256,25 @@ public class NotificationsServices implements Serializable {
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println(JmoordbUtil.nameOfMethod()+ e.getLocalizedMessage());
+            System.out.println(JmoordbUtil.nameOfMethod() + e.getLocalizedMessage());
             JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
         }
 
         return suggestions;
     }
     // </editor-fold>   
-  
-  // <editor-fold defaultstate="collapsed" desc=" List<Notifications> jsonQueryWithoutPagination( @QueryParam("query") String query , @QueryParam("sort") String sort  ){">
-   
-   public List<Notifications> jsonQueryWithoutPagination( String query ,  String sort  ){
+
+    // <editor-fold defaultstate="collapsed" desc=" List<Notifications> jsonQueryWithoutPagination( @QueryParam("query") String query , @QueryParam("sort") String sort  ){">
+    public List<Notifications> jsonQueryWithoutPagination(String query, String sort) {
         List<Notifications> suggestions = new ArrayList<>();
         try {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationsboletas/jsonquerywithoutpagination/")                    
-                 .queryParam("query", JmoordbDocument.encodeJson(query))
-                    .queryParam("sort",JmoordbDocument.encodeJson(sort))
-                  
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationsboletas/jsonquerywithoutpagination/")
+                    .queryParam("query", JmoordbDocument.encodeJson(query))
+                    .queryParam("sort", JmoordbDocument.encodeJson(sort))
                     .request(MediaType.APPLICATION_JSON)
                     .get(new GenericType<List<Notifications>>() {
                     });
@@ -296,17 +288,14 @@ public class NotificationsServices implements Serializable {
         return suggestions;
     }
     // </editor-fold>   
-    
-    
-   
-    // <editor-fold defaultstate="collapsed" desc="Integer countJsonQuery(String query)">
 
+    // <editor-fold defaultstate="collapsed" desc="Integer countJsonQuery(String query)">
     /**
      * devuelve el contador de documentos en base a un json query
+     *
      * @param query
-     * @return 
+     * @return
      */
-
     public Integer countJsonQuery(String query) {
         Integer total = 0;
         try {
@@ -316,7 +305,7 @@ public class NotificationsServices implements Serializable {
 
             WebTarget webTarget
                     = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationsboletas/countjsonquery")
-                             .queryParam("query", JmoordbDocument.encodeJson(query));
+                            .queryParam("query", JmoordbDocument.encodeJson(query));
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.get();
@@ -340,17 +329,19 @@ public class NotificationsServices implements Serializable {
         return total;
     }
     // </editor-fold>
-    
-    
+
     // <editor-fold defaultstate="collapsed" desc="List<String> generateList(Boletas boletas, Boolean isJefeUnidad, Boolean isAutoridad, Boolean isRecursosHumanos, String msgJefeUnidad,           String msgAutoridad, String msgRecursos) ">
     public List<String> generateList(Boletas boletas, Boolean isJefeUnidad, Boolean isAutoridad, Boolean isRecursosHumanos, String msgJefeUnidad,
             String msgAutoridad, String msgRecursos) {
         List<String> emailList = new ArrayList<>();
         List<User> list = new ArrayList<>();
         try {
+
+            list.add(boletas.getUser());
+            //  list.add(boletas.getUser().getUsername());
             if (isJefeUnidad) {
-                       list.addAll(searchJefeUnidadDelDepartament(boletas, msgJefeUnidad));
-              }
+                list.addAll(searchJefeUnidadDelDepartament(boletas, msgJefeUnidad));
+            }
             if (isAutoridad) {
 
                 list = sinDuplicados(list, searchAutoridad(msgAutoridad));
@@ -358,14 +349,27 @@ public class NotificationsServices implements Serializable {
             if (isRecursosHumanos) {
 
                 list = sinDuplicados(list, searchRecursosHumanos(msgRecursos));
-              
+
             }
             //Carga la lista 
-            if(!list.isEmpty()){
-               list.forEach(u->emailList.add(u.getUsername()));
+            if (!list.isEmpty()) {
+                list.forEach(u -> emailList.add(u.getUsername()));
             }
-          
-         
+            /**
+             * Agrega el usuario de la boleta
+             */
+             found =false;
+             emailList.forEach(u -> {
+
+                if (u.equals(boletas.getUser().getUsername())) {
+                    found =true;
+                }
+            }
+            );
+             if(!found){
+                 emailList.add(boletas.getUser().getUsername());
+             }
+
         } catch (Exception e) {
             JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
         }
@@ -403,12 +407,11 @@ public class NotificationsServices implements Serializable {
                 JmoordbUtil.warningMessage(msgAutoridad);
             } else {
 
-             
-                userAutoridadList.forEach(u->{
-                   if(!list.contains(u)){
-                       list.add(u);
-                          
-                   }
+                userAutoridadList.forEach(u -> {
+                    if (!list.contains(u)) {
+                        list.add(u);
+
+                    }
                 });
             }
 
@@ -429,15 +432,14 @@ public class NotificationsServices implements Serializable {
                 JmoordbUtil.warningMessage(msgRecursos);
             } else {
 
+                userRecursosHumanosList.forEach(u -> {
+                    if (!list.contains(u)) {
 
-                userRecursosHumanosList.forEach(u->{
-                if(!list.contains(u)){
-
-                    list.add(u);
-                }
+                        list.add(u);
+                    }
                 }
                 );
-                
+
             }
 
         } catch (Exception e) {
@@ -447,8 +449,7 @@ public class NotificationsServices implements Serializable {
     }
 // </editor-fold>
 
-    
-     // <editor-fold defaultstate="collapsed" desc="List<User> sinDuplicados(List<User> listSource, List<User> listToAdd)">
+    // <editor-fold defaultstate="collapsed" desc="List<User> sinDuplicados(List<User> listSource, List<User> listToAdd)">
     /**
      * Agrega a la lista el elemento si no esta registrado
      *
@@ -459,15 +460,14 @@ public class NotificationsServices implements Serializable {
     public List<User> sinDuplicados(List<User> listSource, List<User> listToAdd) {
         List<User> list = new ArrayList<>();
         try {
-            listToAdd.forEach(u->{
-              
-                if(!listSource.contains(u)){
+            listToAdd.forEach(u -> {
+
+                if (!listSource.contains(u)) {
                     listSource.add(u);
 
                 }
-              }
+            }
             );
-
 
         } catch (Exception e) {
             JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
@@ -475,9 +475,8 @@ public class NotificationsServices implements Serializable {
         return listSource;
     }
 // </editor-fold>
-    
-     
-     // <editor-fold defaultstate="collapsed" desc="String showDate(Date date)">
+
+    // <editor-fold defaultstate="collapsed" desc="String showDate(Date date)">
     public String showDate(Date date) {
         String h = "";
         try {
