@@ -613,42 +613,8 @@ public class BoletasServices implements Serializable {
         return suggestions;
     }
     // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="List<Boletas> userEstadoUnidadOr(String userame, String estadounidad1, String estadounidad2) ">
+    
 
-    /**
-     * Consulta las boletas por usuario y el (estadounidad = or estadounidad=)
-     *
-     * @param username
-     * @param estadounidad1
-     * @param estadounidad2
-     * @return
-     */
-    public List<Boletas> userEstadoUnidadOr(String username, String estadounidad1, String estadounidad2) {
-        List<Boletas> suggestions = new ArrayList<>();
-        try {
-
-            Client client = ClientBuilder.newClient();
-            client.register(authentificationProducer.httpAuthenticationFeature());
-            suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/userestaadounidador/")
-                    .queryParam("username", username)
-                    .queryParam("estadounidad1", estadounidad1)
-                    .queryParam("estadounidad2", estadounidad2)
-                    .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<Boletas>>() {
-                    });
-
-        } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
-        }
-
-        return suggestions;
-    }
-
-    // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="List<Boletas> userEstadoAutoridadOr(String username, String estadoautoridad1, String estadoautoridad2)">
     /**
      * Consulta las boletas por usuario y el (estadoautoridad = or
