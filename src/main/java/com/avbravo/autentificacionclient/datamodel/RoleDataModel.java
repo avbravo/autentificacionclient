@@ -38,8 +38,8 @@ public class RoleDataModel extends ListDataModel<Role> implements SelectableData
     }
 
     @Override
-    public Object getRowKey(Role roleo) {
-        return roleo.getIdrole();
+    public Object getRowKey(Role role) {
+        return role.getIdrole();
     }
 
 }

@@ -140,7 +140,7 @@ public class HistoryServices implements Serializable {
         return false;
     }
 // </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="Boolean update(History history)">
+// <editor-fold defaultstate="collapsed" desc="Boolean delete(History history)">
 
     public Boolean delete(History history) {
         try {

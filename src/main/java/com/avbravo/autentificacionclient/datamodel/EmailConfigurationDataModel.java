@@ -38,8 +38,8 @@ public class EmailConfigurationDataModel extends ListDataModel<EmailConfiguratio
     }
 
     @Override
-    public Object getRowKey(EmailConfiguration departamento) {
-        return departamento.getIdEmailConfiguration();
+    public Object getRowKey(EmailConfiguration departament) {
+        return departament.getIdEmailConfiguration();
     }
 
 }

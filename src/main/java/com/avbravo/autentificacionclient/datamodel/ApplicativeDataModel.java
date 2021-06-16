@@ -38,8 +38,8 @@ public class ApplicativeDataModel extends ListDataModel<Applicative> implements 
     }
 
     @Override
-    public Object getRowKey(Applicative applicativeo) {
-        return applicativeo.getIdapplicative();
+    public Object getRowKey(Applicative applicative) {
+        return applicative.getIdapplicative();
     }
 
 }

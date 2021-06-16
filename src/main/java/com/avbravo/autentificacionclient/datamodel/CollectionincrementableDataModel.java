@@ -38,8 +38,8 @@ public class CollectionincrementableDataModel extends ListDataModel<Collectionin
     }
 
     @Override
-    public Object getRowKey(Collectionincrementable collectionincrementableo) {
-        return collectionincrementableo.getCollections();
+    public Object getRowKey(Collectionincrementable collectionincrementable) {
+        return collectionincrementable.getCollections();
     }
 
 }

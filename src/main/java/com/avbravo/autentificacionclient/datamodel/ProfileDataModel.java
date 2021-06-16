@@ -38,8 +38,8 @@ public class ProfileDataModel extends ListDataModel<Profile> implements Selectab
     }
 
     @Override
-    public Object getRowKey(Profile profileo) {
-        return profileo.getIdprofile();
+    public Object getRowKey(Profile profile) {
+        return profile.getIdprofile();
     }
 
 }
