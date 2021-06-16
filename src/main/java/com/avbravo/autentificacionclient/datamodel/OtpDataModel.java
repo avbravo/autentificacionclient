@@ -38,8 +38,8 @@ public class OtpDataModel extends ListDataModel<Otp> implements SelectableDataMo
     }
 
     @Override
-    public Object getRowKey(Otp otpo) {
-        return otpo.getIdotp();
+    public Object getRowKey(Otp otp) {
+        return otp.getIdotp();
     }
 
 }

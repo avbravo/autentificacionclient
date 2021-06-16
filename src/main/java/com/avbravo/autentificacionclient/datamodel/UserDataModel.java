@@ -38,8 +38,8 @@ public class UserDataModel extends ListDataModel<User> implements SelectableData
     }
 
     @Override
-    public Object getRowKey(User usero) {
-        return usero.getUsername();
+    public Object getRowKey(User user) {
+        return user.getUsername();
     }
 
 }

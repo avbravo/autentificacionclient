@@ -136,7 +136,7 @@ public class RoleServices implements Serializable {
         return false;
     }
 // </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="Boolean update(Role role)">
+// <editor-fold defaultstate="collapsed" desc="Boolean delete(Role role)">
 
     public Boolean delete(Role role) {
         try {

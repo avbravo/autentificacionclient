@@ -5,8 +5,7 @@
  */
 package com.avbravo.autentificacionclient.services;
 
-
-import com.avbravo.autentificacionclient.entity.Profile;
+import com.avbravo.autentificacionclient.entity.Province;
 import com.avbravo.autentificacionclient.producer.AuthentificationProducer;
 import com.avbravo.autentificacionclient.producer.MicroservicesProducer;
 import com.avbravo.jmoordb.util.JmoordbDocument;
@@ -16,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.ejb.Stateless;
+import javax.ejb.LocalBean;
 import javax.inject.Inject;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -31,21 +31,25 @@ import javax.ws.rs.core.Response;
  * @author avbravo
  */
 @Stateless
-public class ProfileServices implements Serializable {
+@LocalBean
+public class ProvinceServices implements Serializable {
 
+    // Add business logic below. (Right-click in editor and choose
+    // "Insert Code > Add Business Method")
+    // <editor-fold defaultstate="collapsed" desc="field()">
     String directoryLogger = JmoordbUtil.isLinux() ? JmoordbUtil.userHome() + JmoordbUtil.fileSeparator() + "autentificacionclient" + JmoordbUtil.fileSeparator() + "logs" + JmoordbUtil.fileSeparator() + "logger.json" : "C:\\autentificacionclient\\logs\\logger.json";
     private static final String PASS = "pass";
     private static final String FAIL = "fail";
     private static final String SUCCESS_RESULT = "<result>success</result>";
-  Exception exception;
+    Exception exception;
 
     @Inject
     MicroservicesProducer microservicesProducer;
 
     @Inject
     AuthentificationProducer authentificationProducer;
-    
-     // <editor-fold defaultstate="collapsed" desc=" set/get)">
+    // </editor-fold>
+ // <editor-fold defaultstate="collapsed" desc=" set/get)">
     
     
     public Exception getException() {
@@ -57,41 +61,40 @@ public class ProfileServices implements Serializable {
     }
     
 // </editor-fold>
-    
 
-// <editor-fold defaultstate="collapsed" desc="List<Profile> findAll()">
-    public List<Profile> findAll() {
-        List<Profile> profileList = new ArrayList<>();
+// <editor-fold defaultstate="collapsed" desc="List<Province> findAll()">
+    public List<Province> findAll() {
+        List<Province> provinceList = new ArrayList<>();
         try {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
-            WebTarget target = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/profile/findall");
+            WebTarget target = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/province/findall");
 
-            GenericType<List<Profile>> data = new GenericType<List<Profile>>() {
+            GenericType<List<Province>> data = new GenericType<List<Province>>() {
             };
 
-            profileList = target.request(MediaType.APPLICATION_JSON).get(data);
+            provinceList = target.request(MediaType.APPLICATION_JSON).get(data);
 
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("findAll()" + e.getLocalizedMessage());
         }
-        return profileList;
+        return provinceList;
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Boolean add(Profile profile)">
-    public Boolean add(Profile profile) {
+    // <editor-fold defaultstate="collapsed" desc="Boolean add(Province province)">
+    public Boolean add(Province province) {
         try {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/profile/add");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/province/add");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.post(Entity.entity(profile, MediaType.APPLICATION_JSON));
+            Response response = invocationBuilder.post(Entity.entity(province, MediaType.APPLICATION_JSON));
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
@@ -110,16 +113,16 @@ public class ProfileServices implements Serializable {
     }
 // </editor-fold>
 
-// <editor-fold defaultstate="collapsed" desc="Boolean update(Profile profile)">
-    public Boolean update(Profile profile) {
+// <editor-fold defaultstate="collapsed" desc="Boolean update(Province province)">
+    public Boolean update(Province province) {
         try {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/profile/update");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/province/update");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.put(Entity.entity(profile, MediaType.APPLICATION_JSON));
+            Response response = invocationBuilder.put(Entity.entity(province, MediaType.APPLICATION_JSON));
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
@@ -137,17 +140,17 @@ public class ProfileServices implements Serializable {
         return false;
     }
 // </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="Boolean delete(Profile profile)">
+// <editor-fold defaultstate="collapsed" desc="Boolean delete(Province province)">
 
-    public Boolean delete(Profile profile) {
+    public Boolean delete(Province province) {
         try {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/profile/delete");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/province/delete");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.post(Entity.entity(profile, MediaType.APPLICATION_JSON));
+            Response response = invocationBuilder.post(Entity.entity(province, MediaType.APPLICATION_JSON));
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
@@ -166,44 +169,43 @@ public class ProfileServices implements Serializable {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Profile findByProfile(Integer idprofile) ">
+    // <editor-fold defaultstate="collapsed" desc="Province findByProvince(Integer idprovince) ">
     /**
      * consulta por codigo_pedido impresa
      *
      * @param codigo_
      * @return
      */
-    public Optional<Profile> findByIdprofile(Integer idprofile) {
-        Profile profile = new Profile();
+    public Optional<Province> findByIdprovince(Integer idprovince) {
+        Province province = new Province();
         try {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
-            profile = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/profile/search/")
-                    .path("/{idprofile}")
-                    .resolveTemplate("idprofile", idprofile)
+            province = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/province/search/")
+                    .path("/{idprovince}")
+                    .resolveTemplate("idprovince", idprovince)
                     .request(MediaType.APPLICATION_JSON)
-                    .get(Profile.class
+                    .get(Province.class
                     );
-            
-            if(profile == null || profile.getIdprofile() == null){
-                  return Optional.empty();
+            if(province == null || province.getIdprovince() == null){
+               return Optional.empty();  
             }
-            return Optional.of(profile);
+            return Optional.of(province);
             //String result = FAIL;
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("findByIdprofile() " + e.getLocalizedMessage());
+            System.out.println("findByIdapplicativ() " + e.getLocalizedMessage());
         }
         return Optional.empty();
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="List<Profile> complete( String query)">
-    public List<Profile> complete(String query) {
-        List<Profile> suggestions = new ArrayList<>();
+    // <editor-fold defaultstate="collapsed" desc="List<Province> complete( String query)">
+    public List<Province> complete(String query) {
+        List<Province> suggestions = new ArrayList<>();
         try {
 
             if (query == null || query.isEmpty()) {
@@ -212,11 +214,11 @@ public class ProfileServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/profile/autocomplete/")
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/province/autocomplete/")
                     .path("/{query}")
                     .resolveTemplate("query", query)
                     .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<Profile>>() {
+                    .get(new GenericType<List<Province>>() {
                     });
 
         } catch (Exception e) {
@@ -229,29 +231,27 @@ public class ProfileServices implements Serializable {
         return suggestions;
     }
     // </editor-fold>
-
-    
     
      
        
-// <editor-fold defaultstate="collapsed" desc=" List<Profile> jsonQuery(@QueryParam("query") String query , @QueryParam("sort") String sort, @QueryParam("pagenumber") Integer pageNumber, @QueryParam("rowforpage") Integer rowForPage )">
+// <editor-fold defaultstate="collapsed" desc=" List<Province> jsonQuery(@QueryParam("query") String query , @QueryParam("sort") String sort, @QueryParam("pagenumber") Integer pageNumber, @QueryParam("rowforpage") Integer rowForPage )">
 
-  public  List<Profile> jsonQuery( String query ,  String sort,
+  public  List<Province> jsonQuery( String query ,  String sort,
      Integer pageNumber,  Integer rowForPage ){
-        List<Profile> suggestions = new ArrayList<>();
+        List<Province> suggestions = new ArrayList<>();
         try {
  
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/profile/jsonquery/")                    
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/province/jsonquery/")                    
                     .queryParam("query", JmoordbDocument.encodeJson(query))
                     .queryParam("sort",JmoordbDocument.encodeJson(sort))
                     .queryParam("pagenumber", pageNumber)
                     .queryParam("rowforpage", rowForPage)
                     .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<Profile>>() {
+                    .get(new GenericType<List<Province>>() {
                     });
 
         } catch (Exception e) {
@@ -265,21 +265,21 @@ public class ProfileServices implements Serializable {
     }
     // </editor-fold>   
   
-  // <editor-fold defaultstate="collapsed" desc=" List<Profile> jsonQueryWithoutPagination( @QueryParam("query") String query , @QueryParam("sort") String sort  ){">
+  // <editor-fold defaultstate="collapsed" desc=" List<Province> jsonQueryWithoutPagination( @QueryParam("query") String query , @QueryParam("sort") String sort  ){">
    
-   public List<Profile> jsonQueryWithoutPagination( String query ,  String sort  ){
-        List<Profile> suggestions = new ArrayList<>();
+   public List<Province> jsonQueryWithoutPagination( String query ,  String sort  ){
+        List<Province> suggestions = new ArrayList<>();
         try {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/profile/jsonquerywithoutpagination/")                    
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/province/jsonquerywithoutpagination/")                    
                  .queryParam("query", JmoordbDocument.encodeJson(query))
                     .queryParam("sort",JmoordbDocument.encodeJson(sort))
                   
                     .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<Profile>>() {
+                    .get(new GenericType<List<Province>>() {
                     });
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
@@ -310,7 +310,7 @@ public class ProfileServices implements Serializable {
             client.register(authentificationProducer.httpAuthenticationFeature());
 
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/profile/countjsonquery")
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/province/countjsonquery")
                              .queryParam("query", JmoordbDocument.encodeJson(query));
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
@@ -335,5 +335,6 @@ public class ProfileServices implements Serializable {
         return total;
     }
     // </editor-fold>
-       
+
 }
+

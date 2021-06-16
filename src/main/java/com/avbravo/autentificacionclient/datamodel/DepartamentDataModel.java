@@ -38,8 +38,8 @@ public class DepartamentDataModel extends ListDataModel<Departament> implements 
     }
 
     @Override
-    public Object getRowKey(Departament departamento) {
-        return departamento.getIddepartament();
+    public Object getRowKey(Departament departament) {
+        return departament.getIddepartament();
     }
 
 }

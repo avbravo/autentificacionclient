@@ -38,8 +38,8 @@ public class AccessDataModel extends ListDataModel<Access> implements Selectable
     }
 
     @Override
-    public Object getRowKey(Access accesso) {
-        return accesso.getIdaccess();
+    public Object getRowKey(Access access) {
+        return access.getIdaccess();
     }
 
 }

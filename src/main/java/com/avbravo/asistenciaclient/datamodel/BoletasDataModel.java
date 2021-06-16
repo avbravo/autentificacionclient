@@ -38,8 +38,8 @@ public class BoletasDataModel extends ListDataModel<Boletas> implements Selectab
     }
 
     @Override
-    public Object getRowKey(Boletas boletaso) {
-        return boletaso.getIdboleta();
+    public Object getRowKey(Boletas boletas) {
+        return boletas.getIdboleta();
     }
 
 }

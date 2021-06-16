@@ -131,7 +131,7 @@ public class HeadquartersServices implements Serializable {
         return false;
     }
 // </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="Boolean update(Headquarters headquarters)">
+// <editor-fold defaultstate="collapsed" desc="Boolean delete(Headquarters headquarters)">
 
     public Boolean delete(Headquarters headquarters) {
         try {

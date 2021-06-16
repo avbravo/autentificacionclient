@@ -38,8 +38,8 @@ public class InstitutionDataModel extends ListDataModel<Institution> implements 
     }
 
     @Override
-    public Object getRowKey(Institution institutiono) {
-        return institutiono.getIdinstitution();
+    public Object getRowKey(Institution institution) {
+        return institution.getIdinstitution();
     }
 
 }

@@ -135,7 +135,7 @@ public class InstitutionServices implements Serializable {
         return false;
     }
 // </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="Boolean update(Institution institution)">
+// <editor-fold defaultstate="collapsed" desc="Boolean delete(Institution institution)">
 
     public Boolean delete(Institution institution) {
         try {

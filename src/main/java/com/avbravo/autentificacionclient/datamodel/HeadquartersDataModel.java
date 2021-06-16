@@ -38,8 +38,8 @@ public class HeadquartersDataModel extends ListDataModel<Headquarters> implement
     }
 
     @Override
-    public Object getRowKey(Headquarters headquarterso) {
-        return headquarterso.getIdheadquarters();
+    public Object getRowKey(Headquarters headquarters) {
+        return headquarters.getIdheadquarters();
     }
 
 }
