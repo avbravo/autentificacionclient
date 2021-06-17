@@ -7,6 +7,7 @@ package com.avbravo.siuclient.entity;
 
 import com.avbravo.jmoordb.anotations.Id;
 import com.avbravo.jmoordb.anotations.Referenced;
+import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
  *
@@ -112,6 +113,28 @@ public class Estudiante {
 
     
 
+     @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Estudiante)) {
+            return false;
+        }
+        Estudiante other = (Estudiante) object;
+        if ((this.idestudiante == null && other.idestudiante!= null) || (this.idestudiante!= null && !this.idestudiante.equals(other.idestudiante))) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean equalsReflection(Object object) {
+        if (!(object instanceof Estudiante)) {
+            return false;
+        }
+        Estudiante other = (Estudiante) object;
+        if ((this.idestudiante == null && other.idestudiante != null) || (this.idestudiante!= null && !this.idestudiante.equals(other.idestudiante))) {
+            return false;
+        }
+        return EqualsBuilder.reflectionEquals(this, object);
+    }
     
     
 }

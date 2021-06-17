@@ -6,6 +6,7 @@
 package com.avbravo.autentificacionclient.entity;
 
 import com.avbravo.jmoordb.anotations.Id;
+import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
  *
@@ -39,6 +40,27 @@ public class Country {
     public void setCountry(String country) {
         this.country = country;
     }
-    
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Country)) {
+            return false;
+        }
+        Country other = (Country) object;
+        if ((this.idcountry == null && other.idcountry!= null) || (this.idcountry!= null && !this.idcountry.equals(other.idcountry))) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean equalsReflection(Object object) {
+        if (!(object instanceof Country)) {
+            return false;
+        }
+        Country other = (Country) object;
+        if ((this.idcountry == null && other.idcountry != null) || (this.idcountry!= null && !this.idcountry.equals(other.idcountry))) {
+            return false;
+        }
+        return EqualsBuilder.reflectionEquals(this, object);
+    }
     
 }

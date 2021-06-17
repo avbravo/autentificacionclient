@@ -7,6 +7,7 @@ package com.avbravo.autentificacionclient.entity;
 
 import com.avbravo.jmoordb.anotations.Id;
 import com.avbravo.jmoordb.anotations.Referenced;
+import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
  *
@@ -71,6 +72,28 @@ public class Province {
     }
     
     
+      @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Province)) {
+            return false;
+        }
+        Province other = (Province) object;
+        if ((this.idprovince == null && other.idprovince!= null) || (this.idprovince!= null && !this.idprovince.equals(other.idprovince))) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean equalsReflection(Object object) {
+        if (!(object instanceof Province)) {
+            return false;
+        }
+        Province other = (Province) object;
+        if ((this.idprovince == null && other.idprovince != null) || (this.idprovince!= null && !this.idprovince.equals(other.idprovince))) {
+            return false;
+        }
+        return EqualsBuilder.reflectionEquals(this, object);
+    }
     
     
     
