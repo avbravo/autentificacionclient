@@ -8,26 +8,35 @@ package com.avbravo.siuclient.entity;
 import com.avbravo.jmoordb.anotations.Id;
 import com.avbravo.jmoordb.anotations.Referenced;
 import java.util.List;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
  * @author avbravo
  */
 public class Matricula {
+
     @Id
     private Integer idmatricula;
+    @Min(value = 0,message = "Valor minimo cero")
     private Integer anio;
+    @NotNull
     private String grupo;
+    @NotNull
     private String aula;
+    @Min(value = 0,message = "Valor minimo cero")
     private Integer capacidad;
+     @Min(value = 0,message = "Valor minimo cero")
     private Integer matriculados;
-  
+
     @Referenced(collection = "Estudiante",
             field = "idestudiante", javatype = "String", lazy = false,
             repository = "com.avbravo.autentificacion.siu.repository.EstudianteRepository")
     private List<Estudiante> estudiante;
- 
-     private Boolean active;
+
+    private Boolean active;
 
     public Matricula() {
     }
@@ -106,10 +115,5 @@ public class Matricula {
     public void setActive(Boolean active) {
         this.active = active;
     }
-     
-     
-     
-     
-    
-    
+
 }
