@@ -28,19 +28,23 @@ public class ProvinceConverter implements Converter {
     ProvinceServices provinceServices;
   @Override
     public String getAsString(FacesContext context, UIComponent component, Object modelValue) {
+     
         if (modelValue == null) {
             return "";
         }
 
         if (modelValue instanceof Province) {
+
           return String.valueOf(((Province) modelValue).getIdprovince());
         } else {
+
             throw new ConverterException(new FacesMessage(modelValue + " is not a valid from Converter"));
         }
     }
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String submittedValue) {
+
         Province a = new Province();
         if (provinceServices == null) {
             System.out.println("Service is nich");
@@ -53,13 +57,19 @@ public class ProvinceConverter implements Converter {
 
         try {
             Optional<Province> optional = provinceServices.findByIdprovince(Integer.parseInt(submittedValue));
+
             if (optional.isPresent()) {
+                
                 a = optional.get();
             }
+
             return a;
         } catch (NumberFormatException e) {
+
             throw new ConverterException(new FacesMessage(submittedValue + " is not a valid selecction from Converter"), e);
         }
+        
+        
     }
 
 }

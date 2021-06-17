@@ -11,6 +11,7 @@ import java.util.List;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
  *
@@ -114,6 +115,28 @@ public class Matricula {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+   @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Matricula)) {
+            return false;
+        }
+        Matricula other = (Matricula) object;
+        if ((this.idmatricula == null && other.idmatricula!= null) || (this.idmatricula!= null && !this.idmatricula.equals(other.idmatricula))) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean equalsReflection(Object object) {
+        if (!(object instanceof Matricula)) {
+            return false;
+        }
+        Matricula other = (Matricula) object;
+        if ((this.idmatricula == null && other.idmatricula != null) || (this.idmatricula!= null && !this.idmatricula.equals(other.idmatricula))) {
+            return false;
+        }
+        return EqualsBuilder.reflectionEquals(this, object);
     }
 
 }

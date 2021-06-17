@@ -8,6 +8,7 @@ package com.avbravo.siuclient.entity;
 import com.avbravo.autentificacionclient.entity.Province;
 import com.avbravo.jmoordb.anotations.Id;
 import com.avbravo.jmoordb.anotations.Referenced;
+import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
  *
@@ -70,6 +71,28 @@ public class Colegio {
     
     
     
+     @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Colegio)) {
+            return false;
+        }
+        Colegio other = (Colegio) object;
+        if ((this.idcolegio == null && other.idcolegio!= null) || (this.idcolegio!= null && !this.idcolegio.equals(other.idcolegio))) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean equalsReflection(Object object) {
+        if (!(object instanceof Colegio)) {
+            return false;
+        }
+        Colegio other = (Colegio) object;
+        if ((this.idcolegio == null && other.idcolegio != null) || (this.idcolegio!= null && !this.idcolegio.equals(other.idcolegio))) {
+            return false;
+        }
+        return EqualsBuilder.reflectionEquals(this, object);
+    }
     
    
     
