@@ -40,7 +40,7 @@ import javax.ws.rs.core.Response;
  * @author avbravo
  */
 @Stateless
-public class NotificationsSiuServices implements Serializable {
+public class NotificationsSiuInscripcionServices implements Serializable {
 
     String directoryLogger = JmoordbUtil.isLinux() ? JmoordbUtil.userHome() + JmoordbUtil.fileSeparator() + "autentificacionclient" + JmoordbUtil.fileSeparator() + "logs" + JmoordbUtil.fileSeparator() + "logger.json" : "C:\\autentificacionclient\\logs\\logger.json";
     private static final String PASS = "pass";
@@ -73,7 +73,7 @@ public class NotificationsSiuServices implements Serializable {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
-            WebTarget target = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationssiu/findall");
+            WebTarget target = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationssiuinscripcion/findall");
 
             GenericType<List<Notifications>> data = new GenericType<List<Notifications>>() {
             };
@@ -95,7 +95,7 @@ public class NotificationsSiuServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationssiu/add");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationssiuinscripcion/add");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.post(Entity.entity(notifications, MediaType.APPLICATION_JSON));
@@ -123,7 +123,7 @@ public class NotificationsSiuServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationssiu/update");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationssiuinscripcion/update");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.put(Entity.entity(notifications, MediaType.APPLICATION_JSON));
@@ -151,7 +151,7 @@ public class NotificationsSiuServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationssiu/delete");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationssiuinscripcion/delete");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.post(Entity.entity(notifications, MediaType.APPLICATION_JSON));
@@ -187,7 +187,7 @@ public class NotificationsSiuServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             notifications = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationssiu/search/")
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationssiuinscripcion/search/")
                     .path("/{idnotifications}")
                     .resolveTemplate("idnotifications", idnotifications)
                     .request(MediaType.APPLICATION_JSON)
@@ -218,7 +218,7 @@ public class NotificationsSiuServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationssiu/autocomplete/")
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationssiuinscripcion/autocomplete/")
                     .path("/{query}")
                     .resolveTemplate("query", query)
                     .request(MediaType.APPLICATION_JSON)
@@ -245,7 +245,7 @@ public class NotificationsSiuServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationssiu/jsonquery/")
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationssiuinscripcion/jsonquery/")
                     .queryParam("query", JmoordbDocument.encodeJson(query))
                     .queryParam("sort", JmoordbDocument.encodeJson(sort))
                     .queryParam("pagenumber", pageNumber)
@@ -273,7 +273,7 @@ public class NotificationsSiuServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationssiu/jsonquerywithoutpagination/")
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationssiuinscripcion/jsonquerywithoutpagination/")
                     .queryParam("query", JmoordbDocument.encodeJson(query))
                     .queryParam("sort", JmoordbDocument.encodeJson(sort))
                     .request(MediaType.APPLICATION_JSON)
@@ -305,7 +305,7 @@ public class NotificationsSiuServices implements Serializable {
             client.register(authentificationProducer.httpAuthenticationFeature());
 
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationssiu/countjsonquery")
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationssiuinscripcion/countjsonquery")
                             .queryParam("query", JmoordbDocument.encodeJson(query));
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
