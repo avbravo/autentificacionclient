@@ -169,7 +169,7 @@ public class HistoryServices implements Serializable {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="History findByHistory(Integer idhistory) ">
+    // <editor-fold defaultstate="collapsed" desc="Optional<History> findByHistory(Integer idhistory) ">
     /**
      * consulta por codigo_pedido impresa
      *
@@ -189,7 +189,7 @@ public class HistoryServices implements Serializable {
                     .request(MediaType.APPLICATION_JSON)
                     .get(History.class
                     );
-            if(history == null || history.getIdhistory() == null){
+            if(history == null || history.getIdhistory() == null || history.getContent() == null){
                return Optional.empty();  
             }
             return Optional.of(history);

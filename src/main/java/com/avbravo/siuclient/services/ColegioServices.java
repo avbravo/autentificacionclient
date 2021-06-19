@@ -169,7 +169,7 @@ public class ColegioServices implements Serializable {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Colegio findByColegio(Integer idcolegio) ">
+    // <editor-fold defaultstate="collapsed" desc="Optional<Colegio> findByIdcolegio(Integer idcolegio)">
     /**
      * consulta por codigo_pedido impresa
      *
@@ -189,7 +189,7 @@ public class ColegioServices implements Serializable {
                     .request(MediaType.APPLICATION_JSON)
                     .get(Colegio.class
                     );
-            if(colegio == null || colegio.getIdcolegio() == null){
+            if(colegio == null || colegio.getIdcolegio() == null || colegio.getColegio() == null || colegio.getColegio().equals("")){
                return Optional.empty();  
             }
             return Optional.of(colegio);

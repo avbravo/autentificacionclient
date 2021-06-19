@@ -160,7 +160,7 @@ public class HeadquartersServices implements Serializable {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Headquarters findByHeadquarters(Integer idheadquarters) ">
+    // <editor-fold defaultstate="collapsed" desc="Optional<Headquarters> findByHeadquarters(Integer idheadquarters) ">
     /**
      * consulta por codigo_pedido impresa
      *
@@ -181,7 +181,7 @@ public class HeadquartersServices implements Serializable {
                     .get(Headquarters.class
                     );
 
-            if (headquarters == null || headquarters.getIdheadquarters() == null) {
+            if (headquarters == null || headquarters.getIdheadquarters() == null || headquarters.getHeadquarters() == null) {
                 return Optional.empty();
             }
             return Optional.of(headquarters);

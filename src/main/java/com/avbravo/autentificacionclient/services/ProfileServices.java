@@ -166,7 +166,7 @@ public class ProfileServices implements Serializable {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Profile findByProfile(Integer idprofile) ">
+    // <editor-fold defaultstate="collapsed" desc="Optional<Profile> findByProfile(Integer idprofile) ">
     /**
      * consulta por codigo_pedido impresa
      *
@@ -187,7 +187,7 @@ public class ProfileServices implements Serializable {
                     .get(Profile.class
                     );
             
-            if(profile == null || profile.getIdprofile() == null){
+            if(profile == null || profile.getIdprofile() == null || profile.getIdapplicative() == null){
                   return Optional.empty();
             }
             return Optional.of(profile);

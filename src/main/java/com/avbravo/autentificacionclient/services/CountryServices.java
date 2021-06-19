@@ -169,7 +169,7 @@ public class CountryServices implements Serializable {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Country findByCountry(Integer idcountry) ">
+    // <editor-fold defaultstate="collapsed" desc="Optional<Country>  findByCountry(Integer idcountry) ">
     /**
      * consulta por codigo_pedido impresa
      *
@@ -189,7 +189,7 @@ public class CountryServices implements Serializable {
                     .request(MediaType.APPLICATION_JSON)
                     .get(Country.class
                     );
-            if(country == null || country.getIdcountry() == null){
+            if(country == null || country.getIdcountry() == null || country.getCountry()== null){
                return Optional.empty();  
             }
             return Optional.of(country);

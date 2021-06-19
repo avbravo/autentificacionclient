@@ -163,7 +163,7 @@ public class CollectionincrementableServices implements Serializable {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Collectionincrementable findByCollectionincrementablename(String collectionincrementablename) ">
+    // <editor-fold defaultstate="collapsed" desc="Optional<Collectionincrementable> findByCollectionincrementablename(String collectionincrementablename) ">
     /**
      * consulta por codigo_pedido impresa
      *
@@ -183,7 +183,7 @@ public class CollectionincrementableServices implements Serializable {
                     .request(MediaType.APPLICATION_JSON)
                     .get(Collectionincrementable.class
                     );
-            if(collectionincrementable == null || collectionincrementable.getCollections()== null || collectionincrementable.getCollections()== null || collectionincrementable.getCollections().isEmpty()){
+            if(collectionincrementable == null || collectionincrementable.getCollections()== null || collectionincrementable.getCount()== null || collectionincrementable.getCollections().isEmpty()){
                  return Optional.empty();
             }
             return Optional.of(collectionincrementable);

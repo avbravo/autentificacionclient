@@ -165,7 +165,7 @@ public class RoleServices implements Serializable {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Role findByRole(Integer idrole) ">
+    // <editor-fold defaultstate="collapsed" desc="Optional<Role> findByRole(Integer idrole) ">
     /**
      * consulta por codigo_pedido impresa
      *
@@ -185,7 +185,7 @@ public class RoleServices implements Serializable {
                     .request(MediaType.APPLICATION_JSON)
                     .get(Role.class
                     );
-            if(role == null || role.getIdrole() == null){
+            if(role == null || role.getIdrole() == null || role.getRole() == null){
                return Optional.empty();  
             }
             return Optional.of(role);

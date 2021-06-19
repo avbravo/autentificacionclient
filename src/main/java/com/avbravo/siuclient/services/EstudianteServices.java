@@ -169,7 +169,7 @@ public class EstudianteServices implements Serializable {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Estudiante findByEstudiante(Integer idestudiante) ">
+    // <editor-fold defaultstate="collapsed" desc="Optional<Estudiante>  findByEstudiante(Integer idestudiante) ">
     /**
      * consulta por codigo_pedido impresa
      *
@@ -189,7 +189,7 @@ public class EstudianteServices implements Serializable {
                     .request(MediaType.APPLICATION_JSON)
                     .get(Estudiante.class
                     );
-            if(estudiante == null || estudiante.getIdestudiante()== null){
+            if(estudiante == null || estudiante.getIdestudiante()== null || estudiante.getNombre() == null || estudiante.getNombre().equals("")){
                return Optional.empty();  
             }
             return Optional.of(estudiante);

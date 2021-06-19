@@ -169,7 +169,7 @@ public class ProvinceServices implements Serializable {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Province findByProvince(Integer idprovince) ">
+    // <editor-fold defaultstate="collapsed" desc="Optional<Province> findByProvince(Integer idprovince) ">
     /**
      * consulta por codigo_pedido impresa
      *
@@ -189,7 +189,7 @@ public class ProvinceServices implements Serializable {
                     .request(MediaType.APPLICATION_JSON)
                     .get(Province.class
                     );
-            if(province == null || province.getIdprovince() == null){
+            if(province == null || province.getIdprovince() == null || province.getProvince() == null){
                return Optional.empty();  
             }
             return Optional.of(province);

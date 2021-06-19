@@ -163,7 +163,7 @@ public class ApplicativeServices implements Serializable {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Applicative findByApplicative(Integer idapplicative) ">
+    // <editor-fold defaultstate="collapsed" desc="ptional<Applicative> findByApplicative(Integer idapplicative) ">
     /**
      * consulta por codigo_pedido impresa
      *
@@ -184,7 +184,7 @@ public class ApplicativeServices implements Serializable {
                     .get(Applicative.class
                     );
             
-            if(applicative == null  || applicative.getIdapplicative() == null){
+            if(applicative == null  || applicative.getIdapplicative() == null || applicative.getApplicative() ==null){
            
                  return Optional.empty();
             }
