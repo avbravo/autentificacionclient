@@ -173,7 +173,7 @@ public class NotificationsSiuInscripcionServices implements Serializable {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Notifications findByNotifications(Integer idnotifications) ">
+    // <editor-fold defaultstate="collapsed" desc="Optional<Notifications> findByIdnotifications(Integer idnotifications) ">
     /**
      * consulta por codigo_pedido impresa
      *
@@ -193,7 +193,7 @@ public class NotificationsSiuInscripcionServices implements Serializable {
                     .request(MediaType.APPLICATION_JSON)
                     .get(Notifications.class
                     );
-            if (notifications == null || notifications.getIdnotifications() == null) {
+            if (notifications == null || notifications.getIdnotifications() == null || notifications.getIdapplicative() == null   ) {
                 return Optional.empty();
             }
             return Optional.of(notifications);

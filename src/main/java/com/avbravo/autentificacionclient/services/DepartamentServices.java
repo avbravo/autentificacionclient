@@ -164,7 +164,7 @@ public class DepartamentServices implements Serializable {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Departament findByDepartament(Integer iddepartament) ">
+    // <editor-fold defaultstate="collapsed" desc="Optional<Departament> findByDepartament(Integer iddepartament) ">
     /**
      * consulta por codigo_pedido impresa
      *
@@ -185,7 +185,7 @@ public class DepartamentServices implements Serializable {
                     .get(Departament.class
                     );
             
-            if(departament ==  null || departament.getIddepartament() == null){
+            if(departament ==  null || departament.getIddepartament() == null || departament.getDepartament() == null){
                 return Optional.empty();
             }
             return Optional.of(departament);

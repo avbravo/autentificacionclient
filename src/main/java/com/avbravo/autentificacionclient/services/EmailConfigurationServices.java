@@ -198,7 +198,7 @@ public class EmailConfigurationServices implements Serializable {
                     .request(MediaType.APPLICATION_JSON)
                     .get(EmailConfiguration.class
                     );
-             if(emailConfiguration == null || emailConfiguration.getIdEmailConfiguration() == null){
+             if(emailConfiguration == null || emailConfiguration.getIdEmailConfiguration() == null || emailConfiguration.getEmail() == null){
               return Optional.empty();
             }
             return Optional.of(emailConfiguration);

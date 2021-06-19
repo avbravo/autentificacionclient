@@ -167,7 +167,7 @@ public class OtpServices implements Serializable {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Otp findByOtp(Integer idotp) ">
+    // <editor-fold defaultstate="collapsed" desc="Optional<Otp>  findByOtp(Integer idotp) ">
     /**
      * consulta por codigo_pedido impresa
      *
@@ -187,7 +187,7 @@ public class OtpServices implements Serializable {
                     .request(MediaType.APPLICATION_JSON)
                     .get(Otp.class
                     );
-            if(otp == null || otp.getIdotp() == null){
+            if(otp == null || otp.getIdotp() == null || otp.getOtp() == null ){
                      return Optional.empty();
             }
             return Optional.of(otp);

@@ -164,7 +164,7 @@ public class InstitutionServices implements Serializable {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Institution findByInstitution(Integeridinstitution) ">
+    // <editor-fold defaultstate="collapsed" desc="Optional<Institution> findByInstitution(Integeridinstitution) ">
     /**
      * consulta por codigo_pedido impresa
      *
@@ -184,7 +184,7 @@ public class InstitutionServices implements Serializable {
                     .request(MediaType.APPLICATION_JSON)
                     .get(Institution.class
                     );
-            if(institution == null || institution.getIdinstitution() == null){
+            if(institution == null || institution.getIdinstitution() == null || institution.getInstitution() ==null){
                 return Optional.empty();
             }
             return Optional.of(institution);

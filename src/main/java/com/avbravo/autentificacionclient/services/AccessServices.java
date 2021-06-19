@@ -165,7 +165,7 @@ public class AccessServices implements Serializable {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Access findByAccess(Integer idaccess) ">
+    // <editor-fold defaultstate="collapsed" desc="Optional<Access>  findByAccess(Integer idaccess) ">
     /**
      * consulta por codigo_pedido impresa
      *
@@ -185,7 +185,7 @@ public class AccessServices implements Serializable {
                     .request(MediaType.APPLICATION_JSON)
                     .get(Access.class
                     );
-            if(access == null || access.getIdaccess() == null){
+            if(access == null || access.getIdaccess() == null || access.getIdapplicative() == null){
               return Optional.empty();
             }
             return Optional.of(access);

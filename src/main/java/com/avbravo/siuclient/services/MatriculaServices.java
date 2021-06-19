@@ -169,7 +169,7 @@ public class MatriculaServices implements Serializable {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Matricula findByMatricula(Integer idmatricula) ">
+    // <editor-fold defaultstate="collapsed" desc="Optional<Matricula> findByIdmatricula(Integer idmatricula) ">
     /**
      * consulta por codigo_pedido impresa
      *
@@ -189,7 +189,7 @@ public class MatriculaServices implements Serializable {
                     .request(MediaType.APPLICATION_JSON)
                     .get(Matricula.class
                     );
-            if(matricula == null || matricula.getIdmatricula() == null){
+            if(matricula == null || matricula.getIdmatricula() == null || matricula.getGrupo() == null  || matricula.getGrupo().equals("")){
                return Optional.empty();  
             }
             return Optional.of(matricula);
