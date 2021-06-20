@@ -33,7 +33,7 @@ public class Matricula {
     private Integer matriculados;
 
     @Referenced(collection = "Estudiante",
-            field = "idestudiante", javatype = "String", lazy = false,
+            field = "idestudiante", javatype = "Integer", lazy = false,
             repository = "com.avbravo.autentificacion.siu.repository.EstudianteRepository")
     private List<Estudiante> estudiante;
 
