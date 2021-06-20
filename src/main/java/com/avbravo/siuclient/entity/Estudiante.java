@@ -16,7 +16,8 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 public class Estudiante {
 
     @Id
-    private String idestudiante;
+    private Integer idestudiante;
+    private String cedula;
     private String nombre;
     private String apellido;
     private String celular;
@@ -31,8 +32,9 @@ public class Estudiante {
     public Estudiante() {
     }
 
-    public Estudiante(String idestudiante, String nombre, String apellido, String celular, String telefono, String email, Colegio colegio, Boolean active) {
+    public Estudiante(Integer idestudiante, String cedula, String nombre, String apellido, String celular, String telefono, String email, Colegio colegio, Boolean active) {
         this.idestudiante = idestudiante;
+        this.cedula = cedula;
         this.nombre = nombre;
         this.apellido = apellido;
         this.celular = celular;
@@ -44,13 +46,26 @@ public class Estudiante {
 
     
     
-    public String getIdestudiante() {
+   
+    public String getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
+
+    public Integer getIdestudiante() {
         return idestudiante;
     }
 
-    public void setIdestudiante(String idestudiante) {
+    public void setIdestudiante(Integer idestudiante) {
         this.idestudiante = idestudiante;
     }
+
+ 
+
+  
 
     
 
@@ -111,8 +126,6 @@ public class Estudiante {
         this.active = active;
     }
 
-    
-
      @Override
     public boolean equals(Object object) {
         if (!(object instanceof Estudiante)) {
@@ -135,6 +148,7 @@ public class Estudiante {
         }
         return EqualsBuilder.reflectionEquals(this, object);
     }
+
     
     
 }

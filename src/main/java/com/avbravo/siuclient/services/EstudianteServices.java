@@ -183,7 +183,7 @@ public class EstudianteServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             estudiante = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/estudiante/search/")
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/estudiante/findbyidestudiante/")
                     .path("/{idestudiante}")
                     .resolveTemplate("idestudiante", idestudiante)
                     .request(MediaType.APPLICATION_JSON)
@@ -197,7 +197,40 @@ public class EstudianteServices implements Serializable {
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("findByIdapplicativ() " + e.getLocalizedMessage());
+            System.out.println(JmoordbUtil.nameOfMethod() + e.getLocalizedMessage());
+        }
+        return Optional.empty();
+    }
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="Optional<Estudiante>  findByCedula(String cedula)) ">
+    /**
+     * consulta por codigo_pedido impresa
+     *
+     * @param codigo_
+     * @return
+     */
+    public Optional<Estudiante> findByCedula(String cedula) {
+        Estudiante estudiante = new Estudiante();
+        try {
+
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            estudiante = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/estudiante/findbycedula/")
+                    .path("/{cedula}")
+                    .resolveTemplate("cedula", cedula)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(Estudiante.class
+                    );
+            if(estudiante == null || estudiante.getIdestudiante()== null || estudiante.getNombre() == null || estudiante.getNombre().equals("")){
+               return Optional.empty();  
+            }
+            return Optional.of(estudiante);
+            //String result = FAIL;
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println(JmoordbUtil.nameOfMethod() + e.getLocalizedMessage());
         }
         return Optional.empty();
     }
