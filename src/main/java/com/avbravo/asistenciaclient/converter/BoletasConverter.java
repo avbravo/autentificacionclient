@@ -1,6 +1,6 @@
 /*
-* To change this license header, choose License Headers in Project Properties.
-* To change this template file, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package com.avbravo.asistenciaclient.converter;
@@ -8,56 +8,51 @@ package com.avbravo.asistenciaclient.converter;
 import com.avbravo.asistenciaclient.entity.Boletas;
 import com.avbravo.asistenciaclient.services.BoletasServices;
 import java.util.Optional;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.inject.Inject;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
+import javax.faces.convert.FacesConverter;
+import javax.inject.Inject;
 import javax.inject.Named;
+
 /**
  *
  * @author avbravo
  */
-@RequestScoped
 @Named
-public class BoletasConverter implements Converter{
-    @Inject
-    BoletasServices boletasServices;
+@FacesConverter(value = "boletasConverter", managed = true)
+public class BoletasConverter implements Converter<Boletas> {
 
-   @Override
-    public String getAsString(FacesContext context, UIComponent component, Object modelValue) {
-        if (modelValue == null) {
-            return "";
+    @Inject
+    private BoletasServices boletasServices;
+
+    @Override
+    public Boletas getAsObject(FacesContext context, UIComponent component, String value) {
+
+        if (value == null || value.isEmpty() || value.equals("null")) {
+            return new Boletas();
         }
-        if (modelValue instanceof Boletas) {
-          return String.valueOf(((Boletas) modelValue).getIdboleta());
-        } else {
-            throw new ConverterException(new FacesMessage(modelValue + " is not a valid from Converter"));
+        try {
+            Optional<Boletas> optional = boletasServices.findByIdboleta(Integer.parseInt(value));
+            if (optional.isPresent()) {
+                return optional.get();
+            }
+            return new Boletas();
+        } catch (NumberFormatException e) {
+
+            throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error" + e.getLocalizedMessage(), "Not a valid country."));
         }
+
     }
 
     @Override
-    public Object getAsObject(FacesContext context, UIComponent component, String submittedValue) {
-        Boletas a = new Boletas();
-        if (boletasServices == null) {
-            System.out.println("Service is nich");
-        }
-
-        if (submittedValue == null || submittedValue.isEmpty()) {
-            System.out.println("submitted = nil");
+    public String getAsString(FacesContext context, UIComponent component, Boletas value) {
+        if (value != null) {
+            return String.valueOf(value.getIdboleta());
+        } else {
             return null;
-        }
-
-        try {
-            Optional<Boletas> optional = boletasServices.findByIdboleta(Integer.parseInt(submittedValue));
-            if (optional.isPresent()) {
-                a = optional.get();
-            }
-            return a;
-        } catch (NumberFormatException e) {
-            throw new ConverterException(new FacesMessage(submittedValue + " is not a valid selecction from Converter"), e);
         }
     }
 
