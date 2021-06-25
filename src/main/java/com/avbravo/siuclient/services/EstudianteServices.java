@@ -176,7 +176,7 @@ public class EstudianteServices implements Serializable {
      * @param codigo_
      * @return
      */
-    public Optional<Estudiante> findByIdestudiante(String idestudiante) {
+    public Optional<Estudiante> findByIdestudiante(Integer idestudiante) {
         Estudiante estudiante = new Estudiante();
         try {
 
