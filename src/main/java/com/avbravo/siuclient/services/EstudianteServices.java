@@ -116,6 +116,7 @@ public class EstudianteServices implements Serializable {
 // <editor-fold defaultstate="collapsed" desc="Boolean update(Estudiante estudiante)">
     public Boolean update(Estudiante estudiante) {
         try {
+           
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
@@ -124,7 +125,7 @@ public class EstudianteServices implements Serializable {
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.put(Entity.entity(estudiante, MediaType.APPLICATION_JSON));
 
-            System.out.println(response.getStatus());
+            System.out.println("response.getStatus() " +response.getStatus());
             if (response.getStatus() == 400) {
                  exception = new Exception(response.readEntity(String.class));
                 return false;
@@ -135,7 +136,7 @@ public class EstudianteServices implements Serializable {
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("errort" + e.getLocalizedMessage());
+            System.out.println("error" + e.getLocalizedMessage());
         }
         return false;
     }

@@ -5,15 +5,15 @@
  */
 package com.avbravo.siuclient.converter;
 
-import com.avbravo.siuclient.entity.Estudiante;
-import com.avbravo.siuclient.services.EstudianteServices;
+import com.avbravo.autentificacionclient.entity.Access;
+import com.avbravo.autentificacionclient.services.AccessServices;
 import java.util.Optional;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
-import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -21,38 +21,44 @@ import javax.inject.Named;
  *
  * @author avbravo
  */
+@RequestScoped
 @Named
-@FacesConverter(value = "estudianteConverter", managed = true)
-public class EstudianteConverter implements Converter<Estudiante> {
-
+public class EstudianteConverter implements Converter {
     @Inject
-    private EstudianteServices estudianteServices;
-
-    @Override
-    public Estudiante getAsObject(FacesContext context, UIComponent component, String value) {
-
-        if (value == null || value.isEmpty() || value.equals("null")) {
-            return new Estudiante();
-        }
-        try {
-            Optional<Estudiante> optional = estudianteServices.findByIdestudiante(Integer.parseInt(value));
-            if (optional.isPresent()) {
-                return optional.get();
-            }
-            return new Estudiante();
-        } catch (NumberFormatException e) {
-
-            throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error" + e.getLocalizedMessage(), "Not a valid country."));
+    AccessServices accessServices;
+  @Override
+    public String getAsString(FacesContext context, UIComponent component, Object modelValue) {
+        if (modelValue == null) {
+            return "";
         }
 
+        if (modelValue instanceof Access) {
+          return String.valueOf(((Access) modelValue).getIdaccess());
+        } else {
+            throw new ConverterException(new FacesMessage(modelValue + " is not a valid from Converter"));
+        }
     }
 
     @Override
-    public String getAsString(FacesContext context, UIComponent component, Estudiante value) {
-        if (value != null) {
-            return String.valueOf(value.getIdestudiante());
-        } else {
+    public Object getAsObject(FacesContext context, UIComponent component, String submittedValue) {
+        Access a = new Access();
+        if (accessServices == null) {
+            System.out.println("Service is nich");
+        }
+
+        if (submittedValue == null || submittedValue.isEmpty()) {
+            System.out.println("submitted = nil");
             return null;
+        }
+
+        try {
+            Optional<Access> optional = accessServices.findByIdaccess(Integer.parseInt(submittedValue));
+            if (optional.isPresent()) {
+                a = optional.get();
+            }
+            return a;
+        } catch (NumberFormatException e) {
+            throw new ConverterException(new FacesMessage(submittedValue + " is not a valid selecction from Converter"), e);
         }
     }
 

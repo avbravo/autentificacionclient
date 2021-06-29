@@ -8,12 +8,12 @@ package com.avbravo.siuclient.converter;
 import com.avbravo.siuclient.entity.Matricula;
 import com.avbravo.siuclient.services.MatriculaServices;
 import java.util.Optional;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
-import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -21,38 +21,44 @@ import javax.inject.Named;
  *
  * @author avbravo
  */
+@RequestScoped
 @Named
-@FacesConverter(value = "matriculaConverter", managed = true)
-public class MatriculaConverter implements Converter<Matricula> {
-
+public class MatriculaConverter  implements Converter {
     @Inject
-    private MatriculaServices matriculaServices;
-
-    @Override
-    public Matricula getAsObject(FacesContext context, UIComponent component, String value) {
-
-        if (value == null || value.isEmpty() || value.equals("null")) {
-            return new Matricula();
-        }
-        try {
-            Optional<Matricula> optional = matriculaServices.findByIdmatricula(Integer.parseInt(value));
-            if (optional.isPresent()) {
-                return optional.get();
-            }
-            return new Matricula();
-        } catch (NumberFormatException e) {
-
-            throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error" + e.getLocalizedMessage(), "Not a valid country."));
+    MatriculaServices matriculaServices;
+  @Override
+    public String getAsString(FacesContext context, UIComponent component, Object modelValue) {
+        if (modelValue == null) {
+            return "";
         }
 
+        if (modelValue instanceof Matricula) {
+          return String.valueOf(((Matricula) modelValue).getIdmatricula());
+        } else {
+            throw new ConverterException(new FacesMessage(modelValue + " is not a valid from Converter"));
+        }
     }
 
     @Override
-    public String getAsString(FacesContext context, UIComponent component, Matricula value) {
-        if (value != null) {
-            return String.valueOf(value.getIdmatricula());
-        } else {
+    public Object getAsObject(FacesContext context, UIComponent component, String submittedValue) {
+        Matricula a = new Matricula();
+        if (matriculaServices == null) {
+            System.out.println("Service is nich");
+        }
+
+        if (submittedValue == null || submittedValue.isEmpty()) {
+            System.out.println("submitted = nil");
             return null;
+        }
+
+        try {
+            Optional<Matricula> optional = matriculaServices.findByIdmatricula(Integer.parseInt(submittedValue));
+            if (optional.isPresent()) {
+                a = optional.get();
+            }
+            return a;
+        } catch (NumberFormatException e) {
+            throw new ConverterException(new FacesMessage(submittedValue + " is not a valid selecction from Converter"), e);
         }
     }
 
