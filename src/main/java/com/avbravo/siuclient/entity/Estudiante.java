@@ -7,6 +7,7 @@ package com.avbravo.siuclient.entity;
 
 import com.avbravo.jmoordb.anotations.Id;
 import com.avbravo.jmoordb.anotations.Referenced;
+import javax.validation.constraints.Email;
 import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
@@ -22,6 +23,7 @@ public class Estudiante {
     private String apellido;
     private String celular;
     private String telefono;
+    @Email(message = "Email no es valido", regexp=".+@.+\\..+")
     private String email;
     @Referenced(collection = "Colegio",
             field = "idcolegio", javatype = "Integer", lazy = false,

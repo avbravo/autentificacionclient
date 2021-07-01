@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import javax.validation.constraints.Email;
 import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
@@ -28,6 +29,7 @@ public class User {
     private String username;
     private String password;
     private String name;
+    @Email(message = "Email no es valido", regexp = ".+@.+\\..+")
     private String email;
     private String cellphone;
     private String sex;
