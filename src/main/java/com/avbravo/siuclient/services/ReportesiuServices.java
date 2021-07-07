@@ -88,6 +88,7 @@ public class ReportesiuServices implements Serializable {
     // <editor-fold defaultstate="collapsed" desc="Boolean add(Reportesiu reportesiu)">
     public Boolean add(Reportesiu reportesiu) {
         try {
+         
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
