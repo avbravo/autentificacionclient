@@ -10,7 +10,6 @@ import com.avbravo.jmoordb.anotations.Referenced;
 import java.util.List;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
@@ -23,7 +22,7 @@ public class Matricula {
     private Integer idmatricula;
     @Min(value = 0,message = "Valor minimo cero")
     private Integer anio;
-    @NotNull
+    @NotNull(message="Grupo no debe ser nulo")
     private String grupo;
     @NotNull
     private String aula;
