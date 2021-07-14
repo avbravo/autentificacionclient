@@ -7,6 +7,7 @@ package com.avbravo.siuclient.services;
 
 import com.avbravo.autentificacionclient.producer.AuthentificationProducer;
 import com.avbravo.autentificacionclient.producer.MicroservicesProducer;
+import com.avbravo.autentificacionclient.services.LoggerServices;
 import com.avbravo.jmoordb.util.JmoordbDocument;
 import com.avbravo.jmoordb.util.JmoordbUtil;
 import com.avbravo.siuclient.entity.Matricula;
@@ -34,24 +35,21 @@ import javax.ws.rs.core.Response;
 @LocalBean
 public class MatriculaServices implements Serializable {
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-    // <editor-fold defaultstate="collapsed" desc="field()">
-    String directoryLogger = JmoordbUtil.isLinux() ? JmoordbUtil.userHome() + JmoordbUtil.fileSeparator() + "autentificacionclient" + JmoordbUtil.fileSeparator() + "logs" + JmoordbUtil.fileSeparator() + "logger.json" : "C:\\autentificacionclient\\logs\\logger.json";
-    private static final String PASS = "pass";
-    private static final String FAIL = "fail";
-    private static final String SUCCESS_RESULT = "<result>success</result>";
-    Exception exception;
+     // <editor-fold defaultstate="collapsed" desc="fields ">
 
+    Exception exception;
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="@Inject">
+    @Inject
+    LoggerServices loggerServices;
     @Inject
     MicroservicesProducer microservicesProducer;
 
     @Inject
     AuthentificationProducer authentificationProducer;
-    // </editor-fold>
- // <editor-fold defaultstate="collapsed" desc=" set/get)">
-    
-    
+// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc=" set/get)">
     public Exception getException() {
         return exception;
     }
@@ -59,9 +57,8 @@ public class MatriculaServices implements Serializable {
     public void setException(Exception exception) {
         this.exception = exception;
     }
-    
-// </editor-fold>
 
+// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="List<Matricula> findAll()">
     public List<Matricula> findAll() {
         List<Matricula> matriculaList = new ArrayList<>();
@@ -77,9 +74,9 @@ public class MatriculaServices implements Serializable {
             matriculaList = target.request(MediaType.APPLICATION_JSON).get(data);
 
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("findAll()" + e.getLocalizedMessage());
+               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+             
+             
         }
         return matriculaList;
     }
@@ -96,18 +93,18 @@ public class MatriculaServices implements Serializable {
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.post(Entity.entity(matricula, MediaType.APPLICATION_JSON));
 
-            System.out.println(response.getStatus());
+             
             if (response.getStatus() == 400) {
                  exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-            System.out.println(response.readEntity(String.class
-            ));
+             
+     
             return true;
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("errort" + e.getLocalizedMessage());
+               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+             
+             
         }
         return false;
     }
@@ -124,18 +121,18 @@ public class MatriculaServices implements Serializable {
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.put(Entity.entity(matricula, MediaType.APPLICATION_JSON));
 
-            System.out.println(response.getStatus());
+             
             if (response.getStatus() == 400) {
                  exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-            System.out.println(response.readEntity(String.class
-            ));
+             
+        
             return true;
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("errort" + e.getLocalizedMessage());
+               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+             
+             
         }
         return false;
     }
@@ -152,18 +149,17 @@ public class MatriculaServices implements Serializable {
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.post(Entity.entity(matricula, MediaType.APPLICATION_JSON));
 
-            System.out.println(response.getStatus());
+             
             if (response.getStatus() == 400) {
                  exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-            System.out.println(response.readEntity(String.class
-            ));
+               
             return true;
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("errort" + e.getLocalizedMessage());
+               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+             
+             
         }
         return false;
     }
@@ -195,9 +191,9 @@ public class MatriculaServices implements Serializable {
             return Optional.of(matricula);
             //String result = FAIL;
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("findByIdapplicativ() " + e.getLocalizedMessage());
+               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+             
+       
         }
         return Optional.empty();
     }
@@ -222,10 +218,10 @@ public class MatriculaServices implements Serializable {
                     });
 
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("complete() " + e.getLocalizedMessage());
-            JmoordbUtil.errorDialog("complete()", e.getLocalizedMessage());
+               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+             
+             
+             
         }
 
         return suggestions;
@@ -255,10 +251,10 @@ public class MatriculaServices implements Serializable {
                     });
 
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println(JmoordbUtil.nameOfMethod()+ e.getLocalizedMessage());
-            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+             
+       
+             
         }
 
         return suggestions;
@@ -282,10 +278,10 @@ public class MatriculaServices implements Serializable {
                     .get(new GenericType<List<Matricula>>() {
                     });
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("lisfOfPage() " + e.getLocalizedMessage());
-            JmoordbUtil.errorDialog("lisfOfPage()", e.getLocalizedMessage());
+               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+             
+             
+             
         }
 
         return suggestions;
@@ -326,10 +322,10 @@ public class MatriculaServices implements Serializable {
             }
 
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+             
+             
+             
         }
 
         return total;

@@ -5,7 +5,6 @@
  */
 package com.avbravo.autentificacionclient.services;
 
-
 import com.avbravo.autentificacionclient.entity.User;
 import com.avbravo.autentificacionclient.producer.AuthentificationProducer;
 import com.avbravo.autentificacionclient.producer.MicroservicesProducer;
@@ -33,22 +32,21 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 public class UserServices implements Serializable {
+// <editor-fold defaultstate="collapsed" desc="fields ">
 
-    String directoryLogger = JmoordbUtil.isLinux() ? JmoordbUtil.userHome() + JmoordbUtil.fileSeparator() + "autentificacionclient" + JmoordbUtil.fileSeparator() + "logs" + JmoordbUtil.fileSeparator() + "logger.json" : "C:\\autentificacionclient\\logs\\logger.json";
-    private static final String PASS = "pass";
-    private static final String FAIL = "fail";
-    private static final String SUCCESS_RESULT = "<result>success</result>";
-  Exception exception;
-
+    Exception exception;
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="@Inject">
+    @Inject
+    LoggerServices loggerServices;
     @Inject
     MicroservicesProducer microservicesProducer;
 
     @Inject
     AuthentificationProducer authentificationProducer;
-    
-     // <editor-fold defaultstate="collapsed" desc=" set/get)">
-    
-    
+// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc=" set/get)">
     public Exception getException() {
         return exception;
     }
@@ -56,9 +54,8 @@ public class UserServices implements Serializable {
     public void setException(Exception exception) {
         this.exception = exception;
     }
-    
-// </editor-fold>
 
+// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="List<User> findAll()">
     public List<User> findAll() {
         List<User> userList = new ArrayList<>();
@@ -74,9 +71,9 @@ public class UserServices implements Serializable {
             userList = target.request(MediaType.APPLICATION_JSON).get(data);
 
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("findAll()" + e.getLocalizedMessage());
+            exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+                       
+          
         }
         return userList;
     }
@@ -93,18 +90,16 @@ public class UserServices implements Serializable {
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.post(Entity.entity(user, MediaType.APPLICATION_JSON));
 
-            System.out.println(response.getStatus());
+             
             if (response.getStatus() == 400) {
-                 exception = new Exception(response.readEntity(String.class));
+                exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-            System.out.println(response.readEntity(String.class
-            ));
+             
+           
             return true;
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("errort" + e.getLocalizedMessage());
+            exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
         }
         return false;
     }
@@ -121,18 +116,16 @@ public class UserServices implements Serializable {
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.put(Entity.entity(user, MediaType.APPLICATION_JSON));
 
-            System.out.println(response.getStatus());
+             
             if (response.getStatus() == 400) {
-                 exception = new Exception(response.readEntity(String.class));
+                exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-            System.out.println(response.readEntity(String.class
-            ));
+             
+          
             return true;
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("errort" + e.getLocalizedMessage());
+             exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
         }
         return false;
     }
@@ -149,18 +142,16 @@ public class UserServices implements Serializable {
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.post(Entity.entity(user, MediaType.APPLICATION_JSON));
 
-            System.out.println(response.getStatus());
+             
             if (response.getStatus() == 400) {
-                 exception = new Exception(response.readEntity(String.class));
+                exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-            System.out.println(response.readEntity(String.class
-            ));
+             
+           
             return true;
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("errort" + e.getLocalizedMessage());
+             exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
         }
         return false;
     }
@@ -176,7 +167,7 @@ public class UserServices implements Serializable {
     public Optional<User> findByUsername(String username) {
         User user = new User();
         try {
-        
+
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             user = client
@@ -186,18 +177,15 @@ public class UserServices implements Serializable {
                     .request(MediaType.APPLICATION_JSON)
                     .get(User.class
                     );
-            if(user == null || user.getIduser()== null || user.getUsername() == null || user.getUsername().isEmpty()){
-              
-                 return Optional.empty();
+            if (user == null || user.getIduser() == null || user.getUsername() == null || user.getUsername().isEmpty()) {
+
+                return Optional.empty();
             }
-      
+
             return Optional.of(user);
             //String result = FAIL;
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-              System.out.println("findBUsername() " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-          
+             exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
         }
 
         return Optional.empty();
@@ -223,18 +211,14 @@ public class UserServices implements Serializable {
                     });
 
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println(JmoordbUtil.nameOfMethod()+ e.getLocalizedMessage());
-            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+            exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
         }
 
         return suggestions;
     }
     // </editor-fold>
 
-    
-     // <editor-fold defaultstate="collapsed" desc="List<User> searchByIdDepartament(Integer iddepartament) ">
+    // <editor-fold defaultstate="collapsed" desc="List<User> searchByIdDepartament(Integer iddepartament) ">
     public List<User> searchByIdDepartament(Integer iddepartament) {
         List<User> suggestions = new ArrayList<>();
         try {
@@ -250,16 +234,13 @@ public class UserServices implements Serializable {
                     });
 
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println(JmoordbUtil.nameOfMethod() + e.getLocalizedMessage());
-            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+            exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
         }
 
         return suggestions;
     }
     // </editor-fold>
-     // <editor-fold defaultstate="collapsed" desc="List<User> searchJefeUnidadDelDepartament(Integer iddepartament) ">
+    // <editor-fold defaultstate="collapsed" desc="List<User> searchJefeUnidadDelDepartament(Integer iddepartament) ">
     public List<User> searchJefeUnidadDelDepartament(Integer iddepartament) {
         List<User> suggestions = new ArrayList<>();
         try {
@@ -275,24 +256,21 @@ public class UserServices implements Serializable {
                     });
 
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println(JmoordbUtil.nameOfMethod() + e.getLocalizedMessage());
-            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+              exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
         }
 
         return suggestions;
     }
     // </editor-fold>
-    
-     // <editor-fold defaultstate="collapsed" desc="List<User>  searchAutoridad( Boolean isauthority)" >
+
+    // <editor-fold defaultstate="collapsed" desc="List<User>  searchAutoridad( Boolean isauthority)" >
     /**
-     * Busca los usuarios que sean autoridad (isauthority = true
-     * o que no sean autoridad isauthority = false)
-     * Recuerde que es una lista embebida de muchos roles
-     
+     * Busca los usuarios que sean autoridad (isauthority = true o que no sean
+     * autoridad isauthority = false) Recuerde que es una lista embebida de
+     * muchos roles
+     *
      */
-    public List<User>  searchAutoridad( Boolean isauthority) {
+    public List<User> searchAutoridad(Boolean isauthority) {
         List<User> suggestions = new ArrayList<>();
         try {
 
@@ -307,24 +285,21 @@ public class UserServices implements Serializable {
                     });
 
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println(JmoordbUtil.nameOfMethod() + e.getLocalizedMessage());
-            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+          exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
         }
 
         return suggestions;
     }
     // </editor-fold>
-    
-     // <editor-fold defaultstate="collapsed" desc="List<User>  searchAutoridad( Boolean isauthority)" >
+
+    // <editor-fold defaultstate="collapsed" desc="List<User>  searchAutoridad( Boolean isauthority)" >
     /**
-     * Busca los usuarios que sean autoridad (isauthority = true
-     * o que no sean autoridad isauthority = false)
-     * Recuerde que es una lista embebida de muchos roles
-     
+     * Busca los usuarios que sean autoridad (isauthority = true o que no sean
+     * autoridad isauthority = false) Recuerde que es una lista embebida de
+     * muchos roles
+     *
      */
-    public List<User>  searchRecursosHumanos( Boolean ishumanresourcesauthority) {
+    public List<User> searchRecursosHumanos(Boolean ishumanresourcesauthority) {
         List<User> suggestions = new ArrayList<>();
         try {
 
@@ -339,34 +314,25 @@ public class UserServices implements Serializable {
                     });
 
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println(JmoordbUtil.nameOfMethod() + e.getLocalizedMessage());
-            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+           exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
         }
 
         return suggestions;
     }
     // </editor-fold>
-    
-    
-     
-    
-    
-      // <editor-fold defaultstate="collapsed" desc="List<User> findbyIdepartamentIdrol(Integer iddepartament ,Integer idrol )">
- 
+
+    // <editor-fold defaultstate="collapsed" desc="List<User> findbyIdepartamentIdrol(Integer iddepartament ,Integer idrol )">
     /**
-     * 
+     *
      * @param iddepartament
      * @param idrol
-     * @return 
+     * @return
      */
-    
-    public List<User> findbyIdepartamentIdrol(Integer iddepartament ,Integer idrol ) {  
-       List<User> suggestions = new ArrayList<>();
+    public List<User> findbyIdepartamentIdrol(Integer iddepartament, Integer idrol) {
+        List<User> suggestions = new ArrayList<>();
         try {
 
-           Client client = ClientBuilder.newClient();
+            Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
                     .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/findbyidepartamentandidrol/")
@@ -377,70 +343,51 @@ public class UserServices implements Serializable {
                     });
             //String result = FAIL;
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println( JmoordbUtil.nameOfMethod() + e.getLocalizedMessage());
+             exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
         }
         return suggestions;
     }
 
     // </editor-fold>
-    
-    
-    
-      
-    
-  // <editor-fold defaultstate="collapsed" desc="List<User> findbyEmail(String email )">
- 
+    // <editor-fold defaultstate="collapsed" desc="List<User> findbyEmail(String email )">
     /**
-     * 
+     *
      * @param iddepartament
      * @param idrol
-     * @return 
+     * @return
      */
-    
-    public List<User> findbyEmail(String email ) {  
-       List<User> suggestions = new ArrayList<>();
-        try {
-
-           Client client = ClientBuilder.newClient();
-            client.register(authentificationProducer.httpAuthenticationFeature());
-            suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/findbyemail/")
-                    .queryParam("email", email)
-                                        .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<User>>() {
-                    });
-            //String result = FAIL;
-        } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println( JmoordbUtil.nameOfMethod() + e.getLocalizedMessage());
-        }
-        return suggestions;
-    }
-
-    // </editor-fold>
-    
-    
-    
-    
-    
-       
-// <editor-fold defaultstate="collapsed" desc=" List<User> jsonQuery(@QueryParam("query") String query , @QueryParam("sort") String sort, @QueryParam("pagenumber") Integer pageNumber, @QueryParam("rowforpage") Integer rowForPage )">
-
-  public  List<User> jsonQuery( String query ,  String sort,
-     Integer pageNumber,  Integer rowForPage ){
+    public List<User> findbyEmail(String email) {
         List<User> suggestions = new ArrayList<>();
         try {
- 
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/jsonquery/")                    
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/findbyemail/")
+                    .queryParam("email", email)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<User>>() {
+                    });
+            //String result = FAIL;
+        } catch (Exception e) {
+             exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+        }
+        return suggestions;
+    }
+
+    // </editor-fold>
+// <editor-fold defaultstate="collapsed" desc=" List<User> jsonQuery(@QueryParam("query") String query , @QueryParam("sort") String sort, @QueryParam("pagenumber") Integer pageNumber, @QueryParam("rowforpage") Integer rowForPage )">
+    public List<User> jsonQuery(String query, String sort,
+            Integer pageNumber, Integer rowForPage) {
+        List<User> suggestions = new ArrayList<>();
+        try {
+
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/jsonquery/")
                     .queryParam("query", JmoordbDocument.encodeJson(query))
-                    .queryParam("sort",JmoordbDocument.encodeJson(sort))
+                    .queryParam("sort", JmoordbDocument.encodeJson(sort))
                     .queryParam("pagenumber", pageNumber)
                     .queryParam("rowforpage", rowForPage)
                     .request(MediaType.APPLICATION_JSON)
@@ -448,53 +395,42 @@ public class UserServices implements Serializable {
                     });
 
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println(JmoordbUtil.nameOfMethod()+ e.getLocalizedMessage());
-            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+             exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
         }
 
         return suggestions;
     }
     // </editor-fold>   
-  
-  // <editor-fold defaultstate="collapsed" desc=" List<User> jsonQueryWithoutPagination( @QueryParam("query") String query , @QueryParam("sort") String sort  ){">
-   
-   public List<User> jsonQueryWithoutPagination( String query ,  String sort  ){
+
+    // <editor-fold defaultstate="collapsed" desc=" List<User> jsonQueryWithoutPagination( @QueryParam("query") String query , @QueryParam("sort") String sort  ){">
+    public List<User> jsonQueryWithoutPagination(String query, String sort) {
         List<User> suggestions = new ArrayList<>();
         try {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/jsonquerywithoutpagination/")                    
-                 .queryParam("query", JmoordbDocument.encodeJson(query))
-                    .queryParam("sort",JmoordbDocument.encodeJson(sort))
-                  
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/jsonquerywithoutpagination/")
+                    .queryParam("query", JmoordbDocument.encodeJson(query))
+                    .queryParam("sort", JmoordbDocument.encodeJson(sort))
                     .request(MediaType.APPLICATION_JSON)
                     .get(new GenericType<List<User>>() {
                     });
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("lisfOfPage() " + e.getLocalizedMessage());
-            JmoordbUtil.errorDialog("lisfOfPage()", e.getLocalizedMessage());
+             exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
         }
 
         return suggestions;
     }
     // </editor-fold>   
-    
-    
-   
-    // <editor-fold defaultstate="collapsed" desc="Integer countJsonQuery(String query)">
 
+    // <editor-fold defaultstate="collapsed" desc="Integer countJsonQuery(String query)">
     /**
      * devuelve el contador de documentos en base a un json query
+     *
      * @param query
-     * @return 
+     * @return
      */
-
     public Integer countJsonQuery(String query) {
         Integer total = 0;
         try {
@@ -504,7 +440,7 @@ public class UserServices implements Serializable {
 
             WebTarget webTarget
                     = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/countjsonquery")
-                             .queryParam("query", JmoordbDocument.encodeJson(query));
+                            .queryParam("query", JmoordbDocument.encodeJson(query));
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.get();
@@ -519,14 +455,13 @@ public class UserServices implements Serializable {
             }
 
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+             exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
         }
 
         return total;
     }
     // </editor-fold>
-      
+    
+   
+
 }

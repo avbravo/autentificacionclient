@@ -37,16 +37,22 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 public class EmailConfigurationServices implements Serializable {
-// <editor-fold defaultstate="collapsed" desc=" field()">
-
-    String directoryLogger = JmoordbUtil.isLinux() ? JmoordbUtil.userHome() + JmoordbUtil.fileSeparator() + "autentificacionclient" + JmoordbUtil.fileSeparator() + "logs" + JmoordbUtil.fileSeparator() + "logger.json" : "C:\\autentificacionclient\\logs\\logger.json";
-    private static final String PASS = "pass";
-    private static final String FAIL = "fail";
-    private static final String SUCCESS_RESULT = "<result>success</result>";
     
+      // <editor-fold defaultstate="collapsed" desc="fields ">
     JmoordbEmailSender jmoordbEmailSender= new  JmoordbEmailSender();
     Exception exception;
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="@Inject">
+    @Inject
+    LoggerServices loggerServices;
+    @Inject
+    MicroservicesProducer microservicesProducer;
 
+    @Inject
+    AuthentificationProducer authentificationProducer;
+// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc=" set/get)">
     public Exception getException() {
         return exception;
     }
@@ -54,18 +60,9 @@ public class EmailConfigurationServices implements Serializable {
     public void setException(Exception exception) {
         this.exception = exception;
     }
-    
-    
-    
-    
-// </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="inject()">
-    @Inject
-    MicroservicesProducer microservicesProducer;
 
-    @Inject
-    AuthentificationProducer authentificationProducer;
 // </editor-fold>
+
 
 // <editor-fold defaultstate="collapsed" desc="List<EmailConfiguration> findAll()">
     public List<EmailConfiguration> findAll() {
@@ -83,8 +80,8 @@ public class EmailConfigurationServices implements Serializable {
 
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("findAll()" + e.getLocalizedMessage());
+             
+   
         }
         return emailConfigurationList;
     }
@@ -103,16 +100,15 @@ public class EmailConfigurationServices implements Serializable {
 
             if (response.getStatus() == 400) {
                 exception = new Exception(response.readEntity(String.class));
-                // System.out.println("En el Services:" + response.readEntity(String.class));
-                //JmoordbUtil.e
+            
                 return false;
             }
 
             return true;
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("errort" + e.getLocalizedMessage());
+             
+             
         }
         return false;
     }
@@ -136,12 +132,12 @@ public class EmailConfigurationServices implements Serializable {
                 return false;
             }
  
-            //  System.out.println("Response " + response.readEntity(String.class));
+ 
             return true;
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            System.out.println("update" + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+          
+             
 
         }
         return false;
@@ -153,7 +149,7 @@ public class EmailConfigurationServices implements Serializable {
     public Boolean delete(EmailConfiguration emailConfiguration) {
         try {
             
-            System.out.println("---->Servives delete,......");
+       
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
 //            WebTarget webTarget  = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/emailconfiguration/delete");
@@ -164,7 +160,7 @@ public class EmailConfigurationServices implements Serializable {
                     .request(MediaType.APPLICATION_XML)
                     .delete(String.class);
 
-            //  System.out.println("*** Call result = " + callResult);
+
             if (callResult.equals("Ok")) {
                  // exception = new Exception(response.readEntity(String.class));
                 return true;
@@ -172,8 +168,8 @@ public class EmailConfigurationServices implements Serializable {
 
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("errort" + e.getLocalizedMessage());
+             
+             
         }
         return false;
     }
@@ -205,8 +201,7 @@ public class EmailConfigurationServices implements Serializable {
             //String result = FAIL;
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println(JmoordbUtil.nameOfMethod()+ e.getLocalizedMessage());
+      
         }
         return Optional.empty();
     }
@@ -239,8 +234,8 @@ public class EmailConfigurationServices implements Serializable {
             //String result = FAIL;
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println(JmoordbUtil.nameOfMethod()+ e.getLocalizedMessage());
+             
+   
         }
         return Optional.empty();
     }
@@ -273,8 +268,8 @@ public class EmailConfigurationServices implements Serializable {
             //String result = FAIL;
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println(JmoordbUtil.nameOfMethod()+ e.getLocalizedMessage());
+             
+        
         }
         return Optional.empty();
     }
@@ -356,9 +351,9 @@ public class EmailConfigurationServices implements Serializable {
 
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println(JmoordbUtil.nameOfMethod()+ e.getLocalizedMessage());
-            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+             
+
+             
         }
 
         return suggestions;
@@ -383,9 +378,8 @@ public class EmailConfigurationServices implements Serializable {
                     });
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("lisfOfPage() " + e.getLocalizedMessage());
-            JmoordbUtil.errorDialog("lisfOfPage()", e.getLocalizedMessage());
+             
+         
         }
 
         return suggestions;
@@ -427,9 +421,9 @@ public class EmailConfigurationServices implements Serializable {
 
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+             
+             
+             
         }
 
         return total;

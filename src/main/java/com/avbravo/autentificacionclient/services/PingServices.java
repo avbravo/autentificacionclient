@@ -26,23 +26,21 @@ import javax.ws.rs.core.MediaType;
  */
 @Stateless
 public class PingServices implements Serializable {
+// <editor-fold defaultstate="collapsed" desc="fields ">
 
-    String directoryLogger = JmoordbUtil.isLinux() ? JmoordbUtil.userHome() + JmoordbUtil.fileSeparator() + "autentificacionclient" + JmoordbUtil.fileSeparator() + "logs" + JmoordbUtil.fileSeparator() + "logger.json" : "C:\\autentificacionclient\\logs\\logger.json";
-    private static final String PASS = "pass";
-    private static final String FAIL = "fail";
-    private static final String SUCCESS_RESULT = "<result>success</result>";
-  Exception exception;
-
-  
+    Exception exception;
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="@Inject">
+    @Inject
+    LoggerServices loggerServices;
     @Inject
     MicroservicesProducer microservicesProducer;
 
     @Inject
     AuthentificationProducer authentificationProducer;
-    
-     // <editor-fold defaultstate="collapsed" desc=" set/get)">
-    
-    
+// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc=" set/get)">
     public Exception getException() {
         return exception;
     }
@@ -50,7 +48,7 @@ public class PingServices implements Serializable {
     public void setException(Exception exception) {
         this.exception = exception;
     }
-    
+
 // </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="List<Applicative> findAll()">
@@ -69,9 +67,9 @@ public class PingServices implements Serializable {
 
         } catch (Exception e) {
             
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("findAll()" + e.getLocalizedMessage());
+               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+             
+             
         }
         return applicativeList;
     }

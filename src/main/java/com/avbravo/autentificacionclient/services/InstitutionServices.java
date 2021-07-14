@@ -32,21 +32,21 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 public class InstitutionServices implements Serializable {
-        String directoryLogger = JmoordbUtil.isLinux() ? JmoordbUtil.userHome() + JmoordbUtil.fileSeparator() + "autentificacionclient" + JmoordbUtil.fileSeparator() + "logs" + JmoordbUtil.fileSeparator() + "logger.json" : "C:\\autentificacionclient\\logs\\logger.json";
-    private static final String PASS = "pass";
-    private static final String FAIL = "fail";
-    private static final String SUCCESS_RESULT = "<result>success</result>";
-  Exception exception;
-  
+     // <editor-fold defaultstate="collapsed" desc="fields ">
+
+    Exception exception;
+// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="@Inject">
+    @Inject
+    LoggerServices loggerServices;
     @Inject
     MicroservicesProducer microservicesProducer;
 
     @Inject
     AuthentificationProducer authentificationProducer;
-    
-     // <editor-fold defaultstate="collapsed" desc=" set/get)">
-    
-    
+// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc=" set/get)">
     public Exception getException() {
         return exception;
     }
@@ -54,7 +54,7 @@ public class InstitutionServices implements Serializable {
     public void setException(Exception exception) {
         this.exception = exception;
     }
-    
+
 // </editor-fold>
     
     
@@ -74,8 +74,8 @@ public class InstitutionServices implements Serializable {
             institutionList = target.request(MediaType.APPLICATION_JSON).get(data);
 
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-         //     JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+         //      
         }
         return institutionList;
     }
@@ -92,17 +92,17 @@ public class InstitutionServices implements Serializable {
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.post(Entity.entity(institution, MediaType.APPLICATION_JSON));
 
-            System.out.println(response.getStatus());
+             
             if (response.getStatus() == 400) {
                  exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-            System.out.println(response.readEntity(String.class
-            ));
+             
+       
             return true;
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-       //    JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+       //     
         }
         return false;
     }
@@ -119,18 +119,18 @@ public class InstitutionServices implements Serializable {
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.put(Entity.entity(institution, MediaType.APPLICATION_JSON));
 
-            System.out.println(response.getStatus());
+             
             if (response.getStatus() == 400) {
                  exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-            System.out.println(response.readEntity(String.class
-            ));
+             
+       
             return true;
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
             
-            System.out.println("errort" + e.getLocalizedMessage());
+             
         }
         return false;
     }
@@ -147,18 +147,18 @@ public class InstitutionServices implements Serializable {
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.post(Entity.entity(institution, MediaType.APPLICATION_JSON));
 
-            System.out.println(response.getStatus());
+             
             if (response.getStatus() == 400) {
                  exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-            System.out.println(response.readEntity(String.class
-            ));
+             
+           
             return true;
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-          //  JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("errort" + e.getLocalizedMessage());
+               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+          //   
+             
         }
         return false;
     }
@@ -190,9 +190,8 @@ public class InstitutionServices implements Serializable {
             return Optional.of(institution);
             //String result = FAIL;
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
- //           JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("findByidinstitution() " + e.getLocalizedMessage());
+               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+
         }
         return Optional.empty();
     }
@@ -217,10 +216,10 @@ public class InstitutionServices implements Serializable {
                     });
 
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-//            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("complete() " + e.getLocalizedMessage());
-            JmoordbUtil.errorDialog("complete()", e.getLocalizedMessage());
+               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+//             
+             
+             
         }
 
         return suggestions;
@@ -250,10 +249,10 @@ public class InstitutionServices implements Serializable {
                     });
 
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println(JmoordbUtil.nameOfMethod()+ e.getLocalizedMessage());
-            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+             
+   
+             
         }
 
         return suggestions;
@@ -277,10 +276,10 @@ public class InstitutionServices implements Serializable {
                     .get(new GenericType<List<Institution>>() {
                     });
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("lisfOfPage() " + e.getLocalizedMessage());
-            JmoordbUtil.errorDialog("lisfOfPage()", e.getLocalizedMessage());
+               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+             
+             
+             
         }
 
         return suggestions;
@@ -321,10 +320,10 @@ public class InstitutionServices implements Serializable {
             }
 
         } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+             
+             
+             
         }
 
         return total;
