@@ -5,6 +5,7 @@
  */
 package com.avbravo.autentificacionclient.producer;
 
+import com.avbravo.autentificacionclient.services.LoggerServices;
 import com.avbravo.jmoordb.util.JmoordbUtil;
 import static com.avbravo.jmoordb.util.JmoordbUtil.isLinux;
 import java.io.InputStream;
@@ -26,10 +27,16 @@ import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 @Named
 @ApplicationScoped
 public class AuthentificationProducer implements Serializable {
-
-    String directoryLogger = isLinux() ? JmoordbUtil.userHome() + JmoordbUtil.fileSeparator() + "autentificacionclient" + JmoordbUtil.fileSeparator() + "logs" + JmoordbUtil.fileSeparator() + "logger.json" : "C:\\auctentifcacionclient\\logs\\logger.json";
-    String userAutentification;
+     // <editor-fold defaultstate="collapsed" desc="@Inject">
+ @Inject
+    LoggerServices loggerServices;
+ // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="fields ">
+  Exception exception;
+     String userAutentification;
     String passwordAutentification;
+// </editor-fold>
+
     // <editor-fold defaultstate="collapsed" desc="Microprofile Config">
     @Inject
     private Config config;
@@ -84,9 +91,9 @@ public class AuthentificationProducer implements Serializable {
             httpAuthenticationFeature = HttpAuthenticationFeature.basic(userAutentification,  passwordAutentification);
 
         } catch (Exception e) {
-           JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            
  
-   JmoordbUtil.errorMessage("HttpAuthenticationFeature () " + e.getLocalizedMessage());
+  exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,true);
         }
 
         return httpAuthenticationFeature;

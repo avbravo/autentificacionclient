@@ -62,7 +62,7 @@ public class MicroservicesProducer implements Serializable {
 
             }
         } catch (Exception e) {
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+             
             JmoordbUtil.errorMessage("microservicesHost() " + e.getLocalizedMessage());
         }
         return url;
