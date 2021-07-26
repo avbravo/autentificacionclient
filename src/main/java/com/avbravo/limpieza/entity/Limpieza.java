@@ -10,6 +10,7 @@ import com.avbravo.jmoordb.anotations.Id;
 import com.avbravo.jmoordb.anotations.Ignore;
 import com.avbravo.jmoordb.anotations.Referenced;
 import java.util.Date;
+import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
  *
@@ -133,6 +134,28 @@ public class Limpieza {
     }
 
     
+     @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Limpieza)) {
+            return false;
+        }
+        Limpieza other = (Limpieza) object;
+        if ((this.idlimpieza == null && other.idlimpieza!= null) || (this.idlimpieza!= null && !this.idlimpieza.equals(other.idlimpieza))) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean equalsReflection(Object object) {
+        if (!(object instanceof Limpieza)) {
+            return false;
+        }
+       Limpieza other = (Limpieza) object;
+        if ((this.idlimpieza == null && other.idlimpieza!= null) || (this.idlimpieza!= null && !this.idlimpieza.equals(other.idlimpieza))) {
+            return false;
+        }
+        return EqualsBuilder.reflectionEquals(this, object);
+    }
     
     
 }
