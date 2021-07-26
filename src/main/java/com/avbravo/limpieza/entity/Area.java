@@ -6,6 +6,7 @@
 package com.avbravo.limpieza.entity;
 
 import com.avbravo.jmoordb.anotations.Id;
+import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
  *
@@ -60,6 +61,28 @@ public class Area {
         this.active = active;
     }
     
+     @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Area)) {
+            return false;
+        }
+        Area other = (Area) object;
+        if ((this.idarea == null && other.idarea!= null) || (this.idarea!= null && !this.idarea.equals(other.idarea))) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean equalsReflection(Object object) {
+        if (!(object instanceof Area)) {
+            return false;
+        }
+        Area other = (Area) object;
+        if ((this.idarea == null && other.idarea != null) || (this.idarea!= null && !this.idarea.equals(other.idarea))) {
+            return false;
+        }
+        return EqualsBuilder.reflectionEquals(this, object);
+    }
     
     
     
