@@ -99,7 +99,7 @@ public class ColegioServices implements Serializable {
                  exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-             
+         colegio.setIdcolegio(Integer.parseInt(response.readEntity(String.class)));
           
             return true;
         } catch (Exception e) {

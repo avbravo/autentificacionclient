@@ -97,7 +97,7 @@ public class DepartamentServices implements Serializable {
                  exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-             
+              departament.setIddepartament(Integer.parseInt(response.readEntity(String.class)));
        
             return true;
         } catch (Exception e) { 

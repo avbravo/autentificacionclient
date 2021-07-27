@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.avbravo.autentificacionclient.services;
+package com.avbravo.limpieza.services;
 
+import com.avbravo.siuclient.services.*;
+import com.avbravo.autentificacionclient.services.*;
 import com.avbravo.autentificacionclient.entity.History;
 import com.avbravo.autentificacionclient.producer.AuthentificationProducer;
 import com.avbravo.autentificacionclient.producer.MicroservicesProducer;
@@ -32,9 +34,9 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 @LocalBean
-public class HistoryServices implements Serializable {
+public class HistoryLimpiezaServices implements Serializable {
 
-  // <editor-fold defaultstate="collapsed" desc="fields ">
+      // <editor-fold defaultstate="collapsed" desc="fields ">
 
     Exception exception;
 // </editor-fold>
@@ -65,7 +67,7 @@ public class HistoryServices implements Serializable {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
-            WebTarget target = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/history/findall");
+            WebTarget target = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/historylimpieza/findall");
 
             GenericType<List<History>> data = new GenericType<List<History>>() {
             };
@@ -87,7 +89,7 @@ public class HistoryServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/history/add");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/historylimpieza/add");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.post(Entity.entity(history, MediaType.APPLICATION_JSON));
@@ -97,8 +99,8 @@ public class HistoryServices implements Serializable {
                  exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-              history.setIdhistory(Integer.parseInt(response.readEntity(String.class)));
-        
+                history.setIdhistory(Integer.parseInt(response.readEntity(String.class)));
+           
             return true;
         } catch (Exception e) {
                exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
@@ -115,7 +117,7 @@ public class HistoryServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/history/update");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/historylimpieza/update");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.put(Entity.entity(history, MediaType.APPLICATION_JSON));
@@ -126,7 +128,7 @@ public class HistoryServices implements Serializable {
                 return false;
             }
              
-         
+            
             return true;
         } catch (Exception e) {
                exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
@@ -143,7 +145,7 @@ public class HistoryServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/history/delete");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/historylimpieza/delete");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.post(Entity.entity(history, MediaType.APPLICATION_JSON));
@@ -154,7 +156,7 @@ public class HistoryServices implements Serializable {
                 return false;
             }
              
-          
+         
             return true;
         } catch (Exception e) {
                exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
@@ -179,7 +181,7 @@ public class HistoryServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             history = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/history/search/")
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/historylimpieza/search/")
                     .path("/{idhistory}")
                     .resolveTemplate("idhistory", idhistory)
                     .request(MediaType.APPLICATION_JSON)
@@ -193,7 +195,7 @@ public class HistoryServices implements Serializable {
         } catch (Exception e) {
                exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
              
-       
+    
         }
         return Optional.empty();
     }
@@ -210,7 +212,7 @@ public class HistoryServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/history/autocomplete/")
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/historylimpieza/autocomplete/")
                     .path("/{query}")
                     .resolveTemplate("query", query)
                     .request(MediaType.APPLICATION_JSON)
@@ -241,7 +243,7 @@ public class HistoryServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/history/jsonquery/")                    
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/historylimpieza/jsonquery/")                    
                     .queryParam("query", JmoordbDocument.encodeJson(query))
                     .queryParam("sort",JmoordbDocument.encodeJson(sort))
                     .queryParam("pagenumber", pageNumber)
@@ -252,7 +254,8 @@ public class HistoryServices implements Serializable {
 
         } catch (Exception e) {
                exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-
+             
+         
              
         }
 
@@ -269,7 +272,7 @@ public class HistoryServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/history/jsonquerywithoutpagination/")                    
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/historylimpieza/jsonquerywithoutpagination/")                    
                  .queryParam("query", JmoordbDocument.encodeJson(query))
                     .queryParam("sort",JmoordbDocument.encodeJson(sort))
                   
@@ -305,7 +308,7 @@ public class HistoryServices implements Serializable {
             client.register(authentificationProducer.httpAuthenticationFeature());
 
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/history/countjsonquery")
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/historylimpieza/countjsonquery")
                              .queryParam("query", JmoordbDocument.encodeJson(query));
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);

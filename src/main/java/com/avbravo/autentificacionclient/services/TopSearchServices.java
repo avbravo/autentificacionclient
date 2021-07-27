@@ -95,7 +95,7 @@ public class TopSearchServices implements Serializable {
                  exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-
+ topsearch.setIdtopsearch(Integer.parseInt(response.readEntity(String.class)));
             return true;
         } catch (Exception e) {
                exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);

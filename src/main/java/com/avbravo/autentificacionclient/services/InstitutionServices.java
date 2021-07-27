@@ -98,7 +98,7 @@ public class InstitutionServices implements Serializable {
                 return false;
             }
              
-       
+     institution.setIdinstitution(Integer.parseInt(response.readEntity(String.class)));
             return true;
         } catch (Exception e) {
                exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);

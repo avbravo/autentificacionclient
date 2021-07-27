@@ -111,7 +111,7 @@ public class NotificationsSiuInscripcionServices implements Serializable {
                 exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-
+   notifications.setIdnotifications(Integer.parseInt(response.readEntity(String.class)));
             return true;
         } catch (Exception e) {
                exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);

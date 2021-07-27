@@ -10,6 +10,7 @@ import com.avbravo.jmoordb.anotations.Id;
 import com.avbravo.jmoordb.anotations.Ignore;
 import com.avbravo.jmoordb.anotations.Referenced;
 import java.util.Date;
+import java.util.List;
 import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
@@ -26,32 +27,41 @@ public class Limpieza {
             repository = "com.avbravo.autentificacion.limpieza.repository.AreaRepository")
     private Area area;
     @Referenced(collection = "User",
-            field = "idarea", javatype = "Integer", lazy = false,
+            field = "iduser", javatype = "Integer", lazy = false,
             repository = "com.avbravo.autentificacion.repository.UserRepository")
-    private User user;
+    private List<User> user;
     private String observacion;
     private Date fechahorasupervision;
-    private String usernamesupervisor;
-    @Ignore
-    private User supervisor;
     private String observacionsupervisor;
+    private Boolean supervisado;
     private Boolean active;
 
     public Limpieza() {
     }
 
-    public Limpieza(Integer idlimpieza, Date fechahora, Area area, User user, String observacion, Date fechahorasupervision, String usernamesupervisor, User supervisor, String observacionsupervisor, Boolean active) {
+    public Limpieza(Integer idlimpieza, Date fechahora, Area area, List<User> user, String observacion, Date fechahorasupervision, String observacionsupervisor, Boolean supervisado, Boolean active) {
         this.idlimpieza = idlimpieza;
         this.fechahora = fechahora;
         this.area = area;
         this.user = user;
         this.observacion = observacion;
         this.fechahorasupervision = fechahorasupervision;
-        this.usernamesupervisor = usernamesupervisor;
-        this.supervisor = supervisor;
         this.observacionsupervisor = observacionsupervisor;
+        this.supervisado = supervisado;
         this.active = active;
     }
+
+    
+    
+    public Boolean getSupervisado() {
+        return supervisado;
+    }
+
+    public void setSupervisado(Boolean supervisado) {
+        this.supervisado = supervisado;
+    }
+
+    
 
     public Integer getIdlimpieza() {
         return idlimpieza;
@@ -77,11 +87,11 @@ public class Limpieza {
         this.area = area;
     }
 
-    public User getUser() {
+    public List<User> getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(List<User> user) {
         this.user = user;
     }
 
@@ -101,22 +111,6 @@ public class Limpieza {
         this.fechahorasupervision = fechahorasupervision;
     }
 
-    public String getUsernamesupervisor() {
-        return usernamesupervisor;
-    }
-
-    public void setUsernamesupervisor(String usernamesupervisor) {
-        this.usernamesupervisor = usernamesupervisor;
-    }
-
-    public User getSupervisor() {
-        return supervisor;
-    }
-
-    public void setSupervisor(User supervisor) {
-        this.supervisor = supervisor;
-    }
-
     public String getObservacionsupervisor() {
         return observacionsupervisor;
     }
@@ -133,8 +127,9 @@ public class Limpieza {
         this.active = active;
     }
 
-    
-     @Override
+   
+   
+      @Override
     public boolean equals(Object object) {
         if (!(object instanceof Limpieza)) {
             return false;
@@ -156,6 +151,7 @@ public class Limpieza {
         }
         return EqualsBuilder.reflectionEquals(this, object);
     }
+    
     
     
 }

@@ -99,7 +99,7 @@ public class ProvinceServices implements Serializable {
                 return false;
             }
              
-         
+          province.setIdprovince(Integer.parseInt(response.readEntity(String.class)));
             return true;
         } catch (Exception e) {
                exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);

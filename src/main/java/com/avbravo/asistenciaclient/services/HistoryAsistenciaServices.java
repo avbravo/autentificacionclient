@@ -97,7 +97,7 @@ public class HistoryAsistenciaServices implements Serializable {
                  exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-             
+             history.setIdhistory(Integer.parseInt(response.readEntity(String.class)));
        
             return true;
         } catch (Exception e) {

@@ -99,7 +99,8 @@ public class AreaServices implements Serializable {
                  exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-             
+              area.setIdarea(Integer.parseInt(response.readEntity(String.class)));
+            
           
             return true;
         } catch (Exception e) {

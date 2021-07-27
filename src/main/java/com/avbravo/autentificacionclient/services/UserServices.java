@@ -96,7 +96,7 @@ public class UserServices implements Serializable {
                 return false;
             }
              
-           
+            user.setIduser(Integer.parseInt(response.readEntity(String.class)));
             return true;
         } catch (Exception e) {
             exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
