@@ -99,7 +99,7 @@ public class ReportesiuServices implements Serializable {
                  exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-             
+              reportesiu.setIdreportesiu(Integer.parseInt(response.readEntity(String.class)));
           
             return true;
         } catch (Exception e) {

@@ -96,7 +96,7 @@ public class RoleServices implements Serializable {
                  exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-             
+       role.setIdrole(Integer.parseInt(response.readEntity(String.class)));
            
             return true;
         } catch (Exception e) {

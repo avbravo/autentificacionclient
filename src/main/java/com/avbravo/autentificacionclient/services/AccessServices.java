@@ -97,7 +97,7 @@ public class AccessServices implements Serializable {
                  exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-
+ access.setIdaccess(Integer.parseInt(response.readEntity(String.class)));
             return true;
         } catch (Exception e) {
                exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);

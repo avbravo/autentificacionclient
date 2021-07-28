@@ -98,7 +98,7 @@ public class ProfileServices implements Serializable {
                 return false;
             }
              
-       
+       profile.setIdprofile(Integer.parseInt(response.readEntity(String.class)));
             return true;
         } catch (Exception e) {
                exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);

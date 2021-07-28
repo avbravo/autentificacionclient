@@ -103,7 +103,7 @@ public class EmailConfigurationServices implements Serializable {
             
                 return false;
             }
-
+ emailConfiguration.setIdEmailConfiguration(Integer.parseInt(response.readEntity(String.class)));
             return true;
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
