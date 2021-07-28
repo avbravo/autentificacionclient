@@ -90,7 +90,7 @@ public class BoletasServices implements Serializable {
                 //JmoordbUtil.e
                 return false;
             }
-
+boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
             return true;
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());

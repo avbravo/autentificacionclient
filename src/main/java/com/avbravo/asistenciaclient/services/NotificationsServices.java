@@ -89,7 +89,7 @@ public class NotificationsServices implements Serializable {
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Boolean add(Notifications notificationsboletas)">
-    public Boolean add(Notifications notificationsboletas) {
+    public Boolean add(Notifications notifications) {
         try {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
@@ -97,15 +97,14 @@ public class NotificationsServices implements Serializable {
                     = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationsasistencia/add");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.post(Entity.entity(notificationsboletas, MediaType.APPLICATION_JSON));
+            Response response = invocationBuilder.post(Entity.entity(notifications, MediaType.APPLICATION_JSON));
 
-            System.out.println(response.getStatus());
+          
             if (response.getStatus() == 400) {
                 exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-//            System.out.println(response.readEntity(String.class
-//            ));
+notifications.setIdnotifications(Integer.parseInt(response.readEntity(String.class)));
             return true;
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());

@@ -93,13 +93,12 @@ public class ProfileServices implements Serializable {
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.post(Entity.entity(profile, MediaType.APPLICATION_JSON));
 
-            System.out.println(response.getStatus());
+           
             if (response.getStatus() == 400) {
                  exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-            System.out.println(response.readEntity(String.class
-            ));
+           profile.setIdprofile(Integer.parseInt(response.readEntity(String.class)));
             return true;
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
