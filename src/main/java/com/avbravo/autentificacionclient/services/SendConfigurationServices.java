@@ -3,27 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.avbravo.asistenciaclient.services;
-// <editor-fold defaultstate="collapsed" desc="import">
+package com.avbravo.autentificacionclient.services;
 
-import com.avbravo.asistenciaclient.entity.Boletas;
-import com.avbravo.autentificacionclient.entity.Notifications;
+import com.avbravo.autentificacionclient.entity.Profile;
+import com.avbravo.autentificacionclient.entity.SendConfiguration;
 import com.avbravo.autentificacionclient.entity.User;
 import com.avbravo.autentificacionclient.producer.AuthentificationProducer;
 import com.avbravo.autentificacionclient.producer.MicroservicesProducer;
-import com.avbravo.autentificacionclient.services.UserServices;
-import com.avbravo.jmoordb.util.JmoordbDateUtil;
 import com.avbravo.jmoordb.util.JmoordbDocument;
 import com.avbravo.jmoordb.util.JmoordbUtil;
-import java.util.Date;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import java.util.Optional;
 import javax.ejb.Stateless;
+import javax.ejb.LocalBean;
 import javax.inject.Inject;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -32,28 +28,30 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-// </editor-fold>
 
 /**
  *
  * @author avbravo
  */
 @Stateless
-public class NotificationsServices implements Serializable {
+@LocalBean
+public class SendConfigurationServices implements Serializable {
 
+    // Add business logic below. (Right-click in editor and choose
+    // "Insert Code > Add Business Method")
+    // <editor-fold defaultstate="collapsed" desc="field()">
     String directoryLogger = JmoordbUtil.isLinux() ? JmoordbUtil.userHome() + JmoordbUtil.fileSeparator() + "autentificacionclient" + JmoordbUtil.fileSeparator() + "logs" + JmoordbUtil.fileSeparator() + "logger.json" : "C:\\autentificacionclient\\logs\\logger.json";
     private static final String PASS = "pass";
     private static final String FAIL = "fail";
     private static final String SUCCESS_RESULT = "<result>success</result>";
     Exception exception;
- Boolean found =false;
+
     @Inject
     MicroservicesProducer microservicesProducer;
 
     @Inject
     AuthentificationProducer authentificationProducer;
-    @Inject
-    UserServices userServices;
+    // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc=" set/get)">
 
     public Exception getException() {
@@ -65,46 +63,45 @@ public class NotificationsServices implements Serializable {
     }
 
 // </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="List<Notifications> findAll()">
-    public List<Notifications> findAll() {
-        List<Notifications> notificationsboletasList = new ArrayList<>();
+// <editor-fold defaultstate="collapsed" desc="List<SendConfiguration> findAll()">
+    public List<SendConfiguration> findAll() {
+        List<SendConfiguration> sendConfigurationList = new ArrayList<>();
         try {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
-            WebTarget target = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationsasistencia/findall");
+            WebTarget target = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/sendConfiguration/findall");
 
-            GenericType<List<Notifications>> data = new GenericType<List<Notifications>>() {
+            GenericType<List<SendConfiguration>> data = new GenericType<List<SendConfiguration>>() {
             };
 
-            notificationsboletasList = target.request(MediaType.APPLICATION_JSON).get(data);
+            sendConfigurationList = target.request(MediaType.APPLICATION_JSON).get(data);
 
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
             System.out.println("findAll()" + e.getLocalizedMessage());
         }
-        return notificationsboletasList;
+        return sendConfigurationList;
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Boolean add(Notifications notificationsboletas)">
-    public Boolean add(Notifications notifications) {
+    // <editor-fold defaultstate="collapsed" desc="Boolean add(SendConfiguration sendConfiguration)">
+    public Boolean add(SendConfiguration sendConfiguration) {
         try {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationsasistencia/add");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/sendConfiguration/add");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.post(Entity.entity(notifications, MediaType.APPLICATION_JSON));
+            Response response = invocationBuilder.post(Entity.entity(sendConfiguration, MediaType.APPLICATION_JSON));
 
-          
             if (response.getStatus() == 400) {
                 exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-notifications.setIdnotifications(Integer.parseInt(response.readEntity(String.class)));
+            sendConfiguration.setIdsendconfiguration(Integer.parseInt(response.readEntity(String.class)));
             return true;
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
@@ -115,24 +112,24 @@ notifications.setIdnotifications(Integer.parseInt(response.readEntity(String.cla
     }
 // </editor-fold>
 
-// <editor-fold defaultstate="collapsed" desc="Boolean update(Notifications notificationsboletas)">
-    public Boolean update(Notifications notificationsboletas) {
+// <editor-fold defaultstate="collapsed" desc="Boolean update(SendConfiguration sendConfiguration)">
+    public Boolean update(SendConfiguration sendConfiguration) {
         try {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationsasistencia/update");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/sendConfiguration/update");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.put(Entity.entity(notificationsboletas, MediaType.APPLICATION_JSON));
+            Response response = invocationBuilder.put(Entity.entity(sendConfiguration, MediaType.APPLICATION_JSON));
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
                 exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-//            System.out.println(response.readEntity(String.class
-//            ));
+            System.out.println(response.readEntity(String.class
+            ));
             return true;
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
@@ -142,17 +139,17 @@ notifications.setIdnotifications(Integer.parseInt(response.readEntity(String.cla
         return false;
     }
 // </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="Boolean delete(Notifications notificationsboletas)">
+// <editor-fold defaultstate="collapsed" desc="Boolean delete(SendConfiguration sendConfiguration)">
 
-    public Boolean delete(Notifications notificationsboletas) {
+    public Boolean delete(SendConfiguration sendConfiguration) {
         try {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationsasistencia/delete");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/sendConfiguration/delete");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.post(Entity.entity(notificationsboletas, MediaType.APPLICATION_JSON));
+            Response response = invocationBuilder.post(Entity.entity(sendConfiguration, MediaType.APPLICATION_JSON));
 
             System.out.println(response.getStatus());
             if (response.getStatus() == 400) {
@@ -171,43 +168,43 @@ notifications.setIdnotifications(Integer.parseInt(response.readEntity(String.cla
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Notifications findByNotifications(Integer idnotificationsboletas) ">
+    // <editor-fold defaultstate="collapsed" desc="Optional<SendConfiguration> findBySendConfiguration(Integer idsendConfiguration) ">
     /**
      * consulta por codigo_pedido impresa
      *
      * @param codigo_
      * @return
      */
-    public Optional<Notifications> findByIdnotificationsboletas(Integer idnotificationsboletas) {
-        Notifications notifications = new Notifications();
+    public Optional<SendConfiguration> findByIdsendConfiguration(Integer idsendConfiguration) {
+        SendConfiguration sendConfiguration = new SendConfiguration();
         try {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
-            notifications = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationsasistencia/search/")
-                    .path("/{idnotificationsboletas}")
-                    .resolveTemplate("idnotificationsboletas", idnotificationsboletas)
+            sendConfiguration = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/sendConfiguration/search/")
+                    .path("/{idsendConfiguration}")
+                    .resolveTemplate("idsendConfiguration", idsendConfiguration)
                     .request(MediaType.APPLICATION_JSON)
-                    .get(Notifications.class
+                    .get(SendConfiguration.class
                     );
-            if (notifications == null || notifications.getIdnotifications() == null) {
+            if (sendConfiguration == null || sendConfiguration.getIdsendconfiguration() == null || sendConfiguration.getModule() == null) {
                 return Optional.empty();
             }
-            return Optional.of(notifications);
+            return Optional.of(sendConfiguration);
             //String result = FAIL;
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("findByidnotificationsboletas() " + e.getLocalizedMessage());
+            System.out.println("findByIdapplicativ() " + e.getLocalizedMessage());
         }
         return Optional.empty();
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="List<Notifications> complete( String query)">
-    public List<Notifications> complete(String query) {
-        List<Notifications> suggestions = new ArrayList<>();
+    // <editor-fold defaultstate="collapsed" desc="List<SendConfiguration> complete( String query)">
+    public List<SendConfiguration> complete(String query) {
+        List<SendConfiguration> suggestions = new ArrayList<>();
         try {
 
             if (query == null || query.isEmpty()) {
@@ -216,11 +213,11 @@ notifications.setIdnotifications(Integer.parseInt(response.readEntity(String.cla
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationsasistencia/autocomplete/")
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/sendConfiguration/autocomplete/")
                     .path("/{query}")
                     .resolveTemplate("query", query)
                     .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<Notifications>>() {
+                    .get(new GenericType<List<SendConfiguration>>() {
                     });
 
         } catch (Exception e) {
@@ -234,22 +231,22 @@ notifications.setIdnotifications(Integer.parseInt(response.readEntity(String.cla
     }
     // </editor-fold>
 
-// <editor-fold defaultstate="collapsed" desc=" List<Notifications> jsonQuery(@QueryParam("query") String query , @QueryParam("sort") String sort, @QueryParam("pagenumber") Integer pageNumber, @QueryParam("rowforpage") Integer rowForPage )">
-    public List<Notifications> jsonQuery(String query, String sort,
+// <editor-fold defaultstate="collapsed" desc=" List<SendConfiguration> jsonQuery(@QueryParam("query") String query , @QueryParam("sort") String sort, @QueryParam("pagenumber") Integer pageNumber, @QueryParam("rowforpage") Integer rowForPage )">
+    public List<SendConfiguration> jsonQuery(String query, String sort,
             Integer pageNumber, Integer rowForPage) {
-        List<Notifications> suggestions = new ArrayList<>();
+        List<SendConfiguration> suggestions = new ArrayList<>();
         try {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationsasistencia/jsonquery/")
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/sendConfiguration/jsonquery/")
                     .queryParam("query", JmoordbDocument.encodeJson(query))
                     .queryParam("sort", JmoordbDocument.encodeJson(sort))
                     .queryParam("pagenumber", pageNumber)
                     .queryParam("rowforpage", rowForPage)
                     .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<Notifications>>() {
+                    .get(new GenericType<List<SendConfiguration>>() {
                     });
 
         } catch (Exception e) {
@@ -263,19 +260,19 @@ notifications.setIdnotifications(Integer.parseInt(response.readEntity(String.cla
     }
     // </editor-fold>   
 
-    // <editor-fold defaultstate="collapsed" desc=" List<Notifications> jsonQueryWithoutPagination( @QueryParam("query") String query , @QueryParam("sort") String sort  ){">
-    public List<Notifications> jsonQueryWithoutPagination(String query, String sort) {
-        List<Notifications> suggestions = new ArrayList<>();
+    // <editor-fold defaultstate="collapsed" desc=" List<SendConfiguration> jsonQueryWithoutPagination( @QueryParam("query") String query , @QueryParam("sort") String sort  ){">
+    public List<SendConfiguration> jsonQueryWithoutPagination(String query, String sort) {
+        List<SendConfiguration> suggestions = new ArrayList<>();
         try {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationsasistencia/jsonquerywithoutpagination/")
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/sendConfiguration/jsonquerywithoutpagination/")
                     .queryParam("query", JmoordbDocument.encodeJson(query))
                     .queryParam("sort", JmoordbDocument.encodeJson(sort))
                     .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<Notifications>>() {
+                    .get(new GenericType<List<SendConfiguration>>() {
                     });
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
@@ -303,7 +300,7 @@ notifications.setIdnotifications(Integer.parseInt(response.readEntity(String.cla
             client.register(authentificationProducer.httpAuthenticationFeature());
 
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/notificationsasistencia/countjsonquery")
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/sendConfiguration/countjsonquery")
                             .queryParam("query", JmoordbDocument.encodeJson(query));
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
@@ -329,30 +326,66 @@ notifications.setIdnotifications(Integer.parseInt(response.readEntity(String.cla
     }
     // </editor-fold>
 
-    
-   
-
-    // <editor-fold defaultstate="collapsed" desc="String showDate(Date date)">
-    public String showDate(Date date) {
-        String h = "";
+    // <editor-fold defaultstate="collapsed" desc="List<Profile> findbyApplicativeModuleEventActiveDepartament(Integer idapplicative, String module, String event, Integer iddepartamentLogged, Boolean... active)" >
+    /**
+     * Busca los usuarios que sean autoridad (isauthority = true o que no sean
+     * autoridad isauthority = false) Recuerde que es una lista embebida de
+     * muchos roles
+     *
+     */
+    /**
+     * 
+     * @param idapplicative
+     * @param module
+     * @param event
+     * @param iddepartamentLoged : Cuando el profile tiene 0 en el campo iddepartamento se reemplaza con el iddepartamentlogged
+     * @param active
+     * @return 
+     */
+    public List<Profile> findbyApplicativeModuleEventActiveDepartament(Integer idapplicative, String module, String event, Integer iddepartamentLogged, Boolean... active) {
+        List<Profile> suggestions = new ArrayList<>();
         try {
-            h = JmoordbDateUtil.dateFormatToString(date, "dd/MM/yyyy");
+            Boolean activeValue = true;
+            if (active.length != 0) {
+                activeValue = active[0];
+
+            }
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/sendconfiguration/findbyapplicativemoduleeventactive/")
+                    .queryParam("idapplicative", idapplicative)
+                    .queryParam("module", module)
+                    .queryParam("event", event)
+                    .queryParam("active", activeValue)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<Profile>>() {
+                    });
+
+            
+            if(suggestions != null && !suggestions.isEmpty()){
+                /**
+                 * Reemplazar el iddepartament 0 por el iddepartamentLogged que es el envio desde el controller actual
+                 */
+                Integer count=0;
+                System.out.println("++++++++++++++++++++++++++ VERIFICANDO EL IDDEPARTAMEMTO.....");
+                for(Profile p:suggestions){
+                    
+                    if(p.getIddepartament().equals(0)){
+                        System.out.println("---- cambiando "+p.getIddepartament() +   " por "+iddepartamentLogged);
+                        suggestions.get(count).setIddepartament(iddepartamentLogged);
+                    }
+                    count++;
+                }
+            }
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.errorMessage("showDate() " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println(JmoordbUtil.nameOfMethod() + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
         }
-        return h;
-    }// </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="String showHour(Date date)">
 
-    public String showHour(Date date) {
-        String h = "";
-        try {
-            h = JmoordbDateUtil.hourFromDateToString(date);
-        } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.errorMessage("showHour() " + e.getLocalizedMessage());
-        }
-        return h;
-    }// </editor-fold>
+        return suggestions;
+    }
+    // </editor-fold>
 }

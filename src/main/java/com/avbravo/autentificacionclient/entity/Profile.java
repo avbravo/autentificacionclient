@@ -54,6 +54,13 @@ public class Profile {
         this.departament = perfil.departament;
     }
 
+    public Profile(Integer idapplicative, Integer idrole, Integer iddepartament, Boolean active) {
+        this.idapplicative = idapplicative;
+        this.idrole = idrole;
+        this.iddepartament = iddepartament;
+        this.active = active;
+    }
+
  
 
     public Integer getIdprofile() {

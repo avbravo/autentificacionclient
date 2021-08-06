@@ -100,42 +100,42 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
         return false;
     }
 // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="Boolean addReturnid(Boletas boletas)">
-    /**
-     * Retorna el id de la boleta creada, ya que es un autoincrementable
-     * @param boletas
-     * @return 
-     */
-    public Integer addReturnid(Boletas boletas) {
-        Integer id =0;
-        try {
-            Client client = ClientBuilder.newClient();
-            client.register(authentificationProducer.httpAuthenticationFeature());
-            WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/addreturnid");
-
-            Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.post(Entity.entity(boletas, MediaType.APPLICATION_JSON));
-
-              if (response.getStatus() == 201) {
-                id= Integer.parseInt(response.readEntity(String.class));
-
-            }
-            
-            if (response.getStatus() == 400) {
-                exception = new Exception(response.readEntity(String.class));
-                return 0;
-            }
-
-          
-        } catch (Exception e) {
-            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
-            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
-            System.out.println("errort" + e.getLocalizedMessage());
-        }
-        return id;
-    }
-// </editor-fold>
+//    // <editor-fold defaultstate="collapsed" desc="Boolean addReturnid(Boletas boletas)">
+//    /**
+//     * Retorna el id de la boleta creada, ya que es un autoincrementable
+//     * @param boletas
+//     * @return 
+//     */
+//    public Integer addReturnid(Boletas boletas) {
+//        Integer id =0;
+//        try {
+//            Client client = ClientBuilder.newClient();
+//            client.register(authentificationProducer.httpAuthenticationFeature());
+//            WebTarget webTarget
+//                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/addreturnid");
+//
+//            Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+//            Response response = invocationBuilder.post(Entity.entity(boletas, MediaType.APPLICATION_JSON));
+//
+//              if (response.getStatus() == 201) {
+//                id= Integer.parseInt(response.readEntity(String.class));
+//
+//            }
+//            
+//            if (response.getStatus() == 400) {
+//                exception = new Exception(response.readEntity(String.class));
+//                return 0;
+//            }
+//
+//          
+//        } catch (Exception e) {
+//            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+//            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+//            System.out.println("errort" + e.getLocalizedMessage());
+//        }
+//        return id;
+//    }
+//// </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="Boolean update(Boletas boletas)">
     public Boolean update(Boletas boletas) {
@@ -932,7 +932,68 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
     
     
     
-    
+    // <editor-fold defaultstate="collapsed" desc="String generateMessageForEmail(Boletas boletas, String header, String nameOfUser)">
+    /**
+     * Genera el mensaje que sera enviado en el correo
+     * @param boletas
+     * @param header
+     * @param nameOfUser
+     * @return 
+     */
+    public String generateMessageForEmail(Boletas boletas, String header, String nameOfUser){
+        String messages="";
+        try {
+         
+               messages     = "\n  "                    
+                    + "\n----------------------BOLETA---------------------------------------"
+                    + "\nBoleta #:"
+                    +boletas.getIdboleta()
+                    + "\nFecha : "
+                    + showDate(boletas.getFecha())
+                    + " "
+                    + showHour(boletas.getFecha())
+                    + "\nColaborador: "
+                    +boletas.getUser().getName()
+                    + "\nDepartamento: "
+                    +boletas.getDepartament().getDepartament()
+                    + "\nFecha inicial: "
+                    + showDate(boletas.getFechainicial())
+                    + " "
+                    + showHour(boletas.getFechainicial())
+                    + "\nFecha Final: "
+                    + showDate(boletas.getFechafinal())
+                    + " "
+                    + showHour(boletas.getFechafinal())
+                    + "\nObservaciones: "
+                    +boletas.getObservacion()
+                    + "\nTipo boleta: "
+                    +boletas.getTipoboleta()
+                    + "\nTipo justificacion: "
+                    +boletas.getTipojustificacon()
+                    + "\nVisto bueno jefe inmediato: "
+                    +boletas.getEstadounidad()
+                    + "\nVisto bueno Autoridad: "
+                    +boletas.getEstadoautoridad()
+                    + "\nComentario: "
+                    +boletas.getComentario()
+                      + "\n_____________________________________________"
+                     +"\n Evento: "
+                    + header
+                     +"\n Acción realizada por: "
+                    + nameOfUser
+                    + "\n\n\b"
+                    + "\nPor favor no responda este correo..."
+                    + "\n-------------------------------------------------------------";
+
+        } catch (Exception e) {
+          exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.appendTextToLogErrorFile(this.directoryLogger, JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e.getLocalizedMessage(), e);
+            System.out.println(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.errorDialog(JmoordbUtil.nameOfMethod(), e.getLocalizedMessage());
+        }
+        return messages;
+    }
+// </editor-fold>
     
     
 
