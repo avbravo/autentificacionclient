@@ -24,40 +24,20 @@ public class Role {
     private String role;
     private Boolean active;
 
-    private Boolean isauthority;
-    private Boolean ishumanresourcesauthority;
-
+ 
     public Role() {
     }
 
-    public Role(Integer idrole, String role, Boolean active, Boolean isauthority, Boolean ishumanresourcesauthority) {
+    public Role(Integer idrole, String role, Boolean active) {
         this.idrole = idrole;
         this.role = role;
         this.active = active;
-        this.isauthority = isauthority;
-        this.ishumanresourcesauthority = ishumanresourcesauthority;
     }
 
     
     
-    public Boolean getIshumanresourcesauthority() {
-        return ishumanresourcesauthority;
-    }
-
-    public void setIshumanresourcesauthority(Boolean ishumanresourcesauthority) {
-        this.ishumanresourcesauthority = ishumanresourcesauthority;
-    }
-
    
-    
-
-    public Boolean getIsauthority() {
-        return isauthority;
-    }
-
-    public void setIsauthority(Boolean isauthority) {
-        this.isauthority = isauthority;
-    }
+   
 
   
 

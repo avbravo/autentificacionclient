@@ -327,21 +327,21 @@ public class SendConfigurationServices implements Serializable {
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="List<Profile> findbyApplicativeModuleEventActiveDepartament(Integer idapplicative, String module, String event, Integer iddepartamentLogged, Boolean... active)" >
-    /**
-     * Busca los usuarios que sean autoridad (isauthority = true o que no sean
-     * autoridad isauthority = false) Recuerde que es una lista embebida de
-     * muchos roles
-     *
-     */
-    /**
-     * 
-     * @param idapplicative
-     * @param module
-     * @param event
-     * @param iddepartamentLoged : Cuando el profile tiene 0 en el campo iddepartamento se reemplaza con el iddepartamentlogged
-     * @param active
-     * @return 
-     */
+  /**
+   * 
+   * 
+   * @param idapplicative
+   * @param module
+   * @param event
+   * @param iddepartamentLogged
+  
+   * @param active
+   * @return List<Profile>
+   *                 departament:
+   *                            -1: No se toma en cuenta
+   *                             0: Se reemplaza por el valor pasado en iddepartamentLogged
+   *                            >0: Se usara este mismo valor que representa al departamento
+   */
     public List<Profile> findbyApplicativeModuleEventActiveDepartament(Integer idapplicative, String module, String event, Integer iddepartamentLogged, Boolean... active) {
         List<Profile> suggestions = new ArrayList<>();
         try {
@@ -367,12 +367,9 @@ public class SendConfigurationServices implements Serializable {
                 /**
                  * Reemplazar el iddepartament 0 por el iddepartamentLogged que es el envio desde el controller actual
                  */
-                Integer count=0;
-                System.out.println("++++++++++++++++++++++++++ VERIFICANDO EL IDDEPARTAMEMTO.....");
-                for(Profile p:suggestions){
-                    
-                    if(p.getIddepartament().equals(0)){
-                        System.out.println("---- cambiando "+p.getIddepartament() +   " por "+iddepartamentLogged);
+                Integer count=0;             
+                for(Profile p:suggestions){                    
+                    if(p.getIddepartament().equals(0)){             
                         suggestions.get(count).setIddepartament(iddepartamentLogged);
                     }
                     count++;
