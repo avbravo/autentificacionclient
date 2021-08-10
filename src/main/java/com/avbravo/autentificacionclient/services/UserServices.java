@@ -5,6 +5,7 @@
  */
 package com.avbravo.autentificacionclient.services;
 
+import com.avbravo.autentificacionclient.entity.Profile;
 import com.avbravo.autentificacionclient.entity.User;
 import com.avbravo.autentificacionclient.producer.AuthentificationProducer;
 import com.avbravo.autentificacionclient.producer.MicroservicesProducer;
@@ -25,6 +26,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.bson.Document;
 
 /**
  *
@@ -218,137 +220,7 @@ public class UserServices implements Serializable {
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="List<User> searchByIdDepartament(Integer iddepartament) ">
-    public List<User> searchByIdDepartament(Integer iddepartament) {
-        List<User> suggestions = new ArrayList<>();
-        try {
-
-            Client client = ClientBuilder.newClient();
-            client.register(authentificationProducer.httpAuthenticationFeature());
-            suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/searchbyiddepartament/")
-                    .path("/{iddepartament}")
-                    .resolveTemplate("iddepartament", iddepartament)
-                    .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<User>>() {
-                    });
-
-        } catch (Exception e) {
-            exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-        }
-
-        return suggestions;
-    }
-    // </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="List<User> searchJefeUnidadDelDepartament(Integer iddepartament) ">
-    public List<User> searchJefeUnidadDelDepartament(Integer iddepartament) {
-        List<User> suggestions = new ArrayList<>();
-        try {
-
-            Client client = ClientBuilder.newClient();
-            client.register(authentificationProducer.httpAuthenticationFeature());
-            suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/searchjefeunidadepartament/")
-                    .path("/{iddepartament}")
-                    .resolveTemplate("iddepartament", iddepartament)
-                    .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<User>>() {
-                    });
-
-        } catch (Exception e) {
-              exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-        }
-
-        return suggestions;
-    }
-    // </editor-fold>
-
-    // <editor-fold defaultstate="collapsed" desc="List<User>  searchAutoridad( Boolean isauthority)" >
-    /**
-     * Busca los usuarios que sean autoridad (isauthority = true o que no sean
-     * autoridad isauthority = false) Recuerde que es una lista embebida de
-     * muchos roles
-     *
-     */
-    public List<User> searchAutoridad(Boolean isauthority) {
-        List<User> suggestions = new ArrayList<>();
-        try {
-
-            Client client = ClientBuilder.newClient();
-            client.register(authentificationProducer.httpAuthenticationFeature());
-            suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/searchautoridad/")
-                    .path("/{isauthority}")
-                    .resolveTemplate("isauthority", isauthority)
-                    .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<User>>() {
-                    });
-
-        } catch (Exception e) {
-          exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-        }
-
-        return suggestions;
-    }
-    // </editor-fold>
-
-    // <editor-fold defaultstate="collapsed" desc="List<User>  searchAutoridad( Boolean isauthority)" >
-    /**
-     * Busca los usuarios que sean autoridad (isauthority = true o que no sean
-     * autoridad isauthority = false) Recuerde que es una lista embebida de
-     * muchos roles
-     *
-     */
-    public List<User> searchRecursosHumanos(Boolean ishumanresourcesauthority) {
-        List<User> suggestions = new ArrayList<>();
-        try {
-
-            Client client = ClientBuilder.newClient();
-            client.register(authentificationProducer.httpAuthenticationFeature());
-            suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/searchrecursoshumanos/")
-                    .path("/{ishumanresourcesauthority}")
-                    .resolveTemplate("ishumanresourcesauthority", ishumanresourcesauthority)
-                    .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<User>>() {
-                    });
-
-        } catch (Exception e) {
-           exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-        }
-
-        return suggestions;
-    }
-    // </editor-fold>
-
-    // <editor-fold defaultstate="collapsed" desc="List<User> findbyIdepartamentIdrol(Integer iddepartament ,Integer idrol )">
-    /**
-     *
-     * @param iddepartament
-     * @param idrol
-     * @return
-     */
-    public List<User> findbyIdepartamentIdrol(Integer iddepartament, Integer idrol) {
-        List<User> suggestions = new ArrayList<>();
-        try {
-
-            Client client = ClientBuilder.newClient();
-            client.register(authentificationProducer.httpAuthenticationFeature());
-            suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/findbyidepartamentandidrol/")
-                    .queryParam("iddepartament", iddepartament)
-                    .queryParam("idrol", idrol)
-                    .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<User>>() {
-                    });
-            //String result = FAIL;
-        } catch (Exception e) {
-             exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-        }
-        return suggestions;
-    }
-
-    // </editor-fold>
+   
     // <editor-fold defaultstate="collapsed" desc="List<User> findbyEmail(String email )">
     /**
      *
@@ -463,5 +335,237 @@ public class UserServices implements Serializable {
     // </editor-fold>
     
    
+    
+     // <editor-fold defaultstate="collapsed" desc="List<User> sinDuplicados(List<User> listSource, List<User> listToAdd)">
+    /**
+     * Agrega a la lista el elemento si no esta registrado
+     *
+     * @param listSource
+     * @param listToAdd
+     * @return
+     */
+    public List<User> sinDuplicados(List<User> listSource, List<User> listToAdd) {
+        List<User> list = new ArrayList<>();
+        try {
+            listToAdd.forEach(u->{
+              
+                if(!listSource.contains(u)){
+                    listSource.add(u);
 
+                }
+              }
+            );
+
+
+        } catch (Exception e) {
+          exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+        }
+        return listSource;
+    }
+// </editor-fold>
+    
+    
+    
+     // <editor-fold defaultstate="collapsed" desc="List<String> extractEmailList(List<User> userList) ">
+    /**
+     * Extrae la lista de emails d
+     * @param userList
+     * @return 
+     */
+    public List<String> extractEmailList(List<User> userList) {
+        List<String> emailList = new ArrayList<>();
+        
+        try {
+           
+            
+            //Carga la lista 
+            if(!userList.isEmpty()){
+               userList.forEach(u->emailList.add(u.getEmail()));
+            }
+          
+         
+        } catch (Exception e) {
+           exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+        }
+        return emailList;
+    }
+// </editor-fold>
+     // <editor-fold defaultstate="collapsed" desc="List<String> extractUsernameList(List<User> userList) ">
+    /**
+     * Extrae la lista de username
+     * @param userList
+     * @return 
+     */
+    public List<String> extractUsernameList(List<User> userList) {
+        List<String> emailList = new ArrayList<>();
+        
+        try {
+           
+            
+            //Carga la lista 
+            if(!userList.isEmpty()){
+               userList.forEach(u->emailList.add(u.getUsername()));
+            }
+        
+         
+        } catch (Exception e) {
+       exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+        }
+        return emailList;
+    }
+// </editor-fold>
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="Boolean foundInList(List<User> userList, User user)">
+    /**
+     * Agrega a la lista el elemento si no esta registrado
+     *
+     * @param listSource
+     * @param listToAdd
+     * @return
+     */
+    public Boolean foundInList(List<User> userList, User user) {
+        List<User> list = new ArrayList<>();
+        try {
+         
+              return userList.contains(user);
+              
+
+
+        } catch (Exception e) {
+            exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+        }
+        return false;
+    }
+// </editor-fold>
+    
+    
+   
+    // <editor-fold defaultstate="collapsed" desc="List<User> findByProfileList(Integer applicativeId,List<Profile> profileList ,  Integer iddepartamentLoged)">
+/**
+ * Genera la lista de usuarios en base a un List de profile y descarta los profile que no pertenezcan al applicativeId
+ * @param applicativeId : El applicativo principal
+ * @param profileList: Lista de profiles a realizar la busqueda
+ * @param iddepartament: Departamento actual del usuario logeado
+ * @return 
+ */
+    
+    public List<User> findByProfileList(Integer applicativeId, List<Profile> profileList ,  Integer iddepartamentLoged){
+        List<User> userList = new ArrayList<>();
+        try {
+             Document sort = new Document("username", -1);
+                for (Profile p : profileList) {
+                  
+                    List<User> list = queryElemMatch(p.getIdapplicative(),p.getIddepartament(),p.getIdrole(),Boolean.TRUE);
+                    if (list == null || list.isEmpty() || list.size() == 0) {
+                      
+                    } else {
+                      
+                     
+                        System.out.println("-----------------------IMPRIMIRE LA LISTA----------------------------------------");
+                        for(User u:list){
+                            System.out.println("username: "+u.getUsername() );
+                            for(Profile px:u.getProfile()){
+                                System.out.println(" idapplicative "+px.getIdapplicative() + " idrole "+px.getIdrole() +" iddepartament "+px.getIddepartament() + " active "+px.getActive());
+                            }
+                        }
+                        System.out.println("----------------------voy a quitar duplicados-----------------------------------------");
+                        userList = sinDuplicados(userList, list);
+                        
+                        
+                    
+                    }
+                }
+        } catch (Exception e) {
+             exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+        }
+        return userList;
+    }
+    // </editor-fold>
+    
+    
+    
+    
+     // <editor-fold defaultstate="collapsed" desc="List<User>  List<User> queryElemMatch (@QueryParam("idapplicative") Integer idapplicative, @QueryParam("iddepartament") Integer iddepartament, @QueryParam("idrole") Integer idrole, @QueryParam("active") Boolean active)">
+    /**
+     * Procesa una consulta en los profile 
+     * Es una busqueda especial que requiere elemMatch
+     * @param idapplicative :
+     *                       0: Se ignora
+     *                      >0: Procesa ese valor
+     * @param iddepartament
+     *                       0: Se ignora
+     *                      >0: Procesa ese valor
+     * @param idrole
+     *                       0: Se ignora
+     *                      >0: Procesa ese valor
+     * @param active
+     * @return 
+     */
+    public List<User>   queryElemMatch (Integer idapplicative, Integer iddepartament,Integer idrole, Boolean active){
+        List<User> suggestions = new ArrayList<>();
+        try {
+
+      
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            suggestions = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/queryelemmatch/")
+                     .queryParam("idapplicative", idapplicative)
+                    .queryParam("iddepartament", iddepartament)
+                    .queryParam("idrole", idrole)
+                    .queryParam("active", active)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<User>>() {
+                    });
+
+        } catch (Exception e) {
+           exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+        }
+
+        return suggestions;
+    }
+    // </editor-fold>
+    
+    
+   // <editor-fold defaultstate="collapsed" desc="haveProfile(Integer applicativeId,List<Profile> profileList, User user,Profile profile) ">
+    /**
+     *Verifica si el user que se paso y el profile coindicen con los perfiles que tiene el usuario
+     * de una lista
+     * Por ejemplo si deseo conocer si un usuario es autoridad es util para esos casos 
+     *
+     * @param applicativeId
+     * @param profileList
+     * @param profile
+     * @return
+     */
+    public Boolean haveProfile(Integer applicativeId, List<Profile> profileList, User user, Profile profile) {
+        Boolean found = false;
+        try {
+            List<User> list = findByProfileList(applicativeId, profileList, profile.getIddepartament());
+
+            if (list == null || list.isEmpty() || list.size() == 0) {
+
+            } else {
+                for (User u : list) {
+                    if (u.getUsername().equals(user.getUsername())) {
+                        for (Profile p : u.getProfile()) {
+                            if (profile.getIdapplicative().equals(p.getIdapplicative())
+                                    && profile.getIdrole().equals(p.getIdrole())) {
+                                found = true;
+                                break;
+
+                            }
+                        }
+                    }
+
+                }
+            }
+
+        } catch (Exception e) {
+              exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+        }
+        return found;
+    }
+// </editor-fold>
 }

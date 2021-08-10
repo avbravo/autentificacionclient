@@ -932,7 +932,65 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
     // </editor-fold>
     
     
-    
+    // <editor-fold defaultstate="collapsed" desc="String generateMessageForEmail(Boletas boletas, String header, String nameOfUser)">
+    /**
+     * Genera el mensaje que sera enviado en el correo
+     * @param boletas
+     * @param header
+     * @param nameOfUser
+     * @return 
+     */
+    public String generateMessageForEmail(Boletas boletas, String header, String nameOfUser){
+        String messages="";
+        try {
+         
+               messages     = "\n  "                    
+                    + "\n----------------------BOLETA---------------------------------------"
+                    + "\nBoleta #:"
+                    +boletas.getIdboleta()
+                    + "\nFecha : "
+                    + showDate(boletas.getFecha())
+                    + " "
+                    + showHour(boletas.getFecha())
+                    + "\nColaborador: "
+                    +boletas.getUser().getName()
+                    + "\nDepartamento: "
+                    +boletas.getDepartament().getDepartament()
+                    + "\nFecha inicial: "
+                    + showDate(boletas.getFechainicial())
+                    + " "
+                    + showHour(boletas.getFechainicial())
+                    + "\nFecha Final: "
+                    + showDate(boletas.getFechafinal())
+                    + " "
+                    + showHour(boletas.getFechafinal())
+                    + "\nObservaciones: "
+                    +boletas.getObservacion()
+                    + "\nTipo boleta: "
+                    +boletas.getTipoboleta()
+                    + "\nTipo justificacion: "
+                    +boletas.getTipojustificacon()
+                    + "\nVisto bueno jefe inmediato: "
+                    +boletas.getEstadounidad()
+                    + "\nVisto bueno Autoridad: "
+                    +boletas.getEstadoautoridad()
+                    + "\nComentario: "
+                    +boletas.getComentario()
+                      + "\n_____________________________________________"
+                     +"\n Evento: "
+                    + header
+                     +"\n Acción realizada por: "
+                    + nameOfUser
+                    + "\n\n\b"
+                    + "\nPor favor no responda este correo..."
+                    + "\n-------------------------------------------------------------";
+
+        } catch (Exception e) {
+            exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+        }
+        return messages;
+    }
+// </editor-fold>
     
     
     

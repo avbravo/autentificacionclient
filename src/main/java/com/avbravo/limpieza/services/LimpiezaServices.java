@@ -5,14 +5,17 @@
  */
 package com.avbravo.limpieza.services;
 
+import com.avbravo.asistenciaclient.entity.Boletas;
 import com.avbravo.autentificacionclient.producer.AuthentificationProducer;
 import com.avbravo.autentificacionclient.producer.MicroservicesProducer;
 import com.avbravo.autentificacionclient.services.LoggerServices;
+import com.avbravo.jmoordb.util.JmoordbDateUtil;
 import com.avbravo.jmoordb.util.JmoordbDocument;
 import com.avbravo.jmoordb.util.JmoordbUtil;
 import com.avbravo.limpieza.entity.Limpieza;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.ejb.Stateless;
@@ -333,5 +336,87 @@ public class LimpiezaServices implements Serializable {
         return total;
     }
     // </editor-fold>
+    
+         // <editor-fold defaultstate="collapsed" desc="String showDate(Date date)">
+    public String showDate(Date date) {
+        String h = "";
+        try {
+            h = JmoordbDateUtil.dateFormatToString(date, "dd/MM/yyyy");
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.errorMessage("showDate() " + e.getLocalizedMessage());
+        }
+        return h;
+    }// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="String showHour(Date date)">
 
+    public String showHour(Date date) {
+        String h = "";
+        try {
+            h = JmoordbDateUtil.hourFromDateToString(date);
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.errorMessage("showHour() " + e.getLocalizedMessage());
+        }
+        return h;
+    }// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="String generateMessageForEmail(Boletas boletas, String header, String nameOfUser)">
+    /**
+     * Genera el mensaje que sera enviado en el correo
+     * @param boletas
+     * @param header
+     * @param nameOfUser
+     * @return 
+     */
+    public String generateMessageForEmail(Limpieza limpieza, String header, String nameOfUser){
+        String messages="";
+        try {
+         
+               messages     = "\n  "                    
+                    + "\n----------------------BOLETA---------------------------------------"
+                    + "\nLimpieza #:"
+                    +limpieza.getIdlimpieza()
+                    + "\nFecha : "
+                    + showDate(boletas.getFecha())
+                    + " "
+                    + showHour(boletas.getFecha())
+                    + "\nColaborador: "
+                    +boletas.getUser().getName()
+                    + "\nDepartamento: "
+                    +boletas.getDepartament().getDepartament()
+                    + "\nFecha inicial: "
+                    + showDate(boletas.getFechainicial())
+                    + " "
+                    + showHour(boletas.getFechainicial())
+                    + "\nFecha Final: "
+                    + showDate(boletas.getFechafinal())
+                    + " "
+                    + showHour(boletas.getFechafinal())
+                    + "\nObservaciones: "
+                    +boletas.getObservacion()
+                    + "\nTipo boleta: "
+                    +boletas.getTipoboleta()
+                    + "\nTipo justificacion: "
+                    +boletas.getTipojustificacon()
+                    + "\nVisto bueno jefe inmediato: "
+                    +boletas.getEstadounidad()
+                    + "\nVisto bueno Autoridad: "
+                    +boletas.getEstadoautoridad()
+                    + "\nComentario: "
+                    +boletas.getComentario()
+                      + "\n_____________________________________________"
+                     +"\n Evento: "
+                    + header
+                     +"\n Acción realizada por: "
+                    + nameOfUser
+                    + "\n\n\b"
+                    + "\nPor favor no responda este correo..."
+                    + "\n-------------------------------------------------------------";
+
+        } catch (Exception e) {
+            exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+        }
+        return messages;
+    }
+// </editor-fold>
 }
