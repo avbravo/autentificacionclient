@@ -30,27 +30,50 @@ public class Limpieza {
             field = "iduser", javatype = "Integer", lazy = false,
             repository = "com.avbravo.autentificacion.repository.UserRepository")
     private List<User> user;
+    private String estado;
     private String observacion;
     private Date fechahorasupervision;
     private String observacionsupervisor;
+      private String estadosupervisor;
     private Boolean supervisado;
     private Boolean active;
 
     public Limpieza() {
     }
 
-    public Limpieza(Integer idlimpieza, Date fechahora, Area area, List<User> user, String observacion, Date fechahorasupervision, String observacionsupervisor, Boolean supervisado, Boolean active) {
+    public Limpieza(Integer idlimpieza, Date fechahora, Area area, List<User> user, String estado, String observacion, Date fechahorasupervision, String observacionsupervisor, String estadosupervisor, Boolean supervisado, Boolean active) {
         this.idlimpieza = idlimpieza;
         this.fechahora = fechahora;
         this.area = area;
         this.user = user;
+        this.estado = estado;
         this.observacion = observacion;
         this.fechahorasupervision = fechahorasupervision;
         this.observacionsupervisor = observacionsupervisor;
+        this.estadosupervisor = estadosupervisor;
         this.supervisado = supervisado;
         this.active = active;
     }
 
+    public String getEstadosupervisor() {
+        return estadosupervisor;
+    }
+
+    public void setEstadosupervisor(String estadosupervisor) {
+        this.estadosupervisor = estadosupervisor;
+    }
+
+   
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+  
     
     
     public Boolean getSupervisado() {
