@@ -5,7 +5,6 @@
  */
 package com.avbravo.limpieza.services;
 
-import com.avbravo.asistenciaclient.entity.Boletas;
 import com.avbravo.autentificacionclient.producer.AuthentificationProducer;
 import com.avbravo.autentificacionclient.producer.MicroservicesProducer;
 import com.avbravo.autentificacionclient.services.LoggerServices;
@@ -360,10 +359,10 @@ public class LimpiezaServices implements Serializable {
         }
         return h;
     }// </editor-fold>
-    // <editor-fold defaultstate="collapsed" desc="String generateMessageForEmail(Boletas boletas, String header, String nameOfUser)">
+    // <editor-fold defaultstate="collapsed" desc="String generateMessageForEmail(Limpieza limpieza, String header, String nameOfUser)">
     /**
      * Genera el mensaje que sera enviado en el correo
-     * @param boletas
+     * @param limpieza
      * @param header
      * @param nameOfUser
      * @return 
@@ -372,38 +371,38 @@ public class LimpiezaServices implements Serializable {
         String messages="";
         try {
          
+            String supervisadoMessage="";
+            if(limpieza.getSupervisado()){
+              supervisadoMessage+=  "\nFecha Supervision: "
+                    + showDate(limpieza.getFechahorasupervision())
+                    + " "
+                    + showHour(limpieza.getFechahorasupervision())
+                    + "\nSupervisor: "
+                    + limpieza.getUser().get(1).getName()
+                    + "\nEstado de Supervision: "
+                    + limpieza.getEstadosupervisor()
+                       + "\nObservación Supervisor:"
+                    +limpieza.getObservacionsupervisor()
+                    + " ";
+            }
+            
                messages     = "\n  "                    
                     + "\n----------------------BOLETA---------------------------------------"
                     + "\nLimpieza #:"
                     +limpieza.getIdlimpieza()
                     + "\nFecha : "
-                    + showDate(boletas.getFecha())
+                    + showDate(limpieza.getFechahora())
                     + " "
-                    + showHour(boletas.getFecha())
+                    + showHour(limpieza.getFechahora())
                     + "\nColaborador: "
-                    +boletas.getUser().getName()
-                    + "\nDepartamento: "
-                    +boletas.getDepartament().getDepartament()
-                    + "\nFecha inicial: "
-                    + showDate(boletas.getFechainicial())
-                    + " "
-                    + showHour(boletas.getFechainicial())
-                    + "\nFecha Final: "
-                    + showDate(boletas.getFechafinal())
-                    + " "
-                    + showHour(boletas.getFechafinal())
-                    + "\nObservaciones: "
-                    +boletas.getObservacion()
-                    + "\nTipo boleta: "
-                    +boletas.getTipoboleta()
-                    + "\nTipo justificacion: "
-                    +boletas.getTipojustificacon()
-                    + "\nVisto bueno jefe inmediato: "
-                    +boletas.getEstadounidad()
-                    + "\nVisto bueno Autoridad: "
-                    +boletas.getEstadoautoridad()
-                    + "\nComentario: "
-                    +boletas.getComentario()
+                    +limpieza.getUser().get(0).getName()
+                    + "\nArea: "
+                    +limpieza.getArea().getArea()
+                    + "\nEstado: "
+                    +limpieza.getEstado()
+                    + "\nObservacion: "
+                    +limpieza.getObservacion()
+                   +supervisadoMessage
                       + "\n_____________________________________________"
                      +"\n Evento: "
                     + header
