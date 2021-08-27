@@ -387,7 +387,7 @@ public class LimpiezaServices implements Serializable {
             }
             
                messages     = "\n  "                    
-                    + "\n----------------------BOLETA---------------------------------------"
+                    + "\n----------------------LIMPIEZA---------------------------------------"
                     + "\nLimpieza #:"
                     +limpieza.getIdlimpieza()
                     + "\nFecha : "

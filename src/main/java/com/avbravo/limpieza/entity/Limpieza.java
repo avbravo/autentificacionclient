@@ -36,12 +36,14 @@ public class Limpieza {
     private String observacionsupervisor;
       private String estadosupervisor;
     private Boolean supervisado;
+     private String archivo;
+    private String archivoSupervisor;
     private Boolean active;
 
     public Limpieza() {
     }
 
-    public Limpieza(Integer idlimpieza, Date fechahora, Area area, List<User> user, String estado, String observacion, Date fechahorasupervision, String observacionsupervisor, String estadosupervisor, Boolean supervisado, Boolean active) {
+    public Limpieza(Integer idlimpieza, Date fechahora, Area area, List<User> user, String estado, String observacion, Date fechahorasupervision, String observacionsupervisor, String estadosupervisor, Boolean supervisado, String archivo, String archivoSupervisor, Boolean active) {
         this.idlimpieza = idlimpieza;
         this.fechahora = fechahora;
         this.area = area;
@@ -52,8 +54,31 @@ public class Limpieza {
         this.observacionsupervisor = observacionsupervisor;
         this.estadosupervisor = estadosupervisor;
         this.supervisado = supervisado;
+        this.archivo = archivo;
+        this.archivoSupervisor = archivoSupervisor;
         this.active = active;
     }
+
+  
+    public String getArchivo() {
+        return archivo;
+    }
+
+    public void setArchivo(String archivo) {
+        this.archivo = archivo;
+    }
+
+    public String getArchivoSupervisor() {
+        return archivoSupervisor;
+    }
+
+    public void setArchivoSupervisor(String archivoSupervisor) {
+        this.archivoSupervisor = archivoSupervisor;
+    }
+
+   
+
+   
 
     public String getEstadosupervisor() {
         return estadosupervisor;
