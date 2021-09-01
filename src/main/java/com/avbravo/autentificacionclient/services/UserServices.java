@@ -462,14 +462,14 @@ public class UserServices implements Serializable {
                     } else {
                       
                      
-                        System.out.println("-----------------------IMPRIMIRE LA LISTA----------------------------------------");
-                        for(User u:list){
-                            System.out.println("username: "+u.getUsername() );
-                            for(Profile px:u.getProfile()){
-                                System.out.println(" idapplicative "+px.getIdapplicative() + " idrole "+px.getIdrole() +" iddepartament "+px.getIddepartament() + " active "+px.getActive());
-                            }
-                        }
-                        System.out.println("----------------------voy a quitar duplicados-----------------------------------------");
+                        
+//                        for(User u:list){
+//                            System.out.println("username: "+u.getUsername() );
+//                            for(Profile px:u.getProfile()){
+//                                System.out.println(" idapplicative "+px.getIdapplicative() + " idrole "+px.getIdrole() +" iddepartament "+px.getIddepartament() + " active "+px.getActive());
+//                            }
+//                        }
+//                        System.out.println("----------------------voy a quitar duplicados-----------------------------------------");
                         userList = sinDuplicados(userList, list);
                         
                         
