@@ -378,11 +378,11 @@ public class SendConfigurationServices implements Serializable {
                  * Reemplazar el iddepartament 0 por el iddepartamentLogged que es el envio desde el controller actual
                  */
                 Integer count=0;
-                System.out.println("++++++++++++++++++++++++++ VERIFICANDO EL IDDEPARTAMEMTO.....");
+               
                 for(Profile p:suggestions){
                     
                     if(p.getIddepartament().equals(0)){
-                        System.out.println("---- cambiando "+p.getIddepartament() +   " por "+iddepartamentLogged);
+               //         System.out.println("---- cambiando "+p.getIddepartament() +   " por "+iddepartamentLogged);
                         suggestions.get(count).setIddepartament(iddepartamentLogged);
                     }
                     count++;
