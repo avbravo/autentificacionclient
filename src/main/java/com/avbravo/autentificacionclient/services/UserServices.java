@@ -13,11 +13,12 @@ import com.avbravo.jmoordb.util.JmoordbDocument;
 import com.avbravo.jmoordb.util.JmoordbUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -73,9 +74,8 @@ public class UserServices implements Serializable {
             userList = target.request(MediaType.APPLICATION_JSON).get(data);
 
         } catch (Exception e) {
-            exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-                       
-          
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+
         }
         return userList;
     }
@@ -92,16 +92,15 @@ public class UserServices implements Serializable {
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.post(Entity.entity(user, MediaType.APPLICATION_JSON));
 
-             
             if (response.getStatus() == 400) {
                 exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-             
+
             user.setIduser(Integer.parseInt(response.readEntity(String.class)));
             return true;
         } catch (Exception e) {
-            exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
         }
         return false;
     }
@@ -118,16 +117,14 @@ public class UserServices implements Serializable {
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.put(Entity.entity(user, MediaType.APPLICATION_JSON));
 
-             
             if (response.getStatus() == 400) {
                 exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-             
-          
+
             return true;
         } catch (Exception e) {
-             exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
         }
         return false;
     }
@@ -144,16 +141,14 @@ public class UserServices implements Serializable {
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.post(Entity.entity(user, MediaType.APPLICATION_JSON));
 
-             
             if (response.getStatus() == 400) {
                 exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-             
-           
+
             return true;
         } catch (Exception e) {
-             exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
         }
         return false;
     }
@@ -187,7 +182,7 @@ public class UserServices implements Serializable {
             return Optional.of(user);
             //String result = FAIL;
         } catch (Exception e) {
-             exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
         }
 
         return Optional.empty();
@@ -213,14 +208,13 @@ public class UserServices implements Serializable {
                     });
 
         } catch (Exception e) {
-            exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
         }
 
         return suggestions;
     }
     // </editor-fold>
 
-   
     // <editor-fold defaultstate="collapsed" desc="List<User> findbyEmail(String email )">
     /**
      *
@@ -242,7 +236,7 @@ public class UserServices implements Serializable {
                     });
             //String result = FAIL;
         } catch (Exception e) {
-             exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
         }
         return suggestions;
     }
@@ -267,7 +261,7 @@ public class UserServices implements Serializable {
                     });
 
         } catch (Exception e) {
-             exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
         }
 
         return suggestions;
@@ -289,7 +283,7 @@ public class UserServices implements Serializable {
                     .get(new GenericType<List<User>>() {
                     });
         } catch (Exception e) {
-             exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
         }
 
         return suggestions;
@@ -327,16 +321,14 @@ public class UserServices implements Serializable {
             }
 
         } catch (Exception e) {
-             exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
         }
 
         return total;
     }
     // </editor-fold>
-    
-   
-    
-     // <editor-fold defaultstate="collapsed" desc="List<User> sinDuplicados(List<User> listSource, List<User> listToAdd)">
+
+    // <editor-fold defaultstate="collapsed" desc="List<User> sinDuplicados(List<User> listSource, List<User> listToAdd)">
     /**
      * Agrega a la lista el elemento si no esta registrado
      *
@@ -347,75 +339,70 @@ public class UserServices implements Serializable {
     public List<User> sinDuplicados(List<User> listSource, List<User> listToAdd) {
         List<User> list = new ArrayList<>();
         try {
-            listToAdd.forEach(u->{
-              
-                if(!listSource.contains(u)){
+            listToAdd.forEach(u -> {
+
+                if (!listSource.contains(u)) {
                     listSource.add(u);
 
                 }
-              }
+            }
             );
 
-
         } catch (Exception e) {
-          exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
         }
         return listSource;
     }
 // </editor-fold>
-    
-    
-    
-     // <editor-fold defaultstate="collapsed" desc="List<String> extractEmailList(List<User> userList) ">
+
+    // <editor-fold defaultstate="collapsed" desc="List<String> extractEmailList(List<User> userList) ">
     /**
      * Extrae la lista de emails d
+     *
      * @param userList
-     * @return 
+     * @return
      */
     public List<String> extractEmailList(List<User> userList) {
         List<String> emailList = new ArrayList<>();
-        
+
         try {
-           
-            
+
             //Carga la lista 
-            if(!userList.isEmpty()){
-               userList.forEach(u->emailList.add(u.getEmail()));
+            if (!userList.isEmpty()) {
+                userList.forEach(u -> emailList.add(u.getEmail()));
             }
-          
-         
+
         } catch (Exception e) {
-           exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
         }
         return emailList;
     }
 // </editor-fold>
-     // <editor-fold defaultstate="collapsed" desc="List<String> extractUsernameList(List<User> userList) ">
+    // <editor-fold defaultstate="collapsed" desc="List<String> extractUsernameList(List<User> userList) ">
+
     /**
      * Extrae la lista de username
+     *
      * @param userList
-     * @return 
+     * @return
      */
     public List<String> extractUsernameList(List<User> userList) {
         List<String> emailList = new ArrayList<>();
-        
+
         try {
-           
-            
+
             //Carga la lista 
-            if(!userList.isEmpty()){
-               userList.forEach(u->emailList.add(u.getUsername()));
+            if (!userList.isEmpty()) {
+                userList.forEach(u -> emailList.add(u.getUsername()));
             }
-        
-         
+
         } catch (Exception e) {
-       exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
         }
         return emailList;
     }
 // </editor-fold>
-    
-    
+
     // <editor-fold defaultstate="collapsed" desc="Boolean foundInList(List<User> userList, User user)">
     /**
      * Agrega a la lista el elemento si no esta registrado
@@ -427,42 +414,37 @@ public class UserServices implements Serializable {
     public Boolean foundInList(List<User> userList, User user) {
         List<User> list = new ArrayList<>();
         try {
-         
-              return userList.contains(user);
-              
 
+            return userList.contains(user);
 
         } catch (Exception e) {
-            exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
         }
         return false;
     }
 // </editor-fold>
-    
-    
-   
+
     // <editor-fold defaultstate="collapsed" desc="List<User> findByProfileList(Integer applicativeId,List<Profile> profileList ,  Integer iddepartamentLoged)">
-/**
- * Genera la lista de usuarios en base a un List de profile y descarta los profile que no pertenezcan al applicativeId
- * @param applicativeId : El applicativo principal
- * @param profileList: Lista de profiles a realizar la busqueda
- * @param iddepartament: Departamento actual del usuario logeado
- * @return 
- */
-    
-    public List<User> findByProfileList(Integer applicativeId, List<Profile> profileList ,  Integer iddepartamentLoged){
+    /**
+     * Genera la lista de usuarios en base a un List de profile y descarta los
+     * profile que no pertenezcan al applicativeId
+     *
+     * @param applicativeId : El applicativo principal
+     * @param profileList: Lista de profiles a realizar la busqueda
+     * @param iddepartament: Departamento actual del usuario logeado
+     * @return
+     */
+    public List<User> findByProfileList(Integer applicativeId, List<Profile> profileList, Integer iddepartamentLoged) {
         List<User> userList = new ArrayList<>();
         try {
-             Document sort = new Document("username", -1);
-                for (Profile p : profileList) {
-                  
-                    List<User> list = queryElemMatch(p.getIdapplicative(),p.getIddepartament(),p.getIdrole(),Boolean.TRUE);
-                    if (list == null || list.isEmpty() || list.size() == 0) {
-                      
-                    } else {
-                      
-                     
-                        
+            Document sort = new Document("username", -1);
+            for (Profile p : profileList) {
+
+                List<User> list = queryElemMatch(p.getIdapplicative(), p.getIddepartament(), p.getIdrole(), Boolean.TRUE);
+                if (list == null || list.isEmpty() || list.size() == 0) {
+
+                } else {
+
 //                        for(User u:list){
 //                            System.out.println("username: "+u.getUsername() );
 //                            for(Profile px:u.getProfile()){
@@ -470,48 +452,37 @@ public class UserServices implements Serializable {
 //                            }
 //                        }
 //                        System.out.println("----------------------voy a quitar duplicados-----------------------------------------");
-                        userList = sinDuplicados(userList, list);
-                        
-                        
-                    
-                    }
+                    userList = sinDuplicados(userList, list);
+
                 }
+            }
         } catch (Exception e) {
-             exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
         }
         return userList;
     }
     // </editor-fold>
-    
-    
-    
-    
-     // <editor-fold defaultstate="collapsed" desc="List<User>  List<User> queryElemMatch (@QueryParam("idapplicative") Integer idapplicative, @QueryParam("iddepartament") Integer iddepartament, @QueryParam("idrole") Integer idrole, @QueryParam("active") Boolean active)">
+
+    // <editor-fold defaultstate="collapsed" desc="List<User>  List<User> queryElemMatch (@QueryParam("idapplicative") Integer idapplicative, @QueryParam("iddepartament") Integer iddepartament, @QueryParam("idrole") Integer idrole, @QueryParam("active") Boolean active)">
     /**
-     * Procesa una consulta en los profile 
-     * Es una busqueda especial que requiere elemMatch
-     * @param idapplicative :
-     *                       0: Se ignora
-     *                      >0: Procesa ese valor
-     * @param iddepartament
-     *                       0: Se ignora
-     *                      >0: Procesa ese valor
-     * @param idrole
-     *                       0: Se ignora
-     *                      >0: Procesa ese valor
+     * Procesa una consulta en los profile Es una busqueda especial que requiere
+     * elemMatch
+     *
+     * @param idapplicative : 0: Se ignora >0: Procesa ese valor
+     * @param iddepartament 0: Se ignora >0: Procesa ese valor
+     * @param idrole 0: Se ignora >0: Procesa ese valor
      * @param active
-     * @return 
+     * @return
      */
-    public List<User>   queryElemMatch (Integer idapplicative, Integer iddepartament,Integer idrole, Boolean active){
+    public List<User> queryElemMatch(Integer idapplicative, Integer iddepartament, Integer idrole, Boolean active) {
         List<User> suggestions = new ArrayList<>();
         try {
 
-      
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
                     .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/queryelemmatch/")
-                     .queryParam("idapplicative", idapplicative)
+                    .queryParam("idapplicative", idapplicative)
                     .queryParam("iddepartament", iddepartament)
                     .queryParam("idrole", idrole)
                     .queryParam("active", active)
@@ -520,19 +491,18 @@ public class UserServices implements Serializable {
                     });
 
         } catch (Exception e) {
-           exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
         }
 
         return suggestions;
     }
     // </editor-fold>
-    
-    
-   // <editor-fold defaultstate="collapsed" desc="haveProfile(Integer applicativeId,List<Profile> profileList, User user,Profile profile) ">
+
+    // <editor-fold defaultstate="collapsed" desc="haveProfile(Integer applicativeId,List<Profile> profileList, User user,Profile profile) ">
     /**
-     *Verifica si el user que se paso y el profile coindicen con los perfiles que tiene el usuario
-     * de una lista
-     * Por ejemplo si deseo conocer si un usuario es autoridad es util para esos casos 
+     * Verifica si el user que se paso y el profile coindicen con los perfiles
+     * que tiene el usuario de una lista Por ejemplo si deseo conocer si un
+     * usuario es autoridad es util para esos casos
      *
      * @param applicativeId
      * @param profileList
@@ -563,9 +533,89 @@ public class UserServices implements Serializable {
             }
 
         } catch (Exception e) {
-              exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
         }
         return found;
     }
 // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="processAndChange(Integer idapplicative, Integer idrole, List<Profile> profileList, Boolean isChange)">
+    /**
+     *
+     * Procesa la lista y actualiza o crea un profile para este sistema
+     */
+    public List<Profile> processAndChangeProfile(Integer idapplicative, Integer iddepartament, Integer idrole, List<Profile> profileList, Boolean isChange) {
+        try{
+        Integer pos = 0;
+        Boolean found = false;
+        for (Profile p : profileList) {
+            if (p.getIdapplicative().equals(idapplicative) && p.getIdrole().equals(idrole)) {
+                found = true;
+                p.setActive(isChange);
+                profileList.set(pos, p);
+
+            }
+            pos++;
+        }
+        if (isChange && !found) {
+            Profile profile = new Profile();
+            profile.setIdprofile(maxValueProfile(profileList) + 1);
+            profile.setIdapplicative(idapplicative);
+            profile.setIddepartament(iddepartament);
+            profile.setIdrole(idrole);
+            profile.setActive(Boolean.TRUE);
+            profileList.add(profile);
+        }
+         } catch (Exception e) {
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+        }
+        return profileList;
+    }
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Boolean haveRole(Integer idrole, User user) ">
+    public Boolean haveRole(Integer idApplicative, Integer idrole, User user) {
+        try {
+
+            for (Profile p : user.getProfile()) {
+
+                if (p.getIdapplicative().equals(idApplicative)
+                        && p.getIdrole().equals(idrole) && p.getActive()) {
+
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+        }
+        return false;
+    }
+
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="Integer maxValueProfile(List<Profile> profileList)">
+    /**
+     * Encuentra el valor maximp de idprofile
+     *
+     * @param profileList
+     * @return
+     */
+    public Integer maxValueProfile(List<Profile> profileList) {
+        try {
+            if (profileList == null || profileList.isEmpty()) {
+                return 0;
+            }
+            // then
+            Profile max = profileList
+                    .stream()
+                    .max(Comparator.comparing(Profile::getIdprofile))
+                    .orElseThrow(NoSuchElementException::new);
+
+            return max.getIdprofile();
+        } catch (Exception e) {
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+        }
+        return 0;
+    }
+
+    // </editor-fold>
 }

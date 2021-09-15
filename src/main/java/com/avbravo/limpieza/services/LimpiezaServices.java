@@ -13,6 +13,8 @@ import com.avbravo.jmoordb.util.JmoordbDocument;
 import com.avbravo.jmoordb.util.JmoordbUtil;
 import com.avbravo.limpieza.entity.Limpieza;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -341,6 +343,19 @@ public class LimpiezaServices implements Serializable {
         String h = "";
         try {
             h = JmoordbDateUtil.dateFormatToString(date, "dd/MM/yyyy");
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.errorMessage("showDate() " + e.getLocalizedMessage());
+        }
+        return h;
+    }// </editor-fold>
+         // <editor-fold defaultstate="collapsed" desc="String showDateLocalDate(Date date)">
+    public String showDateLocalDate(LocalDate date) {
+        String h = "";
+        try {
+            DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+h = date.format(formatters);
+            
         } catch (Exception e) {
             exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
             JmoordbUtil.errorMessage("showDate() " + e.getLocalizedMessage());

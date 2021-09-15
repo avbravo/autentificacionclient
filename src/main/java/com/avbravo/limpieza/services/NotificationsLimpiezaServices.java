@@ -19,6 +19,8 @@ import com.avbravo.limpieza.entity.Limpieza;
 import java.util.Date;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -335,7 +337,19 @@ public class NotificationsLimpiezaServices implements Serializable {
     // </editor-fold>
 
    
-
+      // <editor-fold defaultstate="collapsed" desc="String showDateLocalDate(Date date)">
+    public String showDateLocalDate(LocalDate date) {
+        String h = "";
+        try {
+            DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+h = date.format(formatters);
+            
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.errorMessage("showDate() " + e.getLocalizedMessage());
+        }
+        return h;
+    }// </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="String showDate(Date date)">
     public String showDate(Date date) {
         String h = "";
