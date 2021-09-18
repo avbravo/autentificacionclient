@@ -17,18 +17,34 @@ public class Area {
     private Integer idarea;
     private String area;
     private String descripcion;   
+    private String icon;
     private Boolean active;
 
     public Area() {
     }
 
-    public Area(Integer idarea, String area, String descripcion, Boolean active) {
+    public Area(Integer idarea, String area, String descripcion, String icon, Boolean active) {
         this.idarea = idarea;
         this.area = area;
         this.descripcion = descripcion;
+        this.icon = icon;
         this.active = active;
     }
 
+    
+    
+    
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+   
+    
+    
     public Integer getIdarea() {
         return idarea;
     }
