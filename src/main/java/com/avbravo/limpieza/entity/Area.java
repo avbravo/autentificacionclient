@@ -5,7 +5,9 @@
  */
 package com.avbravo.limpieza.entity;
 
+import com.avbravo.autentificacionclient.entity.Building;
 import com.avbravo.jmoordb.anotations.Id;
+import com.avbravo.jmoordb.anotations.Referenced;
 import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
@@ -20,20 +22,52 @@ public class Area {
     private String icon;
     private Boolean active;
 
+    @Referenced(collection = "TipoArea",
+            field = "idtipoarea", javatype = "Integer", lazy = false,
+            repository = "com.avbravo.autentificacion.limpieza.repository.TipoAreaRepository")
+    private TipoArea tipoArea;
+     @Referenced(collection = "Building",
+            field = "idbuilding", javatype = "Integer", lazy = false,
+            repository = "com.avbravo.autentificacion.repository.BuildingRepository")
+    private Building building;
+
     public Area() {
     }
 
-    public Area(Integer idarea, String area, String descripcion, String icon, Boolean active) {
+    public Area(Integer idarea, String area, String icon, String descripcion, Boolean active, TipoArea tipoArea, Building building) {
         this.idarea = idarea;
         this.area = area;
-        this.descripcion = descripcion;
         this.icon = icon;
+        this.descripcion = descripcion;
         this.active = active;
+        this.tipoArea = tipoArea;
+        this.building = building;
     }
 
     
     
     
+    public TipoArea getTipoArea() {
+        return tipoArea;
+    }
+
+    public void setTipoArea(TipoArea tipoArea) {
+        this.tipoArea = tipoArea;
+    }
+
+    public Building getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
+    }
+
+   
+    
+    
+    
+
     public String getIcon() {
         return icon;
     }
@@ -42,7 +76,7 @@ public class Area {
         this.icon = icon;
     }
 
-   
+    
     
     
     public Integer getIdarea() {
