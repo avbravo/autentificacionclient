@@ -28,15 +28,31 @@ public class AreaConverter implements Converter {
     AreaServices areaServices;
   @Override
     public String getAsString(FacesContext context, UIComponent component, Object modelValue) {
-        if (modelValue == null) {
+        try {
+           if (modelValue == null) {
             return "";
         }
 
         if (modelValue instanceof Area) {
           return String.valueOf(((Area) modelValue).getIdarea());
         } else {
-            throw new ConverterException(new FacesMessage(modelValue + " is not a valid from Converter"));
+            System.out.println("----------->getAsString");
+          throw new ConverterException(new FacesMessage(modelValue + " is not a valid from Converter"));
         }
+      } catch (Exception e) {
+            System.out.println("--------getAsString () "+e.getLocalizedMessage());
+            new FacesMessage("Error en converter Area "+e.getLocalizedMessage());
+      }
+//        if (modelValue == null) {
+//            return "";
+//        }
+//
+//        if (modelValue instanceof Area) {
+//          return String.valueOf(((Area) modelValue).getIdarea());
+//        } else {
+//            throw new ConverterException(new FacesMessage(modelValue + " is not a valid from Converter"));
+//        }
+ return "";
     }
 
     @Override
@@ -57,7 +73,10 @@ public class AreaConverter implements Converter {
                 a = optional.get();
             }
             return a;
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
+            System.out.println("====================");
+            System.out.println("---> getAsObject" +e.getLocalizedMessage());
+            System.out.println("====================");
             throw new ConverterException(new FacesMessage(submittedValue + " is not a valid selecction from Converter"), e);
         }
     }
