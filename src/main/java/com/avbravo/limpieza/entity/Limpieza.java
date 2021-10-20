@@ -39,7 +39,9 @@ public class Limpieza {
      private String archivo;
     private String archivoSupervisor;
     private Boolean active;
-
+    @Ignore
+    private Boolean  esseleccionada;
+    
     public Limpieza() {
     }
 
@@ -59,6 +61,16 @@ public class Limpieza {
         this.active = active;
     }
 
+    public Boolean getEsseleccionada() {
+        return esseleccionada;
+    }
+
+    public void setEsseleccionada(Boolean esseleccionada) {
+        this.esseleccionada = esseleccionada;
+    }
+
+    
+    
   
     public String getArchivo() {
         return archivo;
