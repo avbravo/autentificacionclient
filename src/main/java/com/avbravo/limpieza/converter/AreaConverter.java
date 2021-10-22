@@ -43,15 +43,7 @@ public class AreaConverter implements Converter {
             System.out.println("--------getAsString () "+e.getLocalizedMessage());
             new FacesMessage("Error en converter Area "+e.getLocalizedMessage());
       }
-//        if (modelValue == null) {
-//            return "";
-//        }
-//
-//        if (modelValue instanceof Area) {
-//          return String.valueOf(((Area) modelValue).getIdarea());
-//        } else {
-//            throw new ConverterException(new FacesMessage(modelValue + " is not a valid from Converter"));
-//        }
+
  return "";
     }
 
