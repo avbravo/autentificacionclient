@@ -164,8 +164,12 @@ public class UserServices implements Serializable {
     public Optional<User> findByUsername(String username) {
         User user = new User();
         try {
+javax.ws.rs.client.ClientBuilder cb = ClientBuilder.newBuilder();
 
-            Client client = ClientBuilder.newClient();
+
+
+ 
+            javax.ws.rs.client.Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             user = client
                     .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/search/")
