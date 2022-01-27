@@ -7,6 +7,7 @@ package com.avbravo.system.trabajo.entity;
 import com.avbravo.autentificacionclient.entity.User;
 import com.avbravo.jmoordb.anotations.Embedded;
 import com.avbravo.jmoordb.anotations.Id;
+import java.util.Date;
 import lombok.Builder;
 import lombok.Data;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -21,11 +22,27 @@ public class Tarea {
  @Id
  private Integer idtarea;
  private String tarea;
- private String descripcion;
+ private Date date;
  private Boolean ejecutado;
  private Boolean active;
  @Embedded 
- User user;
+private User user;
+
+    public Tarea() {
+    }
+
+    public Tarea(Integer idtarea, String tarea, Date date, Boolean ejecutado, Boolean active, User user) {
+        this.idtarea = idtarea;
+        this.tarea = tarea;
+        this.date = date;
+        this.ejecutado = ejecutado;
+        this.active = active;
+        this.user = user;
+    }
+ 
+ 
+ 
+ 
  
   @Override
     public boolean equals(Object object) {

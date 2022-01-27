@@ -28,7 +28,10 @@ public class Sprint {
     private Date hasta;
     private Boolean active;
     private Boolean finalizado;
-
+    @Referenced(collection = "Proyecto",
+            field = "idproyecto", javatype = "Integer", lazy = false,
+            repository = "com.avbravo.autentificacion.trabajo.repository.ProyectoRepository")
+    private Proyecto proyecto;
     @Referenced(collection = "Tarjeta",
             field = "idtarjeta", javatype = "Integer", lazy = false,
             repository = "com.avbravo.autentificacion.trabajo.repository.TarjetaRepository")
@@ -37,13 +40,14 @@ public class Sprint {
     public Sprint() {
     }
 
-    public Sprint(Integer idsprint, String descripcion, Date desde, Date hasta, Boolean active, Boolean finalizado, List<Tarjeta> tarjeta) {
+    public Sprint(Integer idsprint, String descripcion, Date desde, Date hasta, Boolean active, Boolean finalizado, Proyecto proyecto, List<Tarjeta> tarjeta) {
         this.idsprint = idsprint;
         this.descripcion = descripcion;
         this.desde = desde;
         this.hasta = hasta;
         this.active = active;
         this.finalizado = finalizado;
+        this.proyecto = proyecto;
         this.tarjeta = tarjeta;
     }
 
@@ -60,10 +64,10 @@ public class Sprint {
     }
 
     public boolean equalsReflection(Object object) {
-        if (!(object instanceof Sprint )) {
+        if (!(object instanceof Sprint)) {
             return false;
         }
-        Sprint  other = (Sprint ) object;
+        Sprint other = (Sprint) object;
         if ((this.idsprint == null && other.idsprint != null) || (this.idsprint != null && !this.idsprint.equals(other.idsprint))) {
             return false;
         }

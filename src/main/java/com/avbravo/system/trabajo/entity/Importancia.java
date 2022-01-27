@@ -20,7 +20,19 @@ public class Importancia {
  private Integer idimportancia;
  private String importancia;
  private Boolean active;
+ private Integer valor;
 
+    public Importancia() {
+    }
+
+    public Importancia(Integer idimportancia, String importancia, Boolean active, Integer valor) {
+        this.idimportancia = idimportancia;
+        this.importancia = importancia;
+        this.active = active;
+        this.valor = valor;
+    }
+
+  
  
   @Override
     public boolean equals(Object object) {

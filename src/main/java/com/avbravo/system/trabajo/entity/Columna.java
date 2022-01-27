@@ -15,20 +15,31 @@ import org.apache.commons.lang.builder.EqualsBuilder;
  */
 @Data
 @Builder
-public class Estado {
+public class Columna {
  @Id
- private Integer idestado;
- private String estado;
+ private Integer idcolumna;
+ private String columna;
  private Boolean active;
 
+    public Columna() {
+    }
+
+    public Columna(Integer idcolumna, String columna, Boolean active) {
+        this.idcolumna = idcolumna;
+        this.columna = columna;
+        this.active = active;
+    }
+
+ 
+ 
  
   @Override
     public boolean equals(Object object) {
         if (!(object instanceof Sprint)) {
             return false;
         }
-        Estado other = (Estado) object;
-        if ((this.idestado == null && other.idestado!= null) || (this.idestado!= null && !this.idestado.equals(other.idestado))) {
+        Columna other = (Columna) object;
+        if ((this.idcolumna == null && other.idcolumna!= null) || (this.idcolumna!= null && !this.idcolumna.equals(other.idcolumna))) {
             return false;
         }
         return true;
@@ -38,8 +49,8 @@ public class Estado {
         if (!(object instanceof Sprint)) {
             return false;
         }
- Estado other = (Estado) object;
-        if ((this.idestado == null && other.idestado != null) || (this.idestado!= null && !this.idestado.equals(other.idestado))) {
+ Columna other = (Columna) object;
+        if ((this.idcolumna == null && other.idcolumna != null) || (this.idcolumna!= null && !this.idcolumna.equals(other.idcolumna))) {
             return false;
         }
         return EqualsBuilder.reflectionEquals(this, object);

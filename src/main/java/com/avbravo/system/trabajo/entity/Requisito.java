@@ -18,21 +18,37 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 @Data
 @Builder
 public class Requisito {
- @Id
- private Integer idrequisito;
- private String requisito;
- private String descripcion;
- private Boolean ejecutado;
- private Boolean active;
-  @Embedded 
- User user;
-  @Override
+
+    @Id
+    private Integer idrequisito;
+    private String requisito;
+    private String descripcion;
+    private String  estado;
+    private Boolean active;
+    @Embedded
+    User user;
+
+    public Requisito() {
+    }
+
+    public Requisito(Integer idrequisito, String requisito, String descripcion, String estado, Boolean active, User user) {
+        this.idrequisito = idrequisito;
+        this.requisito = requisito;
+        this.descripcion = descripcion;
+        this.estado = estado;
+        this.active = active;
+        this.user = user;
+    }
+    
+    
+
+    @Override
     public boolean equals(Object object) {
         if (!(object instanceof Sprint)) {
             return false;
         }
         Requisito other = (Requisito) object;
-        if ((this.idrequisito == null && other.idrequisito!= null) || (this.idrequisito!= null && !this.idrequisito.equals(other.idrequisito))) {
+        if ((this.idrequisito == null && other.idrequisito != null) || (this.idrequisito != null && !this.idrequisito.equals(other.idrequisito))) {
             return false;
         }
         return true;
@@ -42,11 +58,11 @@ public class Requisito {
         if (!(object instanceof Sprint)) {
             return false;
         }
- Requisito other = (Requisito) object;
-        if ((this.idrequisito == null && other.idrequisito != null) || (this.idrequisito!= null && !this.idrequisito.equals(other.idrequisito))) {
+        Requisito other = (Requisito) object;
+        if ((this.idrequisito == null && other.idrequisito != null) || (this.idrequisito != null && !this.idrequisito.equals(other.idrequisito))) {
             return false;
         }
         return EqualsBuilder.reflectionEquals(this, object);
     }
-    
+
 }

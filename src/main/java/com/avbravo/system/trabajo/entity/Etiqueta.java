@@ -22,6 +22,16 @@ public class Etiqueta {
  private String color;
  private Boolean active;
 
+    public Etiqueta() {
+    }
+
+    public Etiqueta(Integer idetiqueta, String etiqueta, String color, Boolean active) {
+        this.idetiqueta = idetiqueta;
+        this.etiqueta = etiqueta;
+        this.color = color;
+        this.active = active;
+    }
+
  
   @Override
     public boolean equals(Object object) {

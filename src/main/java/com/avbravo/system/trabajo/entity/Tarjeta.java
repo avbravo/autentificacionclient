@@ -25,8 +25,7 @@ public class Tarjeta {
  private Integer idtarjeta;
  private String titulo;
  private String descripcion;
- private String duracion;
- private Integer estimacion;
+ private Date inicio;
  private Date vencimiento;
   @Referenced(collection = "Etiqueta",
             field = "idetiqueta", javatype = "Integer", lazy = false,
@@ -43,24 +42,46 @@ public class Tarjeta {
             repository = "com.avbravo.autentificacion.repository.UserRepository")
     private List<User> user;
   
-  @Referenced(collection = "Estado",
-            field = "idestado", javatype = "Integer", lazy = false,
-            repository = "com.avbravo.autentificacion.trabajo.repository.EstadoRepository")
-  private Estado estado;
-  
+  @Referenced(collection = "Columna",
+            field = "idcolumna", javatype = "Integer", lazy = false,
+            repository = "com.avbravo.autentificacion.trabajo.repository.ColumnaRepository")
+  private Columna columna;
   @Embedded
-    private List<Tarea> tarea;
+  private List<Tarea> tarea;
+  @Embedded
+  private List<Impedimento> impedimento;
+  @Embedded
+  private List<Comentario> comentario;
+  
+  private Boolean active;
+  
+  
+  
+
+    public Tarjeta() {
+    }
+
+    public Tarjeta(Integer idtarjeta, String titulo, String descripcion, Date inicio, Date vencimiento, List<Etiqueta> etiqueta, Importancia importancia, List<User> user, Columna columna, List<Tarea> tarea, List<Impedimento> impedimento, List<Comentario> comentario, Boolean active) {
+        this.idtarjeta = idtarjeta;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.inicio = inicio;
+        this.vencimiento = vencimiento;
+        this.etiqueta = etiqueta;
+        this.importancia = importancia;
+        this.user = user;
+        this.columna = columna;
+        this.tarea = tarea;
+        this.impedimento = impedimento;
+        this.comentario = comentario;
+        this.active = active;
+    }
+
    
-     @Embedded
-    private List<Requisito> requisito;
-  
-   @Embedded
-    private List<Impedimento> impedimiento;
-      @Embedded
-    private List<Comentario> comentario;
   
   
- private Boolean active;
+  
+  
 
  
   @Override
