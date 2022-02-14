@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.avbravo.system.trabajo.entity;
+package com.avbravo.system.planeacion.entity;
 
 import com.avbravo.jmoordb.anotations.Id;
 import lombok.Builder;
@@ -15,31 +15,31 @@ import org.apache.commons.lang.builder.EqualsBuilder;
  */
 @Data
 @Builder
-public class Etiqueta {
+public class Columna {
  @Id
- private Integer idetiqueta;
- private String etiqueta;
- private String color;
+ private Integer idcolumna;
+ private String columna;
  private Boolean active;
 
-    public Etiqueta() {
+    public Columna() {
     }
 
-    public Etiqueta(Integer idetiqueta, String etiqueta, String color, Boolean active) {
-        this.idetiqueta = idetiqueta;
-        this.etiqueta = etiqueta;
-        this.color = color;
+    public Columna(Integer idcolumna, String columna, Boolean active) {
+        this.idcolumna = idcolumna;
+        this.columna = columna;
         this.active = active;
     }
 
+ 
+ 
  
   @Override
     public boolean equals(Object object) {
         if (!(object instanceof Sprint)) {
             return false;
         }
-        Etiqueta other = (Etiqueta) object;
-        if ((this.idetiqueta == null && other.idetiqueta!= null) || (this.idetiqueta!= null && !this.idetiqueta.equals(other.idetiqueta))) {
+        Columna other = (Columna) object;
+        if ((this.idcolumna == null && other.idcolumna!= null) || (this.idcolumna!= null && !this.idcolumna.equals(other.idcolumna))) {
             return false;
         }
         return true;
@@ -49,8 +49,8 @@ public class Etiqueta {
         if (!(object instanceof Sprint)) {
             return false;
         }
- Etiqueta other = (Etiqueta) object;
-        if ((this.idetiqueta == null && other.idetiqueta != null) || (this.idetiqueta!= null && !this.idetiqueta.equals(other.idetiqueta))) {
+ Columna other = (Columna) object;
+        if ((this.idcolumna == null && other.idcolumna != null) || (this.idcolumna!= null && !this.idcolumna.equals(other.idcolumna))) {
             return false;
         }
         return EqualsBuilder.reflectionEquals(this, object);

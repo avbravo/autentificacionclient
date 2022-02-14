@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.avbravo.system.trabajo.entity;
+package com.avbravo.system.planeacion.entity;
 
 import com.avbravo.autentificacionclient.entity.User;
 import com.avbravo.jmoordb.anotations.Embedded;
@@ -13,44 +13,44 @@ import lombok.Data;
 import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
- *w
+ *
  * @author avbravo
  */
+
 @Data
 @Builder
-public class Impedimento {
- @Id
- private Integer idimpedimento;
- private String impedimento;
- private Date fecha;
- private Boolean ejecutado;
- private Boolean active;
-  @Embedded 
- private User user;
+public class Comentario {
 
-    public Impedimento() {
+    @Id
+    private Integer idcomentario;
+    private String comentario;
+    private Date fecha;
+    private Boolean active;
+    @Embedded
+   private User user;
+
+    public Comentario() {
     }
 
-    public Impedimento(Integer idimpedimento, String impedimento, Date fecha, Boolean ejecutado, Boolean active, User user) {
-        this.idimpedimento = idimpedimento;
-        this.impedimento = impedimento;
+    public Comentario(Integer idcomentario, String comentario, Date fecha, Boolean active, User user) {
+        this.idcomentario = idcomentario;
+        this.comentario = comentario;
         this.fecha = fecha;
-        this.ejecutado = ejecutado;
         this.active = active;
         this.user = user;
     }
- 
-  
-  
-  
-  
-  @Override
+
+   
+
+   
+
+    @Override
     public boolean equals(Object object) {
         if (!(object instanceof Sprint)) {
             return false;
         }
-        Impedimento other = (Impedimento) object;
-        if ((this.idimpedimento == null && other.idimpedimento!= null) || (this.idimpedimento!= null && !this.idimpedimento.equals(other.idimpedimento))) {
+        Comentario other = (Comentario) object;
+        if ((this.idcomentario == null && other.idcomentario != null) || (this.idcomentario != null && !this.idcomentario.equals(other.idcomentario))) {
             return false;
         }
         return true;
@@ -60,11 +60,11 @@ public class Impedimento {
         if (!(object instanceof Sprint)) {
             return false;
         }
- Impedimento other = (Impedimento) object;
-        if ((this.idimpedimento == null && other.idimpedimento != null) || (this.idimpedimento!= null && !this.idimpedimento.equals(other.idimpedimento))) {
+        Comentario other = (Comentario) object;
+        if ((this.idcomentario == null && other.idcomentario != null) || (this.idcomentario != null && !this.idcomentario.equals(other.idcomentario))) {
             return false;
         }
         return EqualsBuilder.reflectionEquals(this, object);
     }
-    
+
 }

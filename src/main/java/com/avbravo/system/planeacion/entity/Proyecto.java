@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.avbravo.system.trabajo.entity;
+package com.avbravo.system.planeacion.entity;
 
 import com.avbravo.autentificacionclient.entity.Departament;
 import com.avbravo.autentificacionclient.entity.User;

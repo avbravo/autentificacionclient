@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.avbravo.system.trabajo.entity;
+package com.avbravo.system.planeacion.entity;
 
 import com.avbravo.jmoordb.anotations.Id;
 import lombok.Builder;

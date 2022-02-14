@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.avbravo.system.trabajo.entity;
+package com.avbravo.system.planeacion.entity;
 
 import com.avbravo.jmoordb.anotations.Id;
 import com.avbravo.jmoordb.anotations.Referenced;
@@ -30,11 +30,11 @@ public class Sprint {
     private Boolean finalizado;
     @Referenced(collection = "Proyecto",
             field = "idproyecto", javatype = "Integer", lazy = false,
-            repository = "com.avbravo.autentificacion.trabajo.repository.ProyectoRepository")
+            repository = "com.avbravo.autentificacion.planeacion.repository.ProyectoRepository")
     private Proyecto proyecto;
     @Referenced(collection = "Tarjeta",
             field = "idtarjeta", javatype = "Integer", lazy = false,
-            repository = "com.avbravo.autentificacion.trabajo.repository.TarjetaRepository")
+            repository = "com.avbravo.autentificacion.planeacion.repository.TarjetaRepository")
     private List<Tarjeta> tarjeta;
 
     public Sprint() {

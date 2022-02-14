@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.avbravo.system.trabajo.services;
+package com.avbravo.system.planeacion.services;
 // <editor-fold defaultstate="collapsed" desc="import">
 
 import com.avbravo.autentificacionclient.entity.Notifications;

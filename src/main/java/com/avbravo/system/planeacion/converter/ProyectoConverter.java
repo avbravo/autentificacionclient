@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.avbravo.system.trabajo.converter;
+package com.avbravo.system.planeacion.converter;
 
-import com.avbravo.system.trabajo.entity.Proyecto;
-import com.avbravo.system.trabajo.services.ProyectoServices;
+import com.avbravo.system.planeacion.entity.Proyecto;
+import com.avbravo.system.planeacion.services.ProyectoServices;
 import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;

@@ -3,17 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.avbravo.system.trabajo.services;
+package com.avbravo.system.planeacion.services;
 
-import com.avbravo.system.trabajo.services.*;
-import com.avbravo.autentificacionclient.services.*;
-import com.avbravo.autentificacionclient.entity.History;
 import com.avbravo.autentificacionclient.producer.AuthentificationProducer;
 import com.avbravo.autentificacionclient.producer.MicroservicesProducer;
+import com.avbravo.autentificacionclient.services.LoggerServices;
+import com.avbravo.jmoordb.util.JmoordbDateUtil;
 import com.avbravo.jmoordb.util.JmoordbDocument;
 import com.avbravo.jmoordb.util.JmoordbUtil;
+import com.avbravo.system.trabajo.entity.Proyecto;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.ejb.Stateless;
@@ -34,9 +37,9 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 @LocalBean
-public class HistoryTrabajoServices implements Serializable {
+public class ProyectoServices implements Serializable {
 
-      // <editor-fold defaultstate="collapsed" desc="fields ">
+     // <editor-fold defaultstate="collapsed" desc="fields ">
 
     Exception exception;
 // </editor-fold>
@@ -60,75 +63,49 @@ public class HistoryTrabajoServices implements Serializable {
     }
 
 // </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="List<History> findAll()">
-    public List<History> findAll() {
-        List<History> historyList = new ArrayList<>();
+
+// <editor-fold defaultstate="collapsed" desc="List<Proyecto> findAll()">
+    public List<Proyecto> findAll() {
+        List<Proyecto> proyectoList = new ArrayList<>();
         try {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
-            WebTarget target = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/historytrabajo/findall");
+            WebTarget target = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/proyecto/findall");
 
-            GenericType<List<History>> data = new GenericType<List<History>>() {
+            GenericType<List<Proyecto>> data = new GenericType<List<Proyecto>>() {
             };
 
-            historyList = target.request(MediaType.APPLICATION_JSON).get(data);
+            proyectoList = target.request(MediaType.APPLICATION_JSON).get(data);
 
         } catch (Exception e) {
                exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
              
              
         }
-        return historyList;
+        return proyectoList;
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Boolean add(History history)">
-    public Boolean add(History history) {
+    // <editor-fold defaultstate="collapsed" desc="Boolean add(Proyecto proyecto)">
+    public Boolean add(Proyecto proyecto) {
         try {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/historytrabajo/add");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/proyecto/add");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.post(Entity.entity(history, MediaType.APPLICATION_JSON));
+            Response response = invocationBuilder.post(Entity.entity(proyecto, MediaType.APPLICATION_JSON));
 
              
             if (response.getStatus() == 400) {
                  exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-                history.setIdhistory(Integer.parseInt(response.readEntity(String.class)));
-           
-            return true;
-        } catch (Exception e) {
-               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-             
-             
-        }
-        return false;
-    }
-// </editor-fold>
-
-// <editor-fold defaultstate="collapsed" desc="Boolean update(History history)">
-    public Boolean update(History history) {
-        try {
-            Client client = ClientBuilder.newClient();
-            client.register(authentificationProducer.httpAuthenticationFeature());
-            WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/historytrabajo/update");
-
-            Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.put(Entity.entity(history, MediaType.APPLICATION_JSON));
-
-             
-            if (response.getStatus() == 400) {
-                 exception = new Exception(response.readEntity(String.class));
-                return false;
-            }
-             
+              proyecto.setIdproyecto(Integer.parseInt(response.readEntity(String.class)));
             
+          
             return true;
         } catch (Exception e) {
                exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
@@ -138,17 +115,17 @@ public class HistoryTrabajoServices implements Serializable {
         return false;
     }
 // </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="Boolean delete(History history)">
 
-    public Boolean delete(History history) {
+// <editor-fold defaultstate="collapsed" desc="Boolean update(Proyecto proyecto)">
+    public Boolean update(Proyecto proyecto) {
         try {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/historytrabajo/delete");
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/proyecto/update");
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            Response response = invocationBuilder.post(Entity.entity(history, MediaType.APPLICATION_JSON));
+            Response response = invocationBuilder.put(Entity.entity(proyecto, MediaType.APPLICATION_JSON));
 
              
             if (response.getStatus() == 400) {
@@ -156,7 +133,35 @@ public class HistoryTrabajoServices implements Serializable {
                 return false;
             }
              
-         
+      
+            return true;
+        } catch (Exception e) {
+               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+             
+             
+        }
+        return false;
+    }
+// </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="Boolean delete(Proyecto proyecto)">
+
+    public Boolean delete(Proyecto proyecto) {
+        try {
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+            WebTarget webTarget
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/proyecto/delete");
+
+            Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+            Response response = invocationBuilder.post(Entity.entity(proyecto, MediaType.APPLICATION_JSON));
+
+             
+            if (response.getStatus() == 400) {
+                 exception = new Exception(response.readEntity(String.class));
+                return false;
+            }
+             
+        
             return true;
         } catch (Exception e) {
                exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
@@ -167,43 +172,43 @@ public class HistoryTrabajoServices implements Serializable {
     }
 // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Optional<History> findByHistory(Integer idhistory) ">
+    // <editor-fold defaultstate="collapsed" desc="Optional<Proyecto> findByIdproyecto(Integer idproyecto)">
     /**
      * consulta por codigo_pedido impresa
      *
      * @param codigo_
      * @return
      */
-    public Optional<History> findByIdhistory(Integer idhistory) {
-        History history = new History();
+    public Optional<Proyecto> findByIdproyecto(Integer idproyecto) {
+        Proyecto proyecto = new Proyecto();
         try {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
-            history = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/historytrabajo/search/")
-                    .path("/{idhistory}")
-                    .resolveTemplate("idhistory", idhistory)
+            proyecto = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/proyecto/search/")
+                    .path("/{idproyecto}")
+                    .resolveTemplate("idproyecto", idproyecto)
                     .request(MediaType.APPLICATION_JSON)
-                    .get(History.class
+                    .get(Proyecto.class
                     );
-            if(history == null || history.getIdhistory() == null || history.getContent() == null){
+            if(proyecto == null || proyecto.getIdproyecto() == null || proyecto.getProyecto() == null || proyecto.getProyecto().equals("")){
                return Optional.empty();  
             }
-            return Optional.of(history);
+            return Optional.of(proyecto);
             //String result = FAIL;
         } catch (Exception e) {
                exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
              
-    
+          
         }
         return Optional.empty();
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="List<History> complete( String query)">
-    public List<History> complete(String query) {
-        List<History> suggestions = new ArrayList<>();
+    // <editor-fold defaultstate="collapsed" desc="List<Proyecto> complete( String query)">
+    public List<Proyecto> complete(String query) {
+        List<Proyecto> suggestions = new ArrayList<>();
         try {
 
             if (query == null || query.isEmpty()) {
@@ -212,11 +217,11 @@ public class HistoryTrabajoServices implements Serializable {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/historytrabajo/autocomplete/")
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/proyecto/autocomplete/")
                     .path("/{query}")
                     .resolveTemplate("query", query)
                     .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<History>>() {
+                    .get(new GenericType<List<Proyecto>>() {
                     });
 
         } catch (Exception e) {
@@ -232,30 +237,30 @@ public class HistoryTrabajoServices implements Serializable {
     
      
        
-// <editor-fold defaultstate="collapsed" desc=" List<History> jsonQuery(@QueryParam("query") String query , @QueryParam("sort") String sort, @QueryParam("pagenumber") Integer pageNumber, @QueryParam("rowforpage") Integer rowForPage )">
+// <editor-fold defaultstate="collapsed" desc=" List<Proyecto> jsonQuery(@QueryParam("query") String query , @QueryParam("sort") String sort, @QueryParam("pagenumber") Integer pageNumber, @QueryParam("rowforpage") Integer rowForPage )">
 
-  public  List<History> jsonQuery( String query ,  String sort,
+  public  List<Proyecto> jsonQuery( String query ,  String sort,
      Integer pageNumber,  Integer rowForPage ){
-        List<History> suggestions = new ArrayList<>();
+        List<Proyecto> suggestions = new ArrayList<>();
         try {
  
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/historytrabajo/jsonquery/")                    
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/proyecto/jsonquery/")                    
                     .queryParam("query", JmoordbDocument.encodeJson(query))
                     .queryParam("sort",JmoordbDocument.encodeJson(sort))
                     .queryParam("pagenumber", pageNumber)
                     .queryParam("rowforpage", rowForPage)
                     .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<History>>() {
+                    .get(new GenericType<List<Proyecto>>() {
                     });
 
         } catch (Exception e) {
                exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
              
-         
+
              
         }
 
@@ -263,21 +268,21 @@ public class HistoryTrabajoServices implements Serializable {
     }
     // </editor-fold>   
   
-  // <editor-fold defaultstate="collapsed" desc=" List<History> jsonQueryWithoutPagination( @QueryParam("query") String query , @QueryParam("sort") String sort  ){">
+  // <editor-fold defaultstate="collapsed" desc=" List<Proyecto> jsonQueryWithoutPagination( @QueryParam("query") String query , @QueryParam("sort") String sort  ){">
    
-   public List<History> jsonQueryWithoutPagination( String query ,  String sort  ){
-        List<History> suggestions = new ArrayList<>();
+   public List<Proyecto> jsonQueryWithoutPagination( String query ,  String sort  ){
+        List<Proyecto> suggestions = new ArrayList<>();
         try {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/historytrabajo/jsonquerywithoutpagination/")                    
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/proyecto/jsonquerywithoutpagination/")                    
                  .queryParam("query", JmoordbDocument.encodeJson(query))
                     .queryParam("sort",JmoordbDocument.encodeJson(sort))
                   
                     .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<History>>() {
+                    .get(new GenericType<List<Proyecto>>() {
                     });
         } catch (Exception e) {
                exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
@@ -308,7 +313,7 @@ public class HistoryTrabajoServices implements Serializable {
             client.register(authentificationProducer.httpAuthenticationFeature());
 
             WebTarget webTarget
-                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/historytrabajo/countjsonquery")
+                    = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/proyecto/countjsonquery")
                              .queryParam("query", JmoordbDocument.encodeJson(query));
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
@@ -333,5 +338,41 @@ public class HistoryTrabajoServices implements Serializable {
         return total;
     }
     // </editor-fold>
+      // <editor-fold defaultstate="collapsed" desc="String showDate(Date date)">
+    public String showDate(Date date) {
+        String h = "";
+        try {
+            h = JmoordbDateUtil.dateFormatToString(date, "dd/MM/yyyy");
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.errorMessage("showDate() " + e.getLocalizedMessage());
+        }
+        return h;
+    }// </editor-fold>
+         // <editor-fold defaultstate="collapsed" desc="String showDateLocalDate(Date date)">
+    public String showDateLocalDate(LocalDate date) {
+        String h = "";
+        try {
+            DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+h = date.format(formatters);
+            
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.errorMessage("showDate() " + e.getLocalizedMessage());
+        }
+        return h;
+    }// </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="String showHour(Date date)">
+
+    public String showHour(Date date) {
+        String h = "";
+        try {
+            h = JmoordbDateUtil.hourFromDateToString(date);
+        } catch (Exception e) {
+            exception = new Exception(JmoordbUtil.nameOfMethod() + " " + e.getLocalizedMessage());
+            JmoordbUtil.errorMessage("showHour() " + e.getLocalizedMessage());
+        }
+        return h;
+    }// </editor-fold>
 
 }

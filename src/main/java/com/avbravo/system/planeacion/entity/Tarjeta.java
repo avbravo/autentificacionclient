@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.avbravo.system.trabajo.entity;
+package com.avbravo.system.planeacion.entity;
 
 import com.avbravo.autentificacionclient.entity.User;
 import com.avbravo.jmoordb.anotations.Embedded;
@@ -29,12 +29,12 @@ public class Tarjeta {
  private Date vencimiento;
   @Referenced(collection = "Etiqueta",
             field = "idetiqueta", javatype = "Integer", lazy = false,
-            repository = "com.avbravo.autentificacion.trabajo.repository.EtiquetaRepository")
+            repository = "com.avbravo.autentificacion.planeacion.repository.EtiquetaRepository")
  private List<Etiqueta> etiqueta;
  
   @Referenced(collection = "Importancia",
             field = "idimportancia", javatype = "Integer", lazy = false,
-            repository = "com.avbravo.autentificacion.trabajo.repository.ImportanciaRepository")
+            repository = "com.avbravo.autentificacion.planeacion.repository.ImportanciaRepository")
   private Importancia importancia;
   
  @Referenced(collection = "User",
@@ -44,7 +44,7 @@ public class Tarjeta {
   
   @Referenced(collection = "Columna",
             field = "idcolumna", javatype = "Integer", lazy = false,
-            repository = "com.avbravo.autentificacion.trabajo.repository.ColumnaRepository")
+            repository = "com.avbravo.autentificacion.planeacion.repository.ColumnaRepository")
   private Columna columna;
   @Embedded
   private List<Tarea> tarea;
