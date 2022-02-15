@@ -11,7 +11,7 @@ import com.avbravo.autentificacionclient.services.LoggerServices;
 import com.avbravo.jmoordb.util.JmoordbDateUtil;
 import com.avbravo.jmoordb.util.JmoordbDocument;
 import com.avbravo.jmoordb.util.JmoordbUtil;
-import com.avbravo.system.trabajo.entity.Proyecto;
+import com.avbravo.system.planeacion.entity.Proyecto;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
