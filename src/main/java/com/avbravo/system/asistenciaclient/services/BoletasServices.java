@@ -983,6 +983,7 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
                     + nameOfUser
                     + "\n\n\b"
                     + "\nPor favor no responda este correo..."
+                          + "\n\nhttp://congreso.ls.utp.ac.pa:8083/asistencia"
                     + "\n-------------------------------------------------------------";
 
         } catch (Exception e) {

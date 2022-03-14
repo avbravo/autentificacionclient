@@ -425,6 +425,7 @@ h = date.format(formatters);
                     + nameOfUser
                     + "\n\n\b"
                     + "\nPor favor no responda este correo..."
+                          + "\n\nhttp://congreso.ls.utp.ac.pa:8084/limpieza"
                     + "\n-------------------------------------------------------------";
 
         } catch (Exception e) {
