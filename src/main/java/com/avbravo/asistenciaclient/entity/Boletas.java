@@ -22,8 +22,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
  * rechazado, regresado
  */
 public class Boletas {
-
-   @Id
+    @Id
     private Integer idboleta;
     private Date fecha;
     @Referenced(collection = "User",
@@ -50,16 +49,13 @@ public class Boletas {
     @Embedded
     private String numeroincapadicadsalud;
     private String tipojustificacionsalud;
-
     private Boolean active;
-    
     private Boolean captadoensistemaaistencia;
     @Ignore
-    private Boolean  esseleccionada;
-    
+    private Boolean esseleccionada;
     @Ignore
     private String comentario;
-    
+
     public Boletas() {
     }
 
@@ -79,14 +75,6 @@ public class Boletas {
         this.esseleccionada = esseleccionada;
     }
 
-    
-    
-    
-    
-   
-  
-    
-    
     public Boolean getCaptadoensistemaaistencia() {
         return captadoensistemaaistencia;
     }
@@ -102,10 +90,6 @@ public class Boletas {
     public void setGradoconsanguinidad(String gradoconsanguinidad) {
         this.gradoconsanguinidad = gradoconsanguinidad;
     }
-
-   
-
-   
 
     public Integer getIdboleta() {
         return idboleta;
@@ -251,8 +235,6 @@ public class Boletas {
         this.active = active;
     }
 
-  
-
     @Override
     public boolean equals(Object object) {
         if (!(object instanceof Boletas)) {
@@ -262,9 +244,9 @@ public class Boletas {
         if ((this.idboleta == null && other.idboleta != null) || (this.idboleta != null && !this.idboleta.equals(other.idboleta))) {
             return false;
         }
-   return true;
+        return true;
     }
-    
+
     public boolean equalsReflection(Object object) {
         if (!(object instanceof Boletas)) {
             return false;
@@ -273,7 +255,7 @@ public class Boletas {
         if ((this.idboleta == null && other.idboleta != null) || (this.idboleta != null && !this.idboleta.equals(other.idboleta))) {
             return false;
         }
-   return EqualsBuilder.reflectionEquals(this, object);
+        return EqualsBuilder.reflectionEquals(this, object);
     }
 
 }

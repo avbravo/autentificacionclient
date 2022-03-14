@@ -978,11 +978,12 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
                     +boletas.getComentario()
                       + "\n_____________________________________________"
                      +"\n Evento: "
-                    + header
+                    + header 
                      +"\n Acción realizada por: "
                     + nameOfUser
                     + "\n\n\b"
                     + "\nPor favor no responda este correo..."
+                    + "\n\nhttp://congreso.ls.utp.ac.pa:8083/asistencia"
                     + "\n-------------------------------------------------------------";
 
         } catch (Exception e) {
