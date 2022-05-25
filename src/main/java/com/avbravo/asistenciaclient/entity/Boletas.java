@@ -59,6 +59,9 @@ public class Boletas {
     public Boletas() {
     }
 
+    
+    
+    
     public String getComentario() {
         return comentario;
     }
