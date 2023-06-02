@@ -5,14 +5,17 @@
  */
 package com.avbravo.autentificacionclient.services;
 
+import com.avbravo.autentificacion.viewentity.JmoordbEntity;
 import com.avbravo.autentificacionclient.entity.Profile;
 import com.avbravo.autentificacionclient.entity.User;
 import com.avbravo.autentificacionclient.producer.AuthentificationProducer;
 import com.avbravo.autentificacionclient.producer.MicroservicesProducer;
+import com.avbravo.autentificacion.viewentity.CedulaUserVEntity;
 import com.avbravo.jmoordb.util.JmoordbDocument;
 import com.avbravo.jmoordb.util.JmoordbUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -545,28 +548,28 @@ public class UserServices implements Serializable {
      * Procesa la lista y actualiza o crea un profile para este sistema
      */
     public List<Profile> processAndChangeProfile(Integer idapplicative, Integer iddepartament, Integer idrole, List<Profile> profileList, Boolean isChange) {
-        try{
-        Integer pos = 0;
-        Boolean found = false;
-        for (Profile p : profileList) {
-            if (p.getIdapplicative().equals(idapplicative) && p.getIdrole().equals(idrole)) {
-                found = true;
-                p.setActive(isChange);
-                profileList.set(pos, p);
+        try {
+            Integer pos = 0;
+            Boolean found = false;
+            for (Profile p : profileList) {
+                if (p.getIdapplicative().equals(idapplicative) && p.getIdrole().equals(idrole)) {
+                    found = true;
+                    p.setActive(isChange);
+                    profileList.set(pos, p);
 
+                }
+                pos++;
             }
-            pos++;
-        }
-        if (isChange && !found) {
-            Profile profile = new Profile();
-            profile.setIdprofile(maxValueProfile(profileList) + 1);
-            profile.setIdapplicative(idapplicative);
-            profile.setIddepartament(iddepartament);
-            profile.setIdrole(idrole);
-            profile.setActive(Boolean.TRUE);
-            profileList.add(profile);
-        }
-         } catch (Exception e) {
+            if (isChange && !found) {
+                Profile profile = new Profile();
+                profile.setIdprofile(maxValueProfile(profileList) + 1);
+                profile.setIdapplicative(idapplicative);
+                profile.setIddepartament(iddepartament);
+                profile.setIdrole(idrole);
+                profile.setActive(Boolean.TRUE);
+                profileList.add(profile);
+            }
+        } catch (Exception e) {
             exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
         }
         return profileList;
@@ -618,4 +621,35 @@ public class UserServices implements Serializable {
     }
 
     // </editor-fold>
+//<editor-fold defaultstate="collapsed" desc="aggregateCedulaUsuarios">
+    public List<JmoordbEntity> aggregateCedulaUsuarios(List<String> filtros) {
+        List<JmoordbEntity> resultados = new ArrayList<>();
+        try {
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+
+            List<String> jsons = new ArrayList<>();
+            filtros.forEach((elemento) -> {
+//                System.out.println("Elemento " + elemento);
+                jsons.add(new String(Base64.getEncoder().encodeToString(elemento.getBytes())));
+            });
+
+//            System.out.println("Elementos " + jsons.get(0));
+
+            resultados = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/aggregatequerywithoutpagination/")
+                    .queryParam("query", jsons)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<JmoordbEntity>>() {
+                    }
+                    );
+        } catch (Exception e) {
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+        }
+
+        return resultados;
+
+    }
+//</editor-fold>
+
 }

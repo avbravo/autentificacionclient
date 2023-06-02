@@ -6,6 +6,8 @@
 package com.avbravo.asistenciaclient.services;
 
 import com.avbravo.asistenciaclient.entity.Boletas;
+import com.avbravo.autentificacion.viewentity.JmoordbEntity;
+import com.avbravo.autentificacion.viewentity.UsuariosCantidadBoletas;
 import com.avbravo.autentificacionclient.producer.AuthentificationProducer;
 import com.avbravo.autentificacionclient.producer.MicroservicesProducer;
 import com.avbravo.autentificacionclient.services.LoggerServices;
@@ -14,6 +16,7 @@ import com.avbravo.jmoordb.util.JmoordbDocument;
 import com.avbravo.jmoordb.util.JmoordbUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +31,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import org.bson.Document;
 
 /**
  *
@@ -74,9 +78,8 @@ public class BoletasServices implements Serializable {
             boletasList = target.request(MediaType.APPLICATION_JSON).get(data);
 
         } catch (Exception e) {
-               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-             
-   
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+
         }
         return boletasList;
     }
@@ -95,28 +98,29 @@ public class BoletasServices implements Serializable {
 
             if (response.getStatus() == 400) {
                 exception = new Exception(response.readEntity(String.class));
-                
+
                 //JmoordbUtil.e
                 return false;
             }
-boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
+            boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
             return true;
         } catch (Exception e) {
-               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-             
-             
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+
         }
         return false;
     }
 // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Boolean addReturnid(Boletas boletas)">
+
     /**
      * Retorna el id de la boleta creada, ya que es un autoincrementable
+     *
      * @param boletas
-     * @return 
+     * @return
      */
     public Integer addReturnid(Boletas boletas) {
-        Integer id =0;
+        Integer id = 0;
         try {
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
@@ -126,21 +130,19 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.post(Entity.entity(boletas, MediaType.APPLICATION_JSON));
 
-              if (response.getStatus() == 201) {
-                id= Integer.parseInt(response.readEntity(String.class));
+            if (response.getStatus() == 201) {
+                id = Integer.parseInt(response.readEntity(String.class));
 
             }
-            
+
             if (response.getStatus() == 400) {
                 exception = new Exception(response.readEntity(String.class));
                 return 0;
             }
 
-          
         } catch (Exception e) {
-               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-             
-             
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+
         }
         return id;
     }
@@ -163,11 +165,10 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
                 exception = new Exception(response.readEntity(String.class));
                 return false;
             }
-           
+
             return true;
         } catch (Exception e) {
-               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-            
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
 
         }
         return false;
@@ -175,7 +176,6 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
 // </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="Boolean delete(Boletas boletas)">
-
     public Boolean delete(Boletas boletas) {
         try {
             Client client = ClientBuilder.newClient();
@@ -188,28 +188,24 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
                     .request(MediaType.APPLICATION_XML)
                     .delete(String.class);
 
-          
             if (callResult.equals("<result>success</result>")) {
                 // exception = new Exception(response.readEntity(String.class));
                 return true;
             }
 
         } catch (Exception e) {
-               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-             
-             
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+
         }
         return false;
     }
 // </editor-fold>
 
-   
     // <editor-fold defaultstate="collapsed" desc="Boletas findByBoleta(Integer idboleta) ">
-   
     /**
-     * 
+     *
      * @param idboleta
-     * @return 
+     * @return
      */
     public Optional<Boletas> findByIdboleta(Integer idboleta) {
         Boletas boletas = new Boletas();
@@ -224,34 +220,32 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
                     .request(MediaType.APPLICATION_JSON)
                     .get(Boletas.class
                     );
-            if(boletas == null || boletas.getIdboleta() == null){
-                 return Optional.empty();
+            if (boletas == null || boletas.getIdboleta() == null) {
+                return Optional.empty();
             }
             return Optional.of(boletas);
             //String result = FAIL;
         } catch (Exception e) {
-               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-             
-             
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+
         }
         return Optional.empty();
     }
 
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Boletas findByBoleta(Integer idboleta) ">
-   
     /**
-     * 
+     *
      * @param idboleta
-     * @return 
+     * @return
      */
     public List<Boletas> findByIdDepartament(Integer iddepartament) {
-       List<Boletas> suggestions = new ArrayList<>();
+        List<Boletas> suggestions = new ArrayList<>();
         try {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
-             suggestions = client
+            suggestions = client
                     .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/findbyiddepartament/")
                     .path("/{iddepartament}")
                     .resolveTemplate("iddepartament", iddepartament)
@@ -260,17 +254,14 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
                     });
             //String result = FAIL;
         } catch (Exception e) {
-               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-             
-             
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+
         }
         return suggestions;
     }
 
     // </editor-fold>
-    
-    
-      // <editor-fold defaultstate="collapsed" desc="List<Boletas> findByUsername(String username)">
+    // <editor-fold defaultstate="collapsed" desc="List<Boletas> findByUsername(String username)">
     public List<Boletas> findByUsername(String username) {
         List<Boletas> suggestions = new ArrayList<>();
         try {
@@ -286,19 +277,14 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
                     });
 
         } catch (Exception e) {
-               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-             
-          
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+
         }
 
         return suggestions;
     }
 
     // </editor-fold>
-    
-    
-    
-    
     // <editor-fold defaultstate="collapsed" desc="List<Boletas> complete( String query)">
     public List<Boletas> complete(String query) {
         List<Boletas> suggestions = new ArrayList<>();
@@ -318,19 +304,13 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
                     });
 
         } catch (Exception e) {
-               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-           
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+
         }
 
         return suggestions;
     }
     // </editor-fold>
-
-   
-    
-    
-    
-   
 
     // <editor-fold defaultstate="collapsed" desc="List<Boletas> betweendate( String fieldstart, String start, String fieldend,String end)">
     public List<Boletas> betweendate(String fieldstart, String start, String fieldend, String end) {
@@ -350,10 +330,8 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
                     });
 
         } catch (Exception e) {
-               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-             
-             
-         
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+
         }
 
         return suggestions;
@@ -378,10 +356,8 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
                     });
 
         } catch (Exception e) {
-               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-             
-             
-             
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+
         }
 
         return suggestions;
@@ -417,10 +393,8 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
                     });
 
         } catch (Exception e) {
-               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-             
-             
-             
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+
         }
 
         return suggestions;
@@ -456,20 +430,15 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
                     });
 
         } catch (Exception e) {
-               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-             
-             
-             
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+
         }
 
         return suggestions;
     }
     // </editor-fold>
-    
-
 
 //   // <editor-fold defaultstate="collapsed" desc="Integer  count(Boolean active)">
-
     /**
      * Consulta las boletas por departamento y el (estadoautoridad= or
      * estadoautoridad=)
@@ -503,10 +472,8 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
             }
 
         } catch (Exception e) {
-               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-             
-             
-             
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+
         }
 
         return total;
@@ -541,10 +508,8 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
             }
 
         } catch (Exception e) {
-               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-             
-             
-             
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+
         }
 
         return total;
@@ -579,10 +544,8 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
             }
 
         } catch (Exception e) {
-               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-             
-             
-             
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+
         }
 
         return total;
@@ -621,10 +584,8 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
             }
 
         } catch (Exception e) {
-               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-             
-             
-             
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+
         }
 
         return total;
@@ -664,17 +625,14 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
             }
 
         } catch (Exception e) {
-               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-             
-             
-             
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+
         }
 
         return total;
     }
 
     // </editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="List<Boletas> findByEstadoUnidadAndEstadoAutoridad@QueryParam("estadounidad") String estadounidad,             @QueryParam("estadoautoridad") String estadoautoridad)">
     public List<Boletas> findByUserAndFieldType(String username,
             String field,
@@ -694,25 +652,19 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
                     });
 
         } catch (Exception e) {
-               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-             
-           
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+
         }
 
         return suggestions;
     }
 
     // </editor-fold>
-    
-    
-    
-    
-    
     // <editor-fold defaultstate="collapsed" desc="BooleanisAvailableBetweenDateHours(String query, String fieldstart, String start, String fieldend, String end)">
     public Boolean isAvailableBetweenDateHours(String query, String fieldstart, String start, String fieldend, String end
-          ) {
-     
-       Boolean found =false;
+    ) {
+
+        Boolean found = false;
         try {
 
             Client client = ClientBuilder.newClient();
@@ -730,88 +682,72 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
 
             Response response = invocationBuilder.get();
-     
+
             if (response.getStatus() == 201) {
-          
-                String result= response.readEntity(String.class);
-                if(result.equals("true")){
-          
+
+                String result = response.readEntity(String.class);
+                if (result.equals("true")) {
+
                     return true;
-                }else{
-           
+                } else {
+
                     return false;
                 }
-                
-       
 
             }
 
             if (response.getStatus() == 400) {
                 exception = new Exception(response.readEntity(String.class));
-              
+
                 return false;
             }
 
         } catch (Exception e) {
-           
-               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-             
-             
-             
+
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+
         }
 
         return found;
     }
 
     // </editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="List<Boletas> availableBetweenDateHours(String query, String fieldstart, String start, String fieldend, String end)">
     public List<Boletas> availableBetweenDateHours(String query, String fieldstart, String start, String fieldend, String end
-          ) {
-       List<Boletas> suggestions = new ArrayList<>();
+    ) {
+        List<Boletas> suggestions = new ArrayList<>();
         try {
 
-          
-
-             Client client = ClientBuilder.newClient();
+            Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/availableBetweenDateHours/")                    
-                .queryParam("fieldstart", fieldstart)
-                            .queryParam("start", start)
-                            .queryParam("fieldend", fieldend)
-                            .queryParam("end", end)
-                            .queryParam("query", JmoordbDocument.encodeJson(query))
-                  
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/availableBetweenDateHours/")
+                    .queryParam("fieldstart", fieldstart)
+                    .queryParam("start", start)
+                    .queryParam("fieldend", fieldend)
+                    .queryParam("end", end)
+                    .queryParam("query", JmoordbDocument.encodeJson(query))
                     .request(MediaType.APPLICATION_JSON)
                     .get(new GenericType<List<Boletas>>() {
                     });
 
         } catch (Exception e) {
-               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-             
-             
-             
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+
         }
 
-        return suggestions ;
+        return suggestions;
     }
 
     // </editor-fold>
-    
-    
-    
-    
-    
-    
-     // <editor-fold defaultstate="collapsed" desc="String showDate(Date date)">
+    // <editor-fold defaultstate="collapsed" desc="String showDate(Date date)">
     public String showDate(Date date) {
         String h = "";
         try {
             h = JmoordbDateUtil.dateFormatToString(date, "dd/MM/yyyy");
         } catch (Exception e) {
-               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-            
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+
         }
         return h;
     }// </editor-fold>
@@ -822,30 +758,24 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
         try {
             h = JmoordbDateUtil.hourFromDateToString(date);
         } catch (Exception e) {
-               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-        
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+
         }
         return h;
     }// </editor-fold>
-    
-     
 
- 
-       
 // <editor-fold defaultstate="collapsed" desc=" List<Boletas> jsonQuery(@QueryParam("query") String query , @QueryParam("sort") String sort, @QueryParam("pagenumber") Integer pageNumber, @QueryParam("rowforpage") Integer rowForPage )">
-
-  public  List<Boletas> jsonQuery( String query ,  String sort,
-     Integer pageNumber,  Integer rowForPage ){
+    public List<Boletas> jsonQuery(String query, String sort,
+            Integer pageNumber, Integer rowForPage) {
         List<Boletas> suggestions = new ArrayList<>();
         try {
- 
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/jsonquery/")                    
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/jsonquery/")
                     .queryParam("query", JmoordbDocument.encodeJson(query))
-                    .queryParam("sort",JmoordbDocument.encodeJson(sort))
+                    .queryParam("sort", JmoordbDocument.encodeJson(sort))
                     .queryParam("pagenumber", pageNumber)
                     .queryParam("rowforpage", rowForPage)
                     .request(MediaType.APPLICATION_JSON)
@@ -853,50 +783,44 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
                     });
 
         } catch (Exception e) {
-               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-             
-            
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+
         }
 
         return suggestions;
     }
     // </editor-fold>   
-  
-  // <editor-fold defaultstate="collapsed" desc=" List<Boletas> jsonQueryWithoutPagination( @QueryParam("query") String query , @QueryParam("sort") String sort  ){">
-   
-   public List<Boletas> jsonQueryWithoutPagination( String query ,  String sort  ){
+
+    // <editor-fold defaultstate="collapsed" desc=" List<Boletas> jsonQueryWithoutPagination( @QueryParam("query") String query , @QueryParam("sort") String sort  ){">
+    public List<Boletas> jsonQueryWithoutPagination(String query, String sort) {
         List<Boletas> suggestions = new ArrayList<>();
         try {
 
             Client client = ClientBuilder.newClient();
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/jsonquerywithoutpagination/")                    
-                 .queryParam("query", JmoordbDocument.encodeJson(query))
-                    .queryParam("sort",JmoordbDocument.encodeJson(sort))
-                  
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/jsonquerywithoutpagination/")
+                    .queryParam("query", JmoordbDocument.encodeJson(query))
+                    .queryParam("sort", JmoordbDocument.encodeJson(sort))
                     .request(MediaType.APPLICATION_JSON)
                     .get(new GenericType<List<Boletas>>() {
                     });
         } catch (Exception e) {
-               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-            
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+
         }
 
         return suggestions;
     }
     // </editor-fold>   
-    
-    
-   
-    // <editor-fold defaultstate="collapsed" desc="Integer countJsonQuery(String query)">
 
+    // <editor-fold defaultstate="collapsed" desc="Integer countJsonQuery(String query)">
     /**
      * devuelve el contador de documentos en base a un json query
+     *
      * @param query
-     * @return 
+     * @return
      */
-
     public Integer countJsonQuery(String query) {
         Integer total = 0;
         try {
@@ -906,7 +830,7 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
 
             WebTarget webTarget
                     = client.target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/countjsonquery")
-                             .queryParam("query", JmoordbDocument.encodeJson(query));
+                            .queryParam("query", JmoordbDocument.encodeJson(query));
 
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
             Response response = invocationBuilder.get();
@@ -921,41 +845,39 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
             }
 
         } catch (Exception e) {
-               exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
-             
-             
-             
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+
         }
 
         return total;
     }
     // </editor-fold>
-    
-    
+
     // <editor-fold defaultstate="collapsed" desc="String generateMessageForEmail(Boletas boletas, String header, String nameOfUser)">
     /**
      * Genera el mensaje que sera enviado en el correo
+     *
      * @param boletas
      * @param header
      * @param nameOfUser
-     * @return 
+     * @return
      */
-    public String generateMessageForEmail(Boletas boletas, String header, String nameOfUser){
-        String messages="";
+    public String generateMessageForEmail(Boletas boletas, String header, String nameOfUser) {
+        String messages = "";
         try {
-         
-               messages     = "\n  "                    
+
+            messages = "\n  "
                     + "\n----------------------BOLETA---------------------------------------"
                     + "\nBoleta #:"
-                    +boletas.getIdboleta()
+                    + boletas.getIdboleta()
                     + "\nFecha : "
                     + showDate(boletas.getFecha())
                     + " "
                     + showHour(boletas.getFecha())
                     + "\nColaborador: "
-                    +boletas.getUser().getName()
+                    + boletas.getUser().getName()
                     + "\nDepartamento: "
-                    +boletas.getDepartament().getDepartament()
+                    + boletas.getDepartament().getDepartament()
                     + "\nFecha inicial: "
                     + showDate(boletas.getFechainicial())
                     + " "
@@ -965,21 +887,21 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
                     + " "
                     + showHour(boletas.getFechafinal())
                     + "\nObservaciones: "
-                    +boletas.getObservacion()
+                    + boletas.getObservacion()
                     + "\nTipo boleta: "
-                    +boletas.getTipoboleta()
+                    + boletas.getTipoboleta()
                     + "\nTipo justificacion: "
-                    +boletas.getTipojustificacon()
+                    + boletas.getTipojustificacon()
                     + "\nVisto bueno jefe inmediato: "
-                    +boletas.getEstadounidad()
+                    + boletas.getEstadounidad()
                     + "\nVisto bueno Autoridad: "
-                    +boletas.getEstadoautoridad()
+                    + boletas.getEstadoautoridad()
                     + "\nComentario: "
-                    +boletas.getComentario()
-                      + "\n_____________________________________________"
-                     +"\n Evento: "
-                    + header 
-                     +"\n Acción realizada por: "
+                    + boletas.getComentario()
+                    + "\n_____________________________________________"
+                    + "\n Evento: "
+                    + header
+                    + "\n Acción realizada por: "
                     + nameOfUser
                     + "\n\n\b"
                     + "\nPor favor no responda este correo..."
@@ -987,13 +909,39 @@ boletas.setIdboleta(Integer.parseInt(response.readEntity(String.class)));
                     + "\n-------------------------------------------------------------";
 
         } catch (Exception e) {
-            exception =loggerServices.processException(JmoordbUtil.nameOfClass(),JmoordbUtil.nameOfMethod(), e,false);
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
         }
         return messages;
     }
 // </editor-fold>
-    
-    
-    
+
+//<editor-fold defaultstate="collapsed" desc="usuariosCantidadBoletas">
+    public List<JmoordbEntity> aggregateUsuariosCantidadBoletas(List<Document> filtros) {
+        List<JmoordbEntity> resultados = new ArrayList<>();
+        try {
+            Client client = ClientBuilder.newClient();
+            client.register(authentificationProducer.httpAuthenticationFeature());
+
+            List<String> jsons = new ArrayList<>();
+            filtros.forEach((elemento) -> {
+                jsons.add(Base64.getEncoder().encodeToString(elemento.toJson().getBytes()));
+            });
+            List<UsuariosCantidadBoletas> boletas = new ArrayList<>();
+
+            resultados = client
+                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/boletas/aggregatequerywithoutpagination/")
+                    .queryParam("query", jsons)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get(new GenericType<List<JmoordbEntity>>() {
+                    }
+                    );
+        } catch (Exception e) {
+            exception = loggerServices.processException(JmoordbUtil.nameOfClass(), JmoordbUtil.nameOfMethod(), e, false);
+        }
+
+        return resultados;
+
+    }
+//</editor-fold>
 
 }
