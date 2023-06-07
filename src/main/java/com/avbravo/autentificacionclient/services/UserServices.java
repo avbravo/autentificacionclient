@@ -434,16 +434,18 @@ public class UserServices implements Serializable {
      *
      * @param applicativeId : El applicativo principal
      * @param profileList: Lista de profiles a realizar la busqueda
-     * @param iddepartament: Departamento actual del usuario logeado
+     * @param userActivo: Verifica si se requiere que el usuario este activo para regrearlo
+     * @param iddepartamentLoged: Departamento actual del usuario logeado    
      * @return
      */
-    public List<User> findByProfileList(Integer applicativeId, List<Profile> profileList, Integer iddepartamentLoged) {
+    public List<User> findByProfileList(Integer applicativeId, List<Profile> profileList, Boolean requiereUserActivo, Integer iddepartamentLoged) {
         List<User> userList = new ArrayList<>();
         try {
             Document sort = new Document("username", -1);
             for (Profile p : profileList) {
 
-                List<User> list = queryElemMatch(p.getIdapplicative(), p.getIddepartament(), p.getIdrole(), Boolean.TRUE);
+                List<User> list = queryElemMatch(p.getIdapplicative(), p.getIddepartament(), p.getIdrole(), Boolean.TRUE, requiereUserActivo);
+
                 if (list == null || list.isEmpty() || list.size() == 0) {
 
                 } else {
@@ -477,14 +479,20 @@ public class UserServices implements Serializable {
      * @param active
      * @return
      */
-    public List<User> queryElemMatch(Integer idapplicative, Integer iddepartament, Integer idrole, Boolean active) {
+    public List<User> queryElemMatch(Integer idapplicative, Integer iddepartament, Integer idrole, Boolean active, Boolean requiereUserActivo) {
         List<User> suggestions = new ArrayList<>();
         try {
 
             Client client = ClientBuilder.newClient();
+            String ruta;
+            if (requiereUserActivo) {
+                ruta = "/autentificacion/resources/user/queryelemmatchuseractive/";
+            } else {
+                ruta = "/autentificacion/resources/user/queryelemmatch/";
+            }
             client.register(authentificationProducer.httpAuthenticationFeature());
             suggestions = client
-                    .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/queryelemmatch/")
+                    .target(microservicesProducer.microservicesHost() + ruta)
                     .queryParam("idapplicative", idapplicative)
                     .queryParam("iddepartament", iddepartament)
                     .queryParam("idrole", idrole)
@@ -515,7 +523,7 @@ public class UserServices implements Serializable {
     public Boolean haveProfile(Integer applicativeId, List<Profile> profileList, User user, Profile profile) {
         Boolean found = false;
         try {
-            List<User> list = findByProfileList(applicativeId, profileList, profile.getIddepartament());
+            List<User> list = findByProfileList(applicativeId, profileList, false, profile.getIddepartament());
 
             if (list == null || list.isEmpty() || list.size() == 0) {
 
@@ -635,7 +643,6 @@ public class UserServices implements Serializable {
             });
 
 //            System.out.println("Elementos " + jsons.get(0));
-
             resultados = client
                     .target(microservicesProducer.microservicesHost() + "/autentificacion/resources/user/aggregatequerywithoutpagination/")
                     .queryParam("query", jsons)
