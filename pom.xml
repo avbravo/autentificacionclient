@@ -4,7 +4,7 @@
     <groupId>com.avbravo</groupId>
     <artifactId>autentificacionclient</artifactId>
 
-    <version>21.08.100</version>
+    <version>21.08.101</version>
     <packaging>ejb</packaging>
     <name>autentificacionclient</name>
     
