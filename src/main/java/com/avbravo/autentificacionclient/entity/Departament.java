@@ -22,16 +22,26 @@ public class Departament {
     private String departament;
     private Boolean active;
     private String shortname;
-   
-@Referenced(collection = "Headquarters",
+
+    @Referenced(collection = "Headquarters",
             field = "idheadquarters", javatype = "Integer", lazy = false,
             repository = "com.avbravo.autentificacion.repository.HeadquartersRepository")
     private Headquarters headquarters;
 
-private Boolean isapprovalchietunitrequired;
-private Boolean isapprovalauthorityrequired;
-    
+    private Boolean isapprovalchietunitrequired;
+    private Boolean isapprovalauthorityrequired;
+
     public Departament() {
+    }
+
+    public Departament(Departament departamentoClonar) {
+        this.active = departamentoClonar.active;
+        this.departament = departamentoClonar.departament;
+        this.headquarters = departamentoClonar.headquarters;
+        this.isapprovalauthorityrequired = departamentoClonar.isapprovalauthorityrequired;
+        this.isapprovalchietunitrequired = departamentoClonar.isapprovalchietunitrequired;
+        this.shortname = departamentoClonar.shortname;
+        this.iddepartament = departamentoClonar.iddepartament;
     }
 
     public Departament(Integer iddepartament, String departament, Boolean active, String shortname, Headquarters headquarters, Boolean isapprovalchietunitrequired, Boolean isapprovalauthorityrequired) {
@@ -59,8 +69,6 @@ private Boolean isapprovalauthorityrequired;
     public void setIsapprovalauthorityrequired(Boolean isapprovalauthorityrequired) {
         this.isapprovalauthorityrequired = isapprovalauthorityrequired;
     }
-
-   
 
     public Integer getIddepartament() {
         return iddepartament;
@@ -102,10 +110,7 @@ private Boolean isapprovalauthorityrequired;
         this.headquarters = headquarters;
     }
 
-    
-  
-  
- @Override
+    @Override
     public boolean equals(Object object) {
         if (!(object instanceof Departament)) {
             return false;
@@ -114,9 +119,31 @@ private Boolean isapprovalauthorityrequired;
         if ((this.iddepartament == null && other.iddepartament != null) || (this.iddepartament != null && !this.iddepartament.equals(other.iddepartament))) {
             return false;
         }
-       return true;
+        return true;
     }
- 
+
+    public boolean equalsDatos(Object object) {
+        if (!(object instanceof Departament)) {
+            return false;
+        }
+        Departament other = (Departament) object;
+
+        if ((this.iddepartament == null
+                && other.iddepartament != null) || (this.iddepartament != null
+                && !this.iddepartament.equals(other.iddepartament))
+                || (!this.getShortname().equals(other.getShortname())
+                || !this.departament.equals(other.departament)
+                || !this.active == other.active
+                || !this.isapprovalauthorityrequired == other.isapprovalauthorityrequired
+                || !this.isapprovalchietunitrequired == other.isapprovalchietunitrequired
+                || !this.headquarters.equals(other.headquarters))) {
+//            System.out.println("Departamento Falso");
+            return false;
+        }
+//        System.out.println("Departamento Cierto");
+        return true;
+    }
+
     public boolean equalsReflection(Object object) {
         if (!(object instanceof Departament)) {
             return false;
@@ -125,7 +152,7 @@ private Boolean isapprovalauthorityrequired;
         if ((this.iddepartament == null && other.iddepartament != null) || (this.iddepartament != null && !this.iddepartament.equals(other.iddepartament))) {
             return false;
         }
-       return EqualsBuilder.reflectionEquals(this, object);
+        return EqualsBuilder.reflectionEquals(this, object);
     }
 
 }
